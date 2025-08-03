@@ -22,7 +22,8 @@ class PublicController extends BaseController
 {
     public function getIndex()
     {
-        // Theme::addBodyAttributes(['id' => 'page-home']);        // if (defined('PAGE_MODULE_SCREEN_NAME') && BaseHelper::getHomepageId()) {
+        // Theme::addBodyAttributes(['id' => 'page-home']);
+        // if (defined('PAGE_MODULE_SCREEN_NAME') && BaseHelper::getHomepageId()) {
         //     $data = (new PageService())->handleFrontRoutes(null);
 
         //     event(new RenderingSingleEvent(new Slug()));
@@ -37,7 +38,9 @@ class PublicController extends BaseController
         // event(RenderingHomePageEvent::class);
 
         // return Theme::scope('index')->render();
-        return "page";
+        // return "page";
+
+        return view('packages/theme::frontend.pages.home');
     }
 
     public function getView(?string $key = null, string $prefix = '')
@@ -115,5 +118,11 @@ class PublicController extends BaseController
     public function getViewWithPrefix(string $prefix, ?string $slug = null)
     {
         return $this->getView($slug, $prefix);
+    }
+
+
+    public function getAbout()
+    {
+        return "This is about us";
     }
 }

@@ -14,6 +14,12 @@ mix
     .sass(`${source}/resources/sass/admin-bar.scss`, `${dist}/css`)
     .sass(`${source}/resources/sass/guideline.scss`, `${dist}/css`)
 
+    // my custom designs
+    .postCss(`${source}/resources/css/app.css`, `${dist}/frontend/css`, [
+        require('tailwindcss'),
+        require('autoprefixer'),
+    ])
+
 if (mix.inProduction()) {
     mix
         .copy(`${dist}/js/theme-options.js`, `${source}/public/js`)
@@ -23,4 +29,8 @@ if (mix.inProduction()) {
         .copy(`${dist}/css/theme-options.css`, `${source}/public/css`)
         .copy(`${dist}/css/admin-bar.css`, `${source}/public/css`)
         .copy(`${dist}/css/guideline.css`, `${source}/public/css`)
+
+        // my custom designs
+        .copy(`${dist}/frontend/css/app.css`, `${source}/public/frontend/css`)
+
 }

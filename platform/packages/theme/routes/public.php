@@ -12,6 +12,9 @@ Theme::registerRoutes(function (): void {
     Route::group(['controller' => PublicController::class], function (): void {
         event(new ThemeRoutingBeforeEvent(app()->make('router')));
 
+
+        Route::get('about-us', 'getAbout')->name('public.about');
+
         Route::get('/', 'getIndex')->name('public.index');
 
         if (setting('sitemap_enabled', true)) {
@@ -26,6 +29,8 @@ Theme::registerRoutes(function (): void {
 
         Route::get('{prefix}/{slug?}', 'getViewWithPrefix')
             ->whereIn('prefix', SlugHelper::getAllPrefixes() ?: ['1437bcd2-d94e-4a5fd-9a39-b5d60225e9af']);
+
+
 
         event(new ThemeRoutingAfterEvent(app()->make('router')));
     });
