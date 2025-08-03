@@ -1,4 +1,4 @@
-@props(['settings'])
+@props(['settings' => null])
 
 @php
     $navigation = [
@@ -21,15 +21,17 @@
             <div class="flex items-center space-x-4">
                 <div class="flex items-center space-x-1">
                     <i data-lucide="phone" class="h-3 w-3"></i>
-                    <span>{{ $settings?->phone_primary ?? '0784 847946' }} / {{ $settings?->phone_secondary ?? '0745 912000' }}</span>
+                    <span>
+                        {{ $settings['phone_primary'] ?? '0784 847946' }} / {{ $settings['phone_secondary'] ?? '0745 912000' }}
+                    </span>
                 </div>
                 <div class="flex items-center space-x-1">
                     <i data-lucide="mail" class="h-3 w-3"></i>
-                    <span>{{ $settings?->email_primary ?? 'info@jobarn.co.tz' }}</span>
+                    <span>{{ $settings['email_primary'] ?? 'info@jobarn.co.tz' }}</span>
                 </div>
             </div>
             <div class="hidden md:block">
-                <span>{{ $settings?->address ?? 'Survey Complex, Ground Floor, Near Milimani City, Dar es Salaam' }}</span>
+                <span>{{ $settings['address'] ?? 'Survey Complex, Ground Floor, Near Milimani City, Dar es Salaam' }}</span>
             </div>
         </div>
     </div>
@@ -44,22 +46,51 @@
             <!-- Desktop Navigation -->
             <nav class="hidden md:flex items-center space-x-8">
                 @foreach($navigation as $item)
-                    <a href="{{ $item['href'] }}" class="@if($currentPath === $item['href']) text-jobarn-primary @else text-gray-700 @endif text-sm font-medium transition-colors hover:text-jobarn-primary">
+                    <a
+                        href="{{ $item['href'] }}"
+                        class="@if($currentPath === $item['href']) text-jobarn-primary @else text-gray-700 @endif text-sm font-medium transition-colors hover:text-jobarn-primary"
+                    >
                         {{ $item['name'] }}
                     </a>
                 @endforeach
             </nav>
 
             <div class="hidden md:flex items-center space-x-4">
-                <button @click="showQuoteModal = true" class="bg-jobarn-primary hover:bg-jobarn-primary/90 text-white px-4 py-2 rounded">
+                <button
+                    @click="$dispatch('open-quote-modal')"
+                    class="bg-jobarn-primary hover:bg-jobarn-primary/90 text-white px-4 py-2 rounded"
+                >
                     Request Quote
                 </button>
             </div>
 
-            <!-- Mobile Navigation Trigger -->
-            <button @click="mobileMenuOpen = true" class="md:hidden">
-                <i data-lucide="menu" class="h-5 w-5"></i>
-            </button>
+            <!-- Mobile Navigation -->
+            <x-sheet side="right" class="w-[300px] sm:w-[400px]">
+                <x-slot name="trigger">
+                    <button class="md:hidden">
+                        <i data-lucide="menu" class="h-5 w-5"></i>
+                    </button>
+                </x-slot>
+                <x-slot name="content">
+                    <nav class="flex flex-col space-y-4 mt-8">
+                        @foreach($navigation as $item)
+                            <a
+                                href="{{ $item['href'] }}"
+                                @click="open = false"
+                                class="@if($currentPath === $item['href']) text-jobarn-primary @else text-gray-700 @endif text-lg font-medium transition-colors hover:text-jobarn-primary"
+                            >
+                                {{ $item['name'] }}
+                            </a>
+                        @endforeach
+                        <button
+                            @click="open = false; $dispatch('open-quote-modal')"
+                            class="bg-jobarn-primary hover:bg-jobarn-primary/90 text-white px-4 py-2 rounded mt-4"
+                        >
+                            Request Quote
+                        </button>
+                    </nav>
+                </x-slot>
+            </x-sheet>
         </div>
     </div>
 </header>

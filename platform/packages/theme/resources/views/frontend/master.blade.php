@@ -15,6 +15,8 @@
     <script>
         lucide.createIcons(); // This will replace all <i class="lucide-icon"></i> elements
     </script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+
 
 </head>
 <body class="font-sans antialiased text-gray-900 bg-white">

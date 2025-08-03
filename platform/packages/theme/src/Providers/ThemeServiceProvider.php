@@ -19,6 +19,9 @@ use Botble\Theme\Commands\ThemeRenameCommand;
 use Botble\Theme\Contracts\Theme as ThemeContract;
 use Botble\Theme\Events\RenderingAdminBar;
 use Botble\Theme\Theme;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 
 class ThemeServiceProvider extends ServiceProvider
 {
@@ -173,5 +176,17 @@ class ThemeServiceProvider extends ServiceProvider
                 ThemeRenameCommand::class,
             ]);
         }
+
+        //Blace Custom Components
+        collect(File::allFiles(base_path('platform/packages/theme/resources/views/frontend/parts/components')))
+        ->each(function ($file) {
+            Log::debug('Registering Blade component: ' . $file->getRelativePathname());
+            $component = str_replace(
+                ['/', '.blade.php'],
+                ['.', ''],
+                $file->getRelativePathname()
+            );
+            Blade::component("packages/theme::frontend.parts.components.{$component}", $component);
+        });
     }
 }

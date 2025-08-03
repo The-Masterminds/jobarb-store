@@ -5,7 +5,7 @@ module.exports = {
         "./resources/views/**/*.blade.php",
         "./resources/js/**/*.js",
         './platform/packages/theme/resources/views/**/*.blade.php',
-  './platform/packages/theme/resources/js/**/*.js',
+        './platform/packages/theme/resources/js/**/*.js',
     ],
     theme: {
         extend: {
