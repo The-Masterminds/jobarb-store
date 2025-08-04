@@ -1,5 +1,11 @@
 @props(['class' => ''])
 
-<div {{ $attributes->merge(['class' => "p-6 pt-0 $class"]) }}>
+@php
+
+    $classes = app('tw.merge')->merge('p-6 pt-0', $class);
+
+@endphp
+
+<div {{ $attributes->merge(['class' => $classes]) }}>
     {{ $slot }}
 </div>

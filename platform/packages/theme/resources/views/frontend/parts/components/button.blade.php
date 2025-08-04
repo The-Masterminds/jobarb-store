@@ -1,15 +1,18 @@
 @props([
-    // Variants
     'variant' => 'default', // 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link'
-    // Sizes
-    'size' => 'default', // 'default' | 'sm' | 'lg' | 'icon'
-    // Other props
+    'size' => 'default',    // 'default' | 'sm' | 'lg' | 'icon'
     'asChild' => false,
     'type' => 'button',
     'disabled' => false,
 ])
 
 @php
+    // Use the correct facade from gehrisandro's package
+    use TailwindMerge\TailwindMerge;
+
+    // Initialize the merger (configurable via config/tailwind-merge.php)
+    $twMerge = TailwindMerge::instance();
+
     // Base classes
     $baseClasses = 'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0';
 
@@ -21,7 +24,7 @@
         'secondary' => 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
         'ghost' => 'hover:bg-accent hover:text-accent-foreground',
         'link' => 'text-primary underline-offset-4 hover:underline',
-    ][$variant] ?? $variantClasses['default'];
+    ][$variant] ?? '';
 
     // Size classes
     $sizeClasses = [
@@ -29,21 +32,27 @@
         'sm' => 'h-9 rounded-md px-3',
         'lg' => 'h-11 rounded-md px-8',
         'icon' => 'h-10 w-10',
-    ][$size] ?? $sizeClasses['default'];
+    ][$size] ?? '';
 
-    // Merge all classes
-    $classes = "$baseClasses $variantClasses $sizeClasses";
+    // Merge with conflict resolution
+    $classes = $twMerge->merge(
+        $baseClasses,
+        $variantClasses,
+        $sizeClasses,
+        $attributes->get('class')
+    );
+
 @endphp
 
 @if($asChild)
-    <div {{ $attributes->merge(['class' => $classes]) }}>
+    <div {{ $attributes->except('class')->merge(['class' => $classes]) }}>
         {{ $slot }}
     </div>
 @else
     <button
         type="{{ $type }}"
         {{ $disabled ? 'disabled' : '' }}
-        {{ $attributes->merge(['class' => $classes]) }}
+        {{ $attributes->except('class')->merge(['class' => $classes]) }}
     >
         {{ $slot }}
     </button>

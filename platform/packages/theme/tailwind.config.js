@@ -7,6 +7,14 @@ module.exports = {
         './platform/packages/theme/resources/views/**/*.blade.php',
         './platform/packages/theme/resources/js/**/*.js',
     ],
+    safelist: [
+        'bg-jobarn-primary',
+        'bg-jobarn-accent1',
+        'bg-jobarn-accent2',
+        'text-jobarn-primary',
+        'text-jobarn-accent1',
+        'text-jobarn-accent2',
+    ],
     theme: {
         extend: {
             colors: {

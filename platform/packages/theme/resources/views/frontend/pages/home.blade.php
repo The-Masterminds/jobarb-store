@@ -3,6 +3,7 @@
 @section('content')
 
 @php
+
     $services = [
         [
             'icon' => 'shopping-cart',
@@ -16,7 +17,25 @@
             'description' => "Complete networking solutions and server installations",
             'image' => "/placeholder.svg?height=200&width=300",
         ],
-        // ... other services
+        [
+            'icon'=> 'Shield',
+            'title'=> "CCTV & Security",
+            'description'=> "Advanced surveillance systems and cybersecurity solutions",
+            'image'=> "/placeholder.svg?height=200&width=300",
+        ],
+        [
+            'icon'=> 'Code',
+            'title'=> "Software Development",
+            'description'=> "Custom software solutions and licensing services",
+            'image'=> "/placeholder.svg?height=200&width=300",
+        ],
+        [
+            'icon'=> 'Headphones',
+            'title'=> "Technical Support",
+            'description'=> "24/7 maintenance and technical assistance",
+            'image'=> "/placeholder.svg?height=200&width=300",
+        ]
+
     ];
 
     $products = [
@@ -25,7 +44,32 @@
             'description' => "High-performance computers for business and personal use",
             'image' => "/placeholder.svg?height=200&width=300",
         ],
-        // ... other products
+        [
+            'title' => "Networking Equipment",
+            'description' => "Routers, switches, and UPS systems for reliable connectivity",
+            'image' => "/placeholder.svg?height=200&width=300",
+        ],
+        [
+            'title' => "CCTV Systems",
+            'description' => "Advanced surveillance cameras and monitoring solutions",
+            'image' => "/placeholder.svg?height=200&width=300",
+        ],
+        [
+            'title' => "Audio Equipment",
+            'description' => "Professional headphones, microphones, and sound systems",
+            'image' => "/placeholder.svg?height=200&width=300",
+        ],
+        [
+            'title' => "Storage Solutions",
+            'description' => "Reliable data storage and backup systems",
+            'image' => "/placeholder.svg?height=200&width=300",
+        ],
+        [
+            'title' => "Interactive Displays",
+            'description' => "Smart whiteboards and projectors for modern workspaces",
+            'image' => "/placeholder.svg?height=200&width=300",
+        ],
+
     ];
 
     $whyChooseUs = [
@@ -34,7 +78,23 @@
             'title' => "Certified Team",
             'description' => "Expert technicians with industry certifications",
         ],
-        // ... other reasons
+        [
+            'icon' => 'Users',
+            'title' => "Trusted Brands",
+            'description' => "Authorized partners with leading technology companies",
+        ],
+        [
+            'icon' => 'Clock',
+            'title' => "24/7 Support",
+            'description' => "Round-the-clock technical assistance and maintenance",
+        ],
+        [
+            'icon' => 'CheckCircle',
+            'title' => "Quality Assurance",
+            'description' => "Rigorous testing and quality control processes",
+        ],
+
+
     ];
 
     $testimonials = [
@@ -44,7 +104,19 @@
             'content' => "JOBARN transformed our hospital's IT infrastructure...",
             'rating' => 5,
         ],
-        // ... other testimonials
+        [
+             'name'=> "James Kikwete",
+            'company'=> "Simba Cargo",
+            'content'=>
+                "Excellent service and support. Their team helped us implement a complete ICT solution that improved our operations significantly.",
+            'rating'=> 5,
+        ],
+        [
+            'name'=> "Amina Hassan",
+            'company'=> "SWEETSHAPES",
+            'content'=> "Professional, reliable, and knowledgeable. JOBARN is our go-to partner for all technology needs.",
+            'rating'=> 5,
+        ],
     ];
 
     $partners = ["Microsoft", "Lenovo", "CISCO", "TP-Link", "HPE", "SOPHOS", "Kaspersky", "Apple"];

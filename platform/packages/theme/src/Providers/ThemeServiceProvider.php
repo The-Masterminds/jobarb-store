@@ -188,5 +188,9 @@ class ThemeServiceProvider extends ServiceProvider
             );
             Blade::component("packages/theme::frontend.parts.components.{$component}", $component);
         });
+
+
+        // Tailwind Merge
+        $this->app->singleton('tw.merge', fn() => \TailwindMerge\TailwindMerge::instance());
     }
 }
