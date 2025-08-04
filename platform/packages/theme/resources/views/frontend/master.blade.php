@@ -10,13 +10,13 @@
     {{-- Tailwind --}}
     <link rel="stylesheet" href="{{ asset('vendor/core/packages/theme/frontend/css/app.css') }}">
 
-    {{-- Lucide Icons --}}
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-        lucide.createIcons(); // This will replace all <i class="lucide-icon"></i> elements
-    </script>
-    <script src="https://unpkg.com/alpinejs" defer></script>
+    {{-- CSS Custom --}}
+    @stack('css')
 
+    {{-- Fonts --}}
+
+    {{-- AlineJs --}}
+    <script src="//unpkg.com/alpinejs" defer></script>
 
 </head>
 <body class="font-sans antialiased text-gray-900 bg-white">
@@ -29,6 +29,25 @@
 
     @include('packages/theme::frontend.parts.footer')
 
-    {{-- JS if needed --}}
+
+    {{-- JS --}}
+    @stack('js')
+
+    {{-- Lucide icons --}}
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+        });
+
+        // initialize icons after Alpine updates
+        document.addEventListener('alpine:init', () => {
+            Alpine.effect(() => {
+                Alpine.store('iconsReady') && lucide.createIcons();
+            });
+        });
+    </script>
+
 </body>
+
 </html>
