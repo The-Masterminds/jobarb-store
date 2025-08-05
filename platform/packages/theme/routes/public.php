@@ -17,6 +17,10 @@ Theme::registerRoutes(function (): void {
 
         Route::get('/', 'getIndex')->name('public.index');
         Route::get('about-us', 'getAbout')->name('public.about');
+        Route::get('services', 'getServices')->name('public.services');
+        Route::get('blog', 'getBlog')->name('public.blog');
+        Route::get('contact-us', 'getContact')->name('public.contact');
+        Route::get('clients', 'getClients')->name('public.clients');
 
         if (setting('sitemap_enabled', true)) {
             Route::get('sitemap.xml', 'getSiteMap')->name('public.sitemap');
