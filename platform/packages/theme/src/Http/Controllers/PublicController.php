@@ -43,6 +43,11 @@ class PublicController extends BaseController
         return view('packages/theme::frontend.pages.home');
     }
 
+    public function getAbout()
+    {
+        return view('packages/theme::frontend.pages.about');
+    }
+
     public function getView(?string $key = null, string $prefix = '')
     {
         if (empty($key)) {
@@ -120,9 +125,4 @@ class PublicController extends BaseController
         return $this->getView($slug, $prefix);
     }
 
-
-    public function getAbout()
-    {
-        return "This is about us";
-    }
 }

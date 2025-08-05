@@ -16,6 +16,7 @@ Theme::registerRoutes(function (): void {
         Route::get('about-us', 'getAbout')->name('public.about');
 
         Route::get('/', 'getIndex')->name('public.index');
+        Route::get('about-us', 'getAbout')->name('public.about');
 
         if (setting('sitemap_enabled', true)) {
             Route::get('sitemap.xml', 'getSiteMap')->name('public.sitemap');
