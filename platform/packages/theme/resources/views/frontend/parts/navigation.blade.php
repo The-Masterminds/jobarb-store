@@ -3,10 +3,10 @@
         ['name' => 'Home', 'href' => '/'],
         ['name' => 'About', 'href' => route('public.about')],
         ['name' => 'Products', 'href' => '/products'],
-        ['name' => 'Services', 'href' => '/services'],
+        ['name' => 'Services', 'href' => route('public.services')],
         ['name' => 'Blog', 'href' => '/blog'],
-        ['name' => 'Clients', 'href' => '/clients'],
-        ['name' => 'Contact', 'href' => '/contact'],
+        ['name' => 'Clients', 'href' => route('public.clients')],
+        ['name' => 'Contact', 'href' => route('public.contact')],
     ];
 
     $currentPath = request()->path() === '/' ? '/' : '/' . request()->path();

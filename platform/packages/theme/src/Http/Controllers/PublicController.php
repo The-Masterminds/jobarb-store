@@ -152,6 +152,164 @@ class PublicController extends BaseController
         return view('packages/theme::frontend.pages.services', compact('services'));
     }
 
+    public function getClients()
+    {
+        $clients = [
+            [
+                'name' => "DEFM",
+                'industry' => "Defense & Military",
+                'logo' => "/placeholder.svg?height=80&width=120",
+                'description' => "Comprehensive ICT infrastructure and security solutions",
+            ],
+            [
+                'name' => "SALAMI HOSPITAL",
+                'industry' => "Healthcare",
+                'logo' => "/placeholder.svg?height=80&width=120",
+                'description' => "Complete hospital management system and CCTV installation",
+            ],
+            [
+                'name' => "Simba Cargo",
+                'industry' => "Logistics & Transportation",
+                'logo' => "/placeholder.svg?height=80&width=120",
+                'description' => "Fleet management system and network infrastructure",
+            ],
+            [
+                'name' => "SWEETSHAPES",
+                'industry' => "Food & Beverage",
+                'logo' => "/placeholder.svg?height=80&width=120",
+                'description' => "Point of sale systems and inventory management",
+            ],
+            [
+                'name' => "Tanzania Railways",
+                'industry' => "Transportation",
+                'logo' => "/placeholder.svg?height=80&width=120",
+                'description' => "Communication systems and network infrastructure",
+            ],
+            [
+                'name' => "Dar es Salaam Port",
+                'industry' => "Maritime & Logistics",
+                'logo' => "/placeholder.svg?height=80&width=120",
+                'description' => "Security systems and cargo management solutions",
+            ]
+        ];
+
+        $partners = [
+            [
+                'name' => "Microsoft",
+                'category' => "Software & Cloud",
+                'logo' => "/placeholder.svg?height=60&width=120",
+                'description' => "Official Microsoft Partner for software licensing and cloud solutions",
+            ],
+            [
+                'name' => "Lenovo",
+                'category' => "Hardware",
+                'logo' => "/placeholder.svg?height=60&width=120",
+                'description' => "Authorized Lenovo dealer for laptops, desktops, and servers",
+            ],
+            [
+                'name' => "CISCO",
+                'category' => "Networking",
+                'logo' => "/placeholder.svg?height=60&width=120",
+                'description' => "Certified CISCO partner for networking equipment and solutions",
+            ],
+            [
+                'name' => "TP-Link",
+                'category' => "Networking",
+                'logo' => "/placeholder.svg?height=60&width=120",
+                'description' => "Official TP-Link distributor for wireless and networking products",
+            ],
+            [
+                'name' => "HPE",
+                'category' => "Enterprise Solutions",
+                'logo' => "/placeholder.svg?height=60&width=120",
+                'description' => "HPE partner for enterprise servers and storage solutions",
+            ],
+            [
+                'name' => "SOPHOS",
+                'category' => "Cybersecurity",
+                'logo' => "/placeholder.svg?height=60&width=120",
+                'description' => "SOPHOS partner for advanced cybersecurity solutions",
+            ],
+            [
+                'name' => "Kaspersky",
+                'category' => "Cybersecurity",
+                'logo' => "/placeholder.svg?height=60&width=120",
+                'description' => "Kaspersky authorized reseller for antivirus and security products",
+            ],
+            [
+                'name' => "Apple",
+                'category' => "Consumer Electronics",
+                'logo' => "/placeholder.svg?height=60&width=120",
+                'description' => "Apple authorized reseller for Mac computers and devices",
+            ],
+        ];
+
+        $testimonials = [
+            [
+                'name' => "Dr. Sarah Mwalimu",
+                'position' => "Chief Medical Officer",
+                'company' => "SALAMI HOSPITAL",
+                'content' => "JOBARN transformed our hospital's IT infrastructure completely. Their CCTV installation and network setup exceeded our expectations. The team was professional, knowledgeable, and delivered on time. Our operations have become much more efficient.",
+                'rating' => 5,
+                'image' => "/placeholder.svg?height=80&width=80",
+            ],
+            [
+                'name' => "James Kikwete",
+                'position' => "Operations Manager",
+                'company' => "Simba Cargo",
+                'content' => "Excellent service and support from JOBARN. They helped us implement a complete ICT solution that improved our logistics operations significantly. Their 24/7 support ensures our systems are always running smoothly.",
+                'rating' => 5,
+                'image' => "/placeholder.svg?height=80&width=80",
+            ],
+            [
+                'name' => "Amina Hassan",
+                'position' => "IT Director",
+                'company' => "SWEETSHAPES",
+                'content' => "Professional, reliable, and knowledgeable. JOBARN is our go-to partner for all technology needs. They understand our business requirements and always provide solutions that work perfectly for us.",
+                'rating' => 5,
+                'image' => "/placeholder.svg?height=80&width=80",
+            ],
+            [
+                'name' => "Colonel Michael Mwanza",
+                'position' => "IT Security Chief",
+                'company' => "DEFM",
+                'content' => "JOBARN's cybersecurity solutions have significantly enhanced our security posture. Their team's expertise in implementing enterprise-grade security systems is exceptional. Highly recommended for critical infrastructure projects.",
+                'rating' => 5,
+                'image' => "/placeholder.svg?height=80&width=80",
+            ],
+        ];
+
+        $stats = [
+            [
+                'icon' => 'Building',
+                'number' => "50+",
+                'label' => "Happy Clients",
+                'description' => "Businesses trust us with their ICT needs",
+            ],
+            [
+                'icon' => 'Users',
+                'number' => "100+",
+                'label' => "Projects Completed",
+                'description' => "Successful implementations across Tanzania",
+            ],
+            [
+                'icon' => 'Award',
+                'number' => "8+",
+                'label' => "Technology Partners",
+                'description' => "Partnerships with leading global brands",
+            ],
+            [
+                'icon' => 'Handshake',
+                'number' => "99%",
+                'label' => "Client Satisfaction",
+                'description' => "Exceptional service delivery record",
+            ],
+        ];
+
+        return view('packages/theme::frontend.pages.clients', compact('clients', 'partners', 'testimonials', 'stats'));
+    }
+
+
     public function getView(?string $key = null, string $prefix = '')
     {
         if (empty($key)) {
@@ -203,6 +361,13 @@ class PublicController extends BaseController
         }
 
         abort(404);
+    }
+
+    public function getContact()
+    {
+
+
+        return view('packages/theme::frontend.pages.contact');
     }
 
     public function getSiteMap()
