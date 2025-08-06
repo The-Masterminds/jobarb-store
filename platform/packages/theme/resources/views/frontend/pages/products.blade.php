@@ -153,174 +153,174 @@
         </div>
     </div>
 </template>
-
+@endsection
 
 @push('js')
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // DOM Elements
-    const searchInput = document.getElementById('search-input');
-    const categorySelect = document.getElementById('category-select');
-    const categoryButtons = document.getElementById('category-buttons');
-    const productsGrid = document.getElementById('products-grid');
-    const productCount = document.getElementById('product-count');
+    document.addEventListener('DOMContentLoaded', function() {
+        // DOM Elements
+        const searchInput = document.getElementById('search-input');
+        const categorySelect = document.getElementById('category-select');
+        const categoryButtons = document.getElementById('category-buttons');
+        const productsGrid = document.getElementById('products-grid');
+        const productCount = document.getElementById('product-count');
 
-    // Current filter state
-    let currentCategory = 'all';
-    let currentSearch = '';
-    let isLoading = false;
+        // Current filter state
+        let currentCategory = 'all';
+        let currentSearch = '';
+        let isLoading = false;
 
 
-    // Fetch products function
-    async function fetchProducts() {
-        isLoading = true;
-        productsGrid.innerHTML = `
-            <div class="col-span-full text-center py-12">
-                <p class="text-gray-500 text-lg">Loading products...</p>
-            </div>
-        `;
-
-        try {
-            const response = await fetch(`{{ route('public.products') }}?category=${encodeURIComponent(currentCategory)}&search=${encodeURIComponent(currentSearch)}`,
-            {
-        headers: {
-            'X-Custom-Fetch-Request': 'true'
-        }
-    });
-
-            console.log('Fetching products from:', response);
-
-            const data = await response.json();
-
-            if (data.success && data.data.length > 0) {
-                renderProducts(data.data);
-            } else {
-                productsGrid.innerHTML = `
-                    <div class="col-span-full text-center py-12">
-                        <p class="text-gray-500 text-lg">No products found matching your criteria.</p>
-                    </div>
-                `;
-            }
-
-            productCount.textContent = `Showing ${data.data.length} products`;
-        } catch (error) {
-            console.error(error);
+        // Fetch products function
+        async function fetchProducts() {
+            isLoading = true;
             productsGrid.innerHTML = `
                 <div class="col-span-full text-center py-12">
-                    <p class="text-gray-500 text-lg">Failed to load products. Please try again.</p>
-                    <button class="mt-4 px-4 py-2 bg-jobarn-primary text-white rounded hover:bg-jobarn-primary/90" onclick="fetchProducts()">
-                        Retry
-                    </button>
-                </div>
-            `;
-        } finally {
-            isLoading = false;
-        }
-    }
-
-    // Render products function
-    function renderProducts(products) {
-        productsGrid.innerHTML = '';
-
-        products.forEach(product => {
-            const productCard = document.createElement('div');
-            productCard.className = 'group hover:shadow-xl transition-all duration-300 overflow-hidden rounded-lg border';
-            productCard.innerHTML = `
-                <div class="relative h-48 overflow-hidden">
-                    <img src="${product.image || '/placeholder.svg'}" alt="${product.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                    <x-badge class="absolute top-2 left-2 bg-jobarn-primary text-white">${product.brand}</x-badge>
-                </div>
-                <div class="p-6 space-y-4">
-                    <h3 class="text-lg font-semibold text-gray-900 line-clamp-2">${product.title}</h3>
-                    <p class="text-gray-600 text-sm line-clamp-2">${product.description}</p>
-                    <div class="space-y-2">
-                        <p class="text-sm font-medium text-gray-700">Key Features:</p>
-                        <div class="flex flex-wrap gap-1">
-                            ${product.features.slice(0, 2).map(feature => `
-                                <x-badge variant="secondary" class="text-xs">${feature}</x-badge>
-                            `).join('')}
-                            ${product.features.length > 2 ? `
-                                <x-badge variant="secondary" class="text-xs">+${product.features.length - 2} more</x-badge>
-                            ` : ''}
-                        </div>
-                    </div>
-                    <div class="flex gap-2">
-                        <x-button class="flex-1 bg-jobarn-primary hover:bg-jobarn-primary/90 text-white view-details" data-slug="${product.slug}">
-                            View Details
-                        </x-button>
-                        <x-button variant="outline" class="border-jobarn-primary text-jobarn-primary hover:bg-jobarn-primary hover:text-white request-quote" data-product-id="${product.id}">
-                            Quote
-                        </x-button>
-                    </div>
+                    <p class="text-gray-500 text-lg">Loading products...</p>
                 </div>
             `;
 
-            productsGrid.appendChild(productCard);
-        });
-
-        // Add event listeners to the new buttons
-        document.querySelectorAll('.view-details').forEach(button => {
-            button.addEventListener('click', () => {
-                window.location.href = `/products/${button.dataset.slug}`;
-            });
-        });
-
-        document.querySelectorAll('.request-quote').forEach(button => {
-            button.addEventListener('click', () => {
-                openQuoteModal(button.dataset.productId);
-            });
-        });
-
-        // Refresh Lucide icons for new elements
-        if (window.lucide) {
-            lucide.createIcons();
-        }
-    }
-
-    // Open quote modal function
-    function openQuoteModal(productId) {
-        // Implement your quote modal logic here
-        console.log('Request quote for product:', productId);
-        alert('Quote request functionality would open here for product: ' + productId);
-    }
-
-    // Event listeners
-    searchInput.addEventListener('input', (e) => {
-        currentSearch = e.target.value;
-        fetchProducts();
-    });
-
-    categorySelect.addEventListener('change', (e) => {
-        currentCategory = e.target.value;
-        updateActiveCategoryButton();
-        fetchProducts();
-    });
-
-    categoryButtons.addEventListener('click', (e) => {
-        const button = e.target.closest('button[data-category]');
-        if (button) {
-            currentCategory = button.dataset.category;
-            categorySelect.value = currentCategory;
-            updateActiveCategoryButton();
-            fetchProducts();
-        }
-    });
-
-    // Update active category button
-    function updateActiveCategoryButton() {
-        document.querySelectorAll('#category-buttons button').forEach(button => {
-            if (button.dataset.category === currentCategory) {
-                button.classList.add('bg-jobarn-primary', 'hover:bg-jobarn-primary/90', 'text-white');
-                button.classList.remove('border-input', 'hover:bg-accent', 'hover:text-accent-foreground');
-            } else {
-                button.classList.remove('bg-jobarn-primary', 'hover:bg-jobarn-primary/90', 'text-white');
-                button.classList.add('border-input', 'hover:bg-accent', 'hover:text-accent-foreground');
+            try {
+                const response = await fetch(`{{ route('public.products') }}?category=${encodeURIComponent(currentCategory)}&search=${encodeURIComponent(currentSearch)}`,
+                {
+            headers: {
+                'X-Custom-Fetch-Request': 'true'
             }
         });
-    }
 
-    // Initial load
-    fetchProducts();
-});
+                console.log('Fetching products from:', response);
+
+                const data = await response.json();
+
+                if (data.success && data.data.length > 0) {
+                    renderProducts(data.data);
+                } else {
+                    productsGrid.innerHTML = `
+                        <div class="col-span-full text-center py-12">
+                            <p class="text-gray-500 text-lg">No products found matching your criteria.</p>
+                        </div>
+                    `;
+                }
+
+                productCount.textContent = `Showing ${data.data.length} products`;
+            } catch (error) {
+                console.error(error);
+                productsGrid.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <p class="text-gray-500 text-lg">Failed to load products. Please try again.</p>
+                        <button class="mt-4 px-4 py-2 bg-jobarn-primary text-white rounded hover:bg-jobarn-primary/90" onclick="fetchProducts()">
+                            Retry
+                        </button>
+                    </div>
+                `;
+            } finally {
+                isLoading = false;
+            }
+        }
+
+        // Render products function
+        function renderProducts(products) {
+            productsGrid.innerHTML = '';
+
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'group hover:shadow-xl transition-all duration-300 overflow-hidden rounded-lg border';
+                productCard.innerHTML = `
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="${product.image || '/placeholder.svg'}" alt="${product.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        <x-badge class="absolute top-2 left-2 bg-jobarn-primary text-white">${product.brand}</x-badge>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <h3 class="text-lg font-semibold text-gray-900 line-clamp-2">${product.title}</h3>
+                        <p class="text-gray-600 text-sm line-clamp-2">${product.description}</p>
+                        <div class="space-y-2">
+                            <p class="text-sm font-medium text-gray-700">Key Features:</p>
+                            <div class="flex flex-wrap gap-1">
+                                ${product.features.slice(0, 2).map(feature => `
+                                    <x-badge variant="secondary" class="text-xs">${feature}</x-badge>
+                                `).join('')}
+                                ${product.features.length > 2 ? `
+                                    <x-badge variant="secondary" class="text-xs">+${product.features.length - 2} more</x-badge>
+                                ` : ''}
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <x-button class="flex-1 bg-jobarn-primary hover:bg-jobarn-primary/90 text-white view-details" data-slug="${product.slug}">
+                                View Details
+                            </x-button>
+                            <x-button variant="outline" class="border-jobarn-primary text-jobarn-primary hover:bg-jobarn-primary hover:text-white request-quote" data-product-id="${product.id}">
+                                Quote
+                            </x-button>
+                        </div>
+                    </div>
+                `;
+
+                productsGrid.appendChild(productCard);
+            });
+
+            // Add event listeners to the new buttons
+            document.querySelectorAll('.view-details').forEach(button => {
+                button.addEventListener('click', () => {
+                    window.location.href = `/product/${button.dataset.slug}`;
+                });
+            });
+
+            document.querySelectorAll('.request-quote').forEach(button => {
+                button.addEventListener('click', () => {
+                    openQuoteModal(button.dataset.productId);
+                });
+            });
+
+            // Refresh Lucide icons for new elements
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        }
+
+        // Open quote modal function
+        function openQuoteModal(productId) {
+            // Implement your quote modal logic here
+            console.log('Request quote for product:', productId);
+            alert('Quote request functionality would open here for product: ' + productId);
+        }
+
+        // Event listeners
+        searchInput.addEventListener('input', (e) => {
+            currentSearch = e.target.value;
+            fetchProducts();
+        });
+
+        categorySelect.addEventListener('change', (e) => {
+            currentCategory = e.target.value;
+            updateActiveCategoryButton();
+            fetchProducts();
+        });
+
+        categoryButtons.addEventListener('click', (e) => {
+            const button = e.target.closest('button[data-category]');
+            if (button) {
+                currentCategory = button.dataset.category;
+                categorySelect.value = currentCategory;
+                updateActiveCategoryButton();
+                fetchProducts();
+            }
+        });
+
+        // Update active category button
+        function updateActiveCategoryButton() {
+            document.querySelectorAll('#category-buttons button').forEach(button => {
+                if (button.dataset.category === currentCategory) {
+                    button.classList.add('bg-jobarn-primary', 'hover:bg-jobarn-primary/90', 'text-white');
+                    button.classList.remove('border-input', 'hover:bg-accent', 'hover:text-accent-foreground');
+                } else {
+                    button.classList.remove('bg-jobarn-primary', 'hover:bg-jobarn-primary/90', 'text-white');
+                    button.classList.add('border-input', 'hover:bg-accent', 'hover:text-accent-foreground');
+                }
+            });
+        }
+
+        // Initial load
+        fetchProducts();
+    });
 </script>
 @endpush

@@ -381,7 +381,7 @@ class PublicController extends BaseController
                 'slug' => "lenovo-thinkpad-x1-carbon",
                 'category' => "laptops",
                 'description' => "Ultra-lightweight business laptop with enterprise-grade security and performance.",
-                'image' => "/placeholder.svg?height=250&width=350",
+                'image' => "http://192.168.1.141:3000/placeholder.svg?height=250&width=350",
                 'brand' => "Lenovo",
                 'features' => ["Intel Core i7", "16GB RAM", "512GB SSD", "14-inch Display"],
                 'price_range' => "Contact for pricing",
@@ -394,7 +394,7 @@ class PublicController extends BaseController
                 'slug' => "cisco-catalyst-9300-switch",
                 'category' => "networking",
                 'description' => "High-performance enterprise network switch with advanced security features.",
-                'image' => "/placeholder.svg?height=250&width=350",
+                'image' => "http://192.168.1.141:3000/placeholder.svg?height=250&width=350",
                 'brand' => "CISCO",
                 'features' => ["48 Ports", "PoE+", "Stackable", "Layer 3 Switching"],
                 'price_range' => "Contact for pricing",
@@ -407,7 +407,7 @@ class PublicController extends BaseController
                 'slug' => "hikvision-ip-camera-ds-2cd2143g0-i",
                 'category' => "cctv",
                 'description' => "4MP outdoor network camera with excellent night vision capabilities.",
-                'image' => "/placeholder.svg?height=250&width=350",
+                'image' => "http://192.168.1.141:3000/placeholder.svg?height=250&width=350",
                 'brand' => "Hikvision",
                 'features' => ["4MP Resolution", "Night Vision", "Weatherproof", "Motion Detection"],
                 'price_range' => "Contact for pricing",
@@ -420,7 +420,7 @@ class PublicController extends BaseController
                 'slug' => "sony-wh-1000xm4-headphones",
                 'category' => "audio",
                 'description' => "Industry-leading noise canceling wireless headphones for professionals.",
-                'image' => "/placeholder.svg?height=250&width=350",
+                'image' => "http://192.168.1.141:3000/placeholder.svg?height=250&width=350",
                 'brand' => "Sony",
                 'features' => ["Noise Canceling", "30hr Battery", "Touch Controls", "Hi-Res Audio"],
                 'price_range' => "Contact for pricing",
@@ -433,7 +433,7 @@ class PublicController extends BaseController
                 'slug' => "microsoft-surface-hub-2s",
                 'category' => "interactive",
                 'description' => "All-in-one digital whiteboard designed for team collaboration.",
-                'image' => "/placeholder.svg?height=250&width=350",
+                'image' => "http://192.168.1.141:3000/placeholder.svg?height=250&width=350",
                 'brand' => "Microsoft",
                 'features' => ["85-inch Display", "4K Resolution", "Touch & Pen", "Windows 10"],
                 'price_range' => "Contact for pricing",
@@ -446,7 +446,7 @@ class PublicController extends BaseController
                 'slug' => "hp-laserjet-pro-m404dn",
                 'category' => "printers",
                 'description' => "Fast, secure, and reliable monochrome laser printer for offices.",
-                'image' => "/placeholder.svg?height=250&width=350",
+                'image' => "http://192.168.1.141:3000/placeholder.svg?height=250&width=350",
                 'brand' => "HP",
                 'features' => ["38 ppm", "Duplex Printing", "Network Ready", "Security Features"],
                 'price_range' => "Contact for pricing",
@@ -496,6 +496,55 @@ class PublicController extends BaseController
         return view('packages/theme::frontend.pages.products', compact('products'));
     }
 
+    public function getProductDetail(string $slug)
+    {
+        $product = [
+            'id' => 1,
+            'name' => "Ubiquiti UniFi Switch 24",
+            'slug' => "ubiquiti-unifi-switch-24",
+            'description' =>
+                "24-Port Managed Gigabit Switch with SFP. The UniFi Switch 24 is a fully managed, 24-port Gigabit switch that delivers robust performance and intelligent switching for growing networks. With its sleek design and advanced features, it's perfect for small to medium-sized businesses looking to expand their network infrastructure.",
+            'image' => "http://192.168.1.141:3000/placeholder.svg?height=250&width=350",
+            'category' => "Networking",
+            'brand' => "Ubiquiti",
+            'sku' => "UBNT-SW24",
+            'price_range' => "Contact for pricing",
+            'status' => "active",
+            'specifications' => [
+                ['label' => "Ports", 'value' => "24 Gigabit RJ45"],
+                ['label' => "Power Consumption", 'value' => "25W"],
+                ['label' => "Rackmountable", 'value' => "Yes"],
+                ['label' => "Switching Capacity", 'value' => "52 Gbps"],
+                ['label' => "Max Power Consumption", 'value' => "25W"],
+                ['label' => "Dimensions", 'value' => "442 x 285 x 43.7 mm"],
+                ['label' => "Weight", 'value' => "3.4 kg"],
+                ['label' => "Operating Temperature", 'value' => "-5 to 40° C"],
+                ['label' => "Operating Humidity", 'value' => "5 to 95% RH"],
+                ['label' => "Certifications", 'value' => "CE, FCC, IC"],
+            ],
+            'features' => [
+                "24 Gigabit RJ45 ports",
+                "2 SFP ports for fiber connectivity",
+                "Layer 2 switching protocols",
+                "VLAN support",
+                "Link aggregation",
+                "Spanning tree protocol",
+                "Quality of Service (QoS)",
+                "SNMP monitoring",
+                "Web-based management interface",
+                "UniFi Controller integration",
+            ],
+            'related_products' => [2, 3, 9], // IDs of related products
+            'created_at' => "2024-01-15T10:00:00Z",
+            'updated_at' => "2024-01-20T15:30:00Z",
+        ];
+
+        $product = collect($product);
+
+        return view('packages/theme::frontend.pages.product-detail', compact('product'));
+
+
+    }
 
     public function getSiteMap()
     {
