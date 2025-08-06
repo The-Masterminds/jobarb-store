@@ -49,7 +49,7 @@
     <div class="container mx-auto px-4">
         <div class="flex h-16 items-center justify-between">
             <a href="/" class="flex items-center space-x-2">
-                <img src="{{ asset('logo/logo.png') }}" alt="Jobarn Logo" class="h-10 w-auto">
+                <img src="{{ asset('vendor/core/packages/theme/frontend/images/logo.png') }}" alt="Jobarn Logo" class="h-10 w-auto">
             </a>
 
             <!-- Desktop Navigation -->

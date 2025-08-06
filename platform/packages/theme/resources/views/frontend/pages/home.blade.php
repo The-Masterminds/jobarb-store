@@ -152,7 +152,7 @@
                     </p>
                 </div>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <x-button as="a" href="/services" size="lg" class="bg-jobarn-primary hover:bg-jobarn-primary/90 text-white">
+                    <x-button as="a" href="/services" size="lg" class="bg-jobarn-primary hover:bg-jobarn-primary/90 text-white home-services">
                         Explore Services
                         <i data-lucide="arrow-right" class="ml-2 h-4 w-4"></i>
                     </x-button>
@@ -161,7 +161,7 @@
                         href="/contact"
                         size="lg"
                         variant="outline"
-                        class="border-white text-white hover:bg-white hover:text-jobarn-accent1 bg-transparent"
+                        class="border-white text-white hover:bg-white hover:text-jobarn-accent1 bg-transparent hero-request-quote"
                     >
                         Request a Quote
                     </x-button>
@@ -359,3 +359,23 @@
 
 
 @endsection
+
+@push('js')
+
+    <script>
+
+        document.querySelectorAll('.hero-request-quote').forEach(button => {
+            button.addEventListener('click', () => {
+                window.location.href = `/contact-us`;
+            });
+
+        });
+
+        document.querySelectorAll('.home-services').forEach(button => {
+            button.addEventListener('click', () => {
+                window.location.href = `/services`;
+            });
+        });
+
+    </script>
+@endpush

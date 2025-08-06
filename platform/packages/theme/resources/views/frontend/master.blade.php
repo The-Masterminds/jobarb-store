@@ -7,6 +7,11 @@
     <meta name="description" content="Leading ICT company in Tanzania providing computers, networking equipment, CCTV installation, software development, and technical support. Trusted by businesses across Dar es Salaam.">
     <meta name="keywords" content="ICT Tanzania, computers Dar es Salaam, networking equipment, CCTV installation, software development, technical support, Lenovo, Microsoft, CISCO">
 
+    {{-- Favicon --}}
+    <link rel="icon" href="{{ asset('vendor/core/packages/theme/frontend/images/favicon.png') }}" type="image/x-icon">
+
+    {{-- Tailwind CSS --}}
+
     {{-- Tailwind --}}
     <link rel="stylesheet" href="{{ asset('vendor/core/packages/theme/frontend/css/app.css') }}">
 
