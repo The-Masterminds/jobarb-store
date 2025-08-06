@@ -15,7 +15,9 @@ use Botble\Theme\Events\RenderingSingleEvent;
 use Botble\Theme\Events\RenderingSiteMapEvent;
 use Botble\Theme\Facades\SiteMapManager;
 use Botble\Theme\Facades\Theme;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class PublicController extends BaseController
@@ -369,6 +371,131 @@ class PublicController extends BaseController
 
         return view('packages/theme::frontend.pages.contact');
     }
+
+    public function getProducts(Request $request)
+    {
+        $query = collect([
+            [
+                'id' => 1,
+                'title' => "Lenovo ThinkPad X1 Carbon",
+                'slug' => "lenovo-thinkpad-x1-carbon",
+                'category' => "laptops",
+                'description' => "Ultra-lightweight business laptop with enterprise-grade security and performance.",
+                'image' => "/placeholder.svg?height=250&width=350",
+                'brand' => "Lenovo",
+                'features' => ["Intel Core i7", "16GB RAM", "512GB SSD", "14-inch Display"],
+                'price_range' => "Contact for pricing",
+                'status' => "active",
+                'created_at' => "2024-01-15T10:00:00Z",
+            ],
+            [
+                'id' => 2,
+                'title' => "CISCO Catalyst 9300 Switch",
+                'slug' => "cisco-catalyst-9300-switch",
+                'category' => "networking",
+                'description' => "High-performance enterprise network switch with advanced security features.",
+                'image' => "/placeholder.svg?height=250&width=350",
+                'brand' => "CISCO",
+                'features' => ["48 Ports", "PoE+", "Stackable", "Layer 3 Switching"],
+                'price_range' => "Contact for pricing",
+                'status' => "active",
+                'created_at' => "2024-01-14T10:00:00Z",
+            ],
+            [
+                'id' => 3,
+                'title' => "Hikvision IP Camera DS-2CD2143G0-I",
+                'slug' => "hikvision-ip-camera-ds-2cd2143g0-i",
+                'category' => "cctv",
+                'description' => "4MP outdoor network camera with excellent night vision capabilities.",
+                'image' => "/placeholder.svg?height=250&width=350",
+                'brand' => "Hikvision",
+                'features' => ["4MP Resolution", "Night Vision", "Weatherproof", "Motion Detection"],
+                'price_range' => "Contact for pricing",
+                'status' => "active",
+                'created_at' => "2024-01-13T10:00:00Z",
+            ],
+            [
+                'id' => 4,
+                'title' => "Sony WH-1000XM4 Headphones",
+                'slug' => "sony-wh-1000xm4-headphones",
+                'category' => "audio",
+                'description' => "Industry-leading noise canceling wireless headphones for professionals.",
+                'image' => "/placeholder.svg?height=250&width=350",
+                'brand' => "Sony",
+                'features' => ["Noise Canceling", "30hr Battery", "Touch Controls", "Hi-Res Audio"],
+                'price_range' => "Contact for pricing",
+                'status' => "active",
+                'created_at' => "2024-01-12T10:00:00Z",
+            ],
+            [
+                'id' => 5,
+                'title' => "Microsoft Surface Hub 2S",
+                'slug' => "microsoft-surface-hub-2s",
+                'category' => "interactive",
+                'description' => "All-in-one digital whiteboard designed for team collaboration.",
+                'image' => "/placeholder.svg?height=250&width=350",
+                'brand' => "Microsoft",
+                'features' => ["85-inch Display", "4K Resolution", "Touch & Pen", "Windows 10"],
+                'price_range' => "Contact for pricing",
+                'status' => "active",
+                'created_at' => "2024-01-11T10:00:00Z",
+            ],
+            [
+                'id' => 6,
+                'title' => "HP LaserJet Pro M404dn",
+                'slug' => "hp-laserjet-pro-m404dn",
+                'category' => "printers",
+                'description' => "Fast, secure, and reliable monochrome laser printer for offices.",
+                'image' => "/placeholder.svg?height=250&width=350",
+                'brand' => "HP",
+                'features' => ["38 ppm", "Duplex Printing", "Network Ready", "Security Features"],
+                'price_range' => "Contact for pricing",
+                'status' => "active",
+                'created_at' => "2024-01-10T10:00:00Z",
+            ],
+
+
+        ]);
+
+        $products = $query->sortByDesc('created_at')->values()->all();
+
+        Log::info('Fetching products :: ' . json_encode($request->method()));
+
+        if ($request->method() === 'GET' && $request->header('X-Custom-Fetch-Request') === 'true') {
+            // Search filter
+            $query = $query->filter(function ($item) use ($request) {
+                return stripos($item['title'], $request->search) !== false ||
+                    stripos($item['description'], $request->search) !== false;
+            });
+
+            // Category filter
+            $query = $query->filter(function ($item) use ($request) {
+                return $item['category'] === $request->category;
+            });
+
+            try {
+                // $products = $query->paginate(12);
+            } catch (\Exception $e) {
+                Log::error($e->getMessage());
+                $products = collect();
+            }
+
+            return response()->json([
+                'success' => true,
+                'data' => $products
+            ]);
+        }
+
+        try {
+            // $products = $query->paginate(12);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            $products = collect();
+        }
+
+        return view('packages/theme::frontend.pages.products', compact('products'));
+    }
+
 
     public function getSiteMap()
     {

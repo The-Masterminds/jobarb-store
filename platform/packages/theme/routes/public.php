@@ -21,6 +21,7 @@ Theme::registerRoutes(function (): void {
         Route::get('blog', 'getBlog')->name('public.blog');
         Route::get('contact-us', 'getContact')->name('public.contact');
         Route::get('clients', 'getClients')->name('public.clients');
+        Route::get('products', 'getProducts')->name('public.products');
         Route::post('contact/submit', 'submitContact')->name('contact.submit');
 
         if (setting('sitemap_enabled', true)) {

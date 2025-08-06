@@ -20,13 +20,21 @@
             <div class="flex items-center space-x-4">
                 <div class="flex items-center space-x-1">
                     <i data-lucide="phone" class="h-3 w-3"></i>
-                    <span>
-                        {{ $settings['phone_primary'] ?? '0784 847946' }} / {{ $settings['phone_secondary'] ?? '0745 912000' }}
-                    </span>
+                    <a href="tel:{{ $settings['phone_primary'] ?? '+255784847946' }}" class="text-white hover:underline">
+                        <span>
+                            {{ $settings['phone_primary'] ?? '+255 784 847 946' }}
+                        </span>
+                    </a> <span class="md:inline">|</span>
+                    <i data-lucide="message-circle" class="h-3 w-3"></i>
+                    <a href="https://wa.me/{{ $settings['phone_primary'] ?? '+255745912000' }}" target="_blank" rel="noopener noreferrer" class="text-white hover:underline">
+                        <span>
+                            {{ $settings['phone_primary'] ?? '+255 745 912 000' }}
+                        </span>
+                    </a>
                 </div>
                 <div class="flex items-center space-x-1">
                     <i data-lucide="mail" class="h-3 w-3"></i>
-                    <span>{{ $settings['email_primary'] ?? 'info@jobarn.co.tz' }}</span>
+                    <a href="mailto:{{ $settings['email_primary'] ?? 'info@jobarn.co.tz' }}"><span>{{ $settings['email_primary'] ?? 'info@jobarn.co.tz' }}</span></a>
                 </div>
             </div>
             <div class="hidden md:block">

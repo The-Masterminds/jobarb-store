@@ -168,7 +168,7 @@ class ThemeServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands([
-                ThemeActivateCommand::class,
+                ThemeActivateCommand::class, // TODO:: activate theme
                 ThemeRemoveCommand::class,
                 ThemeAssetsPublishCommand::class,
                 ThemeOptionCheckMissingCommand::class,
@@ -180,7 +180,6 @@ class ThemeServiceProvider extends ServiceProvider
         //Blace Custom Components
         collect(File::allFiles(base_path('platform/packages/theme/resources/views/frontend/parts/components')))
         ->each(function ($file) {
-            Log::debug('Registering Blade component: ' . $file->getRelativePathname());
             $component = str_replace(
                 ['/', '.blade.php'],
                 ['.', ''],
