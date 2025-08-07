@@ -368,8 +368,12 @@ class PublicController extends BaseController
     public function getContact()
     {
 
-
         return view('packages/theme::frontend.pages.contact');
+    }
+
+    public function getBlog()
+    {
+        return view('packages/theme::frontend.pages.blog');
     }
 
     public function getProducts(Request $request)

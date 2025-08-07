@@ -61,10 +61,10 @@
                     </div>
                     <div class="relative">
                         <img
-                            src="{{ asset('placeholder.svg') }}?height=400&width=500"
+                            src="{{ asset('vendor/core/packages/theme/frontend/images/about-us.png') }}"
                             alt="JOBARN Office"
-                            class="rounded-2xl shadow-2xl w-full h-auto"
-                            style="height: 400px; width: 500px; object-fit: cover;"
+                            class="w-full h-auto"
+                            style="object-fit: cover;"
                         >
                     </div>
                 </div>
@@ -77,22 +77,22 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     <div class="space-y-6">
                         <h2 class="text-3xl lg:text-4xl font-bold text-gray-900">Who We Are</h2>
-                        <p class="text-lg text-gray-600">
-                            JOBARN GENERAL TRADING COMPANY LTD is a dynamic ICT company based in Dar es Salaam, Tanzania. We
-                            specialize in providing comprehensive technology solutions that help businesses thrive in the digital
-                            age.
+                        <p class="text-gray-600">
+                            <span class="text-lg ">JOBARN GENERAL TRADING COMPANY LTD</span>  is a dynamic ICT company based in Dar es Salaam, Tanzania. We specialize in providing comprehensive technology solutions that help businesses thrive in the digital age.
                         </p>
                         <p class="text-gray-600">
-                            Our expertise spans across ICT equipment sales, network infrastructure setup, cybersecurity solutions,
-                            software development, and technical support.
+                            Our expertise spans across ICT equipment sales, network infrastructure setup, cybersecurity solutions, software development, and technical support. We work with leading global brands to ensure our clients receive only the best technology solutions.
+                        </p>
+                        <p class="text-gray-600">
+                            What sets us apart is our commitment to understanding each client's unique needs and delivering tailored solutions that not only meet current requirements but also scale for future growth.
                         </p>
                     </div>
                     <div class="relative">
                         <img
-                            src="{{ asset('placeholder.svg') }}?height=400&width=500"
+                            src="{{ asset('vendor/core/packages/theme/frontend/images/network.png') }}"
                             alt="ICT Solutions"
-                            class="rounded-2xl shadow-lg w-full h-auto"
-                            style="height: 400px; width: 500px; object-fit: cover;"
+                            class="w-full h-auto"
+                            style="height: 512px; width: 512px; object-fit: cover;"
                         >
                     </div>
                 </div>
@@ -110,7 +110,7 @@
                             </div>
                             <h3 class="text-2xl font-bold text-gray-900">Our Mission</h3>
                             <p class="text-gray-600 text-lg">
-                                To empower businesses across Tanzania with innovative, reliable, and scalable ICT solutions.
+                                To provide unparalleled ICT solutions that drive effi-ciency, productivity, and growth for our clients. We strive to deliver exceptional value through quality products and outstanding customer service.
                             </p>
                         </x-card.content>
                     </x-card>
@@ -122,7 +122,7 @@
                             </div>
                             <h3 class="text-2xl font-bold text-gray-900">Our Vision</h3>
                             <p class="text-gray-600 text-lg">
-                                To be Tanzania's leading ICT solutions provider, recognized for excellence and innovation.
+                                To be the leading ICT service provider, recognized for our commitment to excellence, innovation, and cus-tomer satisfaction. We aim to foster long-term part-nerships with our clients, helping them achieve their business objectives and stay ahead in a rapidly evolv-ing technological landscape.
                             </p>
                         </x-card.content>
                     </x-card>
@@ -152,40 +152,6 @@
                             </x-card.content>
                         </x-card>
                     @endforeach
-                </div>
-            </div>
-        </section>
-
-        <!-- Company Timeline -->
-        <section class="py-16 lg:py-24 bg-gray-50">
-            <div class="container mx-auto px-4">
-                <div class="text-center space-y-4 mb-12">
-                    <x-badge class="bg-jobarn-accent2 text-white">Our Journey</x-badge>
-                    <h2 class="text-3xl lg:text-4xl font-bold text-gray-900">Building Excellence Since 2024</h2>
-                </div>
-                <div class="max-w-4xl mx-auto">
-                    <div class="space-y-8">
-                        @foreach($timeline as $index => $item)
-                            <div class="flex items-start space-x-6">
-                                <div class="flex-shrink-0">
-                                    <div class="h-12 w-12 bg-jobarn-primary rounded-full flex items-center justify-center">
-                                        <span class="text-white font-bold">{{ $index + 1 }}</span>
-                                    </div>
-                                </div>
-                                <div class="flex-grow">
-                                    <x-card class="border-0 shadow-md">
-                                        <x-card.content class="p-6">
-                                            <div class="flex items-center space-x-4 mb-3">
-                                                <x-badge class="bg-jobarn-accent1 text-white">{{ $item['year'] }}</x-badge>
-                                                <h3 class="text-xl font-semibold text-gray-900">{{ $item['title'] }}</h3>
-                                            </div>
-                                            <p class="text-gray-600">{{ $item['description'] }}</p>
-                                        </x-card.content>
-                                    </x-card>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
                 </div>
             </div>
         </section>
