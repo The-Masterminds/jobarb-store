@@ -66,7 +66,7 @@ class PublicController extends BaseController
                     "Competitive Pricing & Warranties",
                 ],
                 'brands' => ["Lenovo", "Dell", "HP", "Apple", "Microsoft"],
-                'image' => "http://192.168.1.141:3000/placeholder.svg?height=300&width=400",
+                'image' => "vendor/core/packages/theme/frontend/images/services/computer-components.jpg",
                 'status' => "active",
             ],
             [
@@ -82,7 +82,7 @@ class PublicController extends BaseController
                     "Network Security Implementation",
                 ],
                 'brands' => ["CISCO", "TP-Link", "Ubiquiti", "HPE"],
-                'image' => "http://192.168.1.141:3000/placeholder.svg?height=300&width=400",
+                'image' => "vendor/core/packages/theme/frontend/images/services/networking.jpg",
                 'status' => "active",
             ],
             [
@@ -98,7 +98,7 @@ class PublicController extends BaseController
                     "Cybersecurity Solutions",
                 ],
                 'brands' => ["Hikvision", "Dahua", "SOPHOS", "Kaspersky"],
-                'image' => "http://192.168.1.141:3000/placeholder.svg?height=300&width=400",
+                'image' => "vendor/core/packages/theme/frontend/images/services/cctv.jpg",
                 'status' => "active",
             ],
             [
@@ -114,7 +114,7 @@ class PublicController extends BaseController
                     "Virtualization Services",
                 ],
                 'brands' => ["HPE", "Dell", "Lenovo", "Microsoft"],
-                'image' => "http://192.168.1.141:3000/placeholder.svg?height=300&width=400",
+                'image' => "vendor/core/packages/theme/frontend/images/services/server.jpg",
                 'status' => "active",
             ],
             [
@@ -130,7 +130,7 @@ class PublicController extends BaseController
                     "On-site Technical Support"
                 ],
                 'brands' => ["Multi-vendor Support"],
-                'image' => "http://192.168.1.141:3000/placeholder.svg?height=300&width=400",
+                'image' => "vendor/core/packages/theme/frontend/images/services/maintanance.jpg",
                 'status' => "active",
             ],
             [
@@ -146,7 +146,7 @@ class PublicController extends BaseController
                     "Application Maintenance",
                 ],
                 'brands' => ["Microsoft", "Adobe", "Autodesk", "Custom Solutions"],
-                'image' => "http://192.168.1.141:3000/placeholder.svg?height=300&width=400",
+                'image' => "/vendor/core/packages/theme/frontend/images/services/software.jpg",
                 'status' => "active",
             ],
         ];
@@ -160,37 +160,37 @@ class PublicController extends BaseController
             [
                 'name' => "DEFM",
                 'industry' => "Defense & Military",
-                'logo' => "/placeholder.svg?height=80&width=120",
+                'logo' => "/vendor/core/packages/theme/frontend/images/partners/images.png",
                 'description' => "Comprehensive ICT infrastructure and security solutions",
             ],
             [
                 'name' => "SALAMI HOSPITAL",
                 'industry' => "Healthcare",
-                'logo' => "/placeholder.svg?height=80&width=120",
+                'logo' => "/vendor/core/packages/theme/frontend/images/partners/images.png",
                 'description' => "Complete hospital management system and CCTV installation",
             ],
             [
                 'name' => "Simba Cargo",
                 'industry' => "Logistics & Transportation",
-                'logo' => "/placeholder.svg?height=80&width=120",
+                'logo' => "/vendor/core/packages/theme/frontend/images/partners/images.png",
                 'description' => "Fleet management system and network infrastructure",
             ],
             [
                 'name' => "SWEETSHAPES",
                 'industry' => "Food & Beverage",
-                'logo' => "/placeholder.svg?height=80&width=120",
+                'logo' => "/vendor/core/packages/theme/frontend/images/partners/images.png",
                 'description' => "Point of sale systems and inventory management",
             ],
             [
                 'name' => "Tanzania Railways",
                 'industry' => "Transportation",
-                'logo' => "/placeholder.svg?height=80&width=120",
+                'logo' => "/vendor/core/packages/theme/frontend/images/partners/images.png",
                 'description' => "Communication systems and network infrastructure",
             ],
             [
                 'name' => "Dar es Salaam Port",
                 'industry' => "Maritime & Logistics",
-                'logo' => "/placeholder.svg?height=80&width=120",
+                'logo' => "/vendor/core/packages/theme/frontend/images/partners/images.png",
                 'description' => "Security systems and cargo management solutions",
             ]
         ];
@@ -199,49 +199,49 @@ class PublicController extends BaseController
             [
                 'name' => "Microsoft",
                 'category' => "Software & Cloud",
-                'logo' => "/placeholder.svg?height=60&width=120",
+                'logo' => "/vendor/core/packages/theme/frontend/images/partners/microsoft.png",
                 'description' => "Official Microsoft Partner for software licensing and cloud solutions",
             ],
             [
                 'name' => "Lenovo",
                 'category' => "Hardware",
-                'logo' => "/placeholder.svg?height=60&width=120",
+                'logo' => "/vendor/core/packages/theme/frontend/images/partners/lenovo.png",
                 'description' => "Authorized Lenovo dealer for laptops, desktops, and servers",
             ],
             [
                 'name' => "CISCO",
                 'category' => "Networking",
-                'logo' => "/placeholder.svg?height=60&width=120",
+                'logo' => "/vendor/core/packages/theme/frontend/images/partners/cisco.png",
                 'description' => "Certified CISCO partner for networking equipment and solutions",
             ],
             [
                 'name' => "TP-Link",
                 'category' => "Networking",
-                'logo' => "/placeholder.svg?height=60&width=120",
+                'logo' => "/vendor/core/packages/theme/frontend/images/partners/tp-link.png",
                 'description' => "Official TP-Link distributor for wireless and networking products",
             ],
             [
                 'name' => "HPE",
                 'category' => "Enterprise Solutions",
-                'logo' => "/placeholder.svg?height=60&width=120",
+                'logo' => "/vendor/core/packages/theme/frontend/images/partners/hpe.png",
                 'description' => "HPE partner for enterprise servers and storage solutions",
             ],
             [
                 'name' => "SOPHOS",
                 'category' => "Cybersecurity",
-                'logo' => "/placeholder.svg?height=60&width=120",
+                'logo' => "/vendor/core/packages/theme/frontend/images/partners/sophos.png",
                 'description' => "SOPHOS partner for advanced cybersecurity solutions",
             ],
             [
                 'name' => "Kaspersky",
                 'category' => "Cybersecurity",
-                'logo' => "/placeholder.svg?height=60&width=120",
+                'logo' => "/vendor/core/packages/theme/frontend/images/partners/kaspersky.png",
                 'description' => "Kaspersky authorized reseller for antivirus and security products",
             ],
             [
                 'name' => "Apple",
                 'category' => "Consumer Electronics",
-                'logo' => "/placeholder.svg?height=60&width=120",
+                'logo' => "/vendor/core/packages/theme/frontend/images/partners/apple.png",
                 'description' => "Apple authorized reseller for Mac computers and devices",
             ],
         ];

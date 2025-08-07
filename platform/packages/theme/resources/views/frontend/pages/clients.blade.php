@@ -129,9 +129,9 @@
                             </div>
                             <div class="flex items-center space-x-4">
                                 <img
-                                    src="{{ asset($testimonial['image'] ?? 'placeholder.svg') }}"
+                                    src="{{ asset('vendor/core/packages/theme/frontend/images/person.png') }}"
                                     alt="{{ $testimonial['name'] }}"
-                                    class="rounded-full object-cover w-15 h-15"
+                                    class="rounded-full object-cover w-15 h-15" style="height: 60px; width: 60px;"
                                 >
                                 <div>
                                     <p class="font-semibold text-gray-900">{{ $testimonial['name'] }}</p>

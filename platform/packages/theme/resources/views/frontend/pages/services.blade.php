@@ -3,26 +3,6 @@
 @section('content')
 
     @php
-        // Sample data - replace with actual data from your backend
-        // $services = [
-        //     [
-        //         'id' => 1,
-        //         'title' => 'ICT Equipment Sales',
-        //         'slug' => 'ict-equipment-sales',
-        //         'description' => 'Premium laptops, desktops, and accessories from trusted brands',
-        //         'icon' => 'shopping-cart',
-        //         'features' => [
-        //             'Wide selection of hardware',
-        //             'Competitive pricing',
-        //             'Warranty support'
-        //         ],
-        //         'brands' => ['Lenovo', 'HP', 'Dell'],
-        //         'image' => 'http://192.168.1.141:3000/placeholder.svg?height=300&width=400',
-        //         'status' => 'active'
-        //     ],
-
-        // ];
-
         $processSteps = [
             [
                 'step' => '01',
@@ -78,10 +58,10 @@
                     </div>
                     <div class="relative">
                         <img
-                            src="{{ asset('placeholder.svg') }}?height=400&width=500"
+                            src="{{ asset('vendor/core/packages/theme/frontend/images/items.png') }}"
                             alt="ICT Services"
-                            class="rounded-2xl shadow-2xl w-full h-auto"
-                            style="height: 400px; width: 500px; object-fit: cover;"
+                            class="w-full h-auto"
+                            style="width: 650px; object-fit: cover;"
                         >
                     </div>
                 </div>
