@@ -6,10 +6,9 @@ $settings = $settings ?? [];
     $defaults = [
         'tagline' => 'Your trusted ICT solutions provider',
         'social_media' => [
-            'facebook' => '#',
-            'twitter' => '#',
-            'linkedin' => '#',
-            'instagram' => '#',
+            'facebook' => 'https://www.facebook.com/jobarnstore',
+            'twitter' => 'https://twitter.com/jobarnstore',
+            'instagram' => 'https://www.instagram.com/jobarnstore',
         ],
         'address' => 'Survey Complex, Ground Floor, Near Milimani City, Dar es Salaam',
         'phone_primary' => '0784 847946',
@@ -28,7 +27,7 @@ $settings = $settings ?? [];
             <div class="space-y-4">
                 <div class="flex items-center space-x-2">
                     <img
-                        src="{{ asset('images/logo/logo.png') }}"
+                        src="{{ asset('vendor/core/packages/theme/frontend/images/logo-white.png') }}"
                         alt="Jobarn Logo"
                         class="h-8 w-auto"
                         width="200"
@@ -36,6 +35,8 @@ $settings = $settings ?? [];
                     >
                 </div>
                 <p class="text-gray-300 text-sm">{{ $settings['tagline'] }}</p>
+                <span></span>
+                <p class="text-gray-300 text-sm">Empowering businesses with innovative ICT solutions. Reliable, scalable, and future-ready technology services.</p>
                 <div class="flex space-x-4">
                     <a
                         href="{{ $settings['social_media']['facebook'] }}"
@@ -52,14 +53,6 @@ $settings = $settings ?? [];
                         class="text-gray-400 hover:text-jobarn-accent2 transition-colors"
                     >
                         <i data-lucide="twitter" class="h-5 w-5"></i>
-                    </a>
-                    <a
-                        href="{{ $settings['social_media']['linkedin'] }}"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="text-gray-400 hover:text-jobarn-accent2 transition-colors"
-                    >
-                        <i data-lucide="linkedin" class="h-5 w-5"></i>
                     </a>
                     <a
                         href="{{ $settings['social_media']['instagram'] }}"
