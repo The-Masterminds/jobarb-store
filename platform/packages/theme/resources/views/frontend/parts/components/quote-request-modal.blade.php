@@ -6,7 +6,7 @@
 
 <div x-data="{
     isOpen: @js($isOpen),
-    
+
 }" x-show="isOpen" class="fixed inset-0 z-50 overflow-y-auto">
     <div class="fixed inset-0 bg-black/50" @click="handleClose"></div>
 
@@ -93,7 +93,7 @@
 
                 <div class="space-y-2">
                     <label for="message" class="block">Message *</label>
-                    <textarea
+                    <x-textarea
                         id="message"
                         x-model="formData.message"
                         @input="handleInputChange('message', $event.target.value)"
@@ -101,7 +101,7 @@
                         rows="4"
                         required
                         class="w-full px-3 py-2 border rounded"
-                    ></textarea>
+                    ></x-textarea>
                 </div>
 
                 <button

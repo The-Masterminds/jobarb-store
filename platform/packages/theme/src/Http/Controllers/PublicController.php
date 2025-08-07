@@ -367,8 +367,9 @@ class PublicController extends BaseController
 
     public function getContact()
     {
+        $googleMapsApiKey = env('GOOGLE_MAPS_API_KEY');
 
-        return view('packages/theme::frontend.pages.contact');
+        return view('packages/theme::frontend.pages.contact', compact('googleMapsApiKey'));
     }
 
     public function getBlog()
