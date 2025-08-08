@@ -112,4 +112,4 @@
 </header>
 
 <!-- Quote Request Modal -->
-<x-quote-request-modal :isOpen="false" />
+{{-- <x-quote-request-modal :isOpen="false" /> --}}

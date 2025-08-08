@@ -377,7 +377,7 @@ class PublicController extends BaseController
         return view('packages/theme::frontend.pages.blog');
     }
 
-    public function getProducts(Request $request)
+    public function getProductsFrontEnd(Request $request)
     {
         $query = collect([
             [

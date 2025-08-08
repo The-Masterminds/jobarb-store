@@ -211,11 +211,11 @@
 @push('js')
 <script>
 
-    window.googleMapsApiKey = "{{ env('GOOGLE_MAPS_API_KEY') }}";
+window.googleMapsApiKey = "{{ env('GOOGLE_MAPS_API_KEY') }}";
 
 function initMap() {
     // Coordinates for Survey Complex, Dar es Salaam
-    const location = { lat: -6.768315, lng: 39.217643};
+    const location = { lat: -6.768339, lng: 39.217601};
 
     // Create the map
     const map = new google.maps.Map(document.getElementById('map-container'), {

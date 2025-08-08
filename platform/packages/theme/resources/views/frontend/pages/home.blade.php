@@ -171,8 +171,8 @@
                         <div class="space-y-4">
                             <h2 class="text-3xl lg:text-4xl font-bold text-gray-900">Your Trusted ICT Partner in Tanzania
                             </h2>
-                            <p class="text-lg text-gray-600">
-                                Founded in 2024, JOBARN GENERAL TRADING COMPANY LTD has quickly established itself as a
+                            <p class="text-gray-600">
+                                Founded in 2024, <span class="text-lg t"> JOBARN GENERAL TRADING COMPANY LTD</span> has quickly established itself as a
                                 leading
                                 provider of ICT solutions in Tanzania. We specialize in delivering comprehensive technology
                                 services
@@ -189,7 +189,7 @@
                         </x-button>
                     </div>
                     <div class="relative">
-                        <img src="http://192.168.1.141:3000/img/comp-network.png" alt="JOBARN About"
+                        <img src="http://192.168.0.44:3000/img/comp-network.png" alt="JOBARN About"
                             class="rounded-2xl shadow-lg w-full h-auto"
                             style="height: 400px; width: 500px; object-fit: cover;">
                     </div>
