@@ -320,7 +320,7 @@ class PublicController extends BaseController
 
         $slug = SlugHelper::getSlug($key, $prefix);
 
-        dd($key);
+        // dd($key);
 
         abort_unless($slug, 404);
 
