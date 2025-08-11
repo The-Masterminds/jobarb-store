@@ -26,7 +26,7 @@ const config: Config = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#758cbc",
+          DEFAULT: "#7402ee",
           foreground: "#ffffff",
         },
         secondary: {
@@ -55,7 +55,7 @@ const config: Config = {
         },
         jobarn: {
           primary: "#293899",
-          accent1: "#5aafe2",
+          accent1: "#7402ee",
           accent2: "#7046a4",
         },
       },
