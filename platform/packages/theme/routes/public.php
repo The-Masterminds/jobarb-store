@@ -18,7 +18,7 @@ Theme::registerRoutes(function (): void {
         Route::get('/', 'getIndex')->name('public.index');
         Route::get('about-us', 'getAbout')->name('public.about');
         Route::get('services', 'getServices')->name('public.services');
-        Route::get('blog', 'getBlog')->name('public.blog');
+        // Route::get('blog', 'getBlog')->name('public.blog');
         Route::get('contact-us', 'getContact')->name('public.contact');
         Route::get('clients', 'getClients')->name('public.clients');
         Route::get('products', 'getProductsFrontEnd')->name('public.products');

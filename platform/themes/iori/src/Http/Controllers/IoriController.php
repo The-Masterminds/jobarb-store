@@ -92,8 +92,9 @@ class IoriController extends PublicController
                 ->render(),
         ];
 
+        // Changed data to be returned as a response 
         return $response
-            ->setData(view($view, compact('products', 'layout'))->render())
+            ->setData($products)
             ->setAdditional($additional)
             ->setMessage($message);
     }
