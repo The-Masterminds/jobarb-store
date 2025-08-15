@@ -89,10 +89,10 @@
                     </div>
                     <div class="relative">
                         <img
-                            src="{{ asset('vendor/core/packages/theme/frontend/images/network.png') }}"
+                            src="{{ asset('vendor/core/packages/theme/frontend/images/who-we-are.jpg') }}"
                             alt="ICT Solutions"
-                            class="w-full h-auto"
-                            style="height: 512px; width: 512px; object-fit: cover;"
+                            class="rounded-2xl shadow-lg w-full h-auto"
+                            style="height: 512px; object-fit: cover;"
                         >
                     </div>
                 </div>
@@ -167,11 +167,11 @@
                 </p>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
                     <div class="text-center space-y-2">
-                        <div class="text-3xl font-bold">100+</div>
+                        <div class="text-3xl font-bold">50+</div>
                         <div class="text-white/80">Projects Delivered</div>
                     </div>
                     <div class="text-center space-y-2">
-                        <div class="text-3xl font-bold">50+</div>
+                        <div class="text-3xl font-bold">200+</div>
                         <div class="text-white/80">Happy Clients</div>
                     </div>
                     <div class="text-center space-y-2">

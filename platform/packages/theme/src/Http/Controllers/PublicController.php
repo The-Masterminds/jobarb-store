@@ -42,7 +42,127 @@ class PublicController extends BaseController
         // return Theme::scope('index')->render();
         // return "page";
 
-        return view('packages/theme::frontend.pages.home');
+        $services = [
+            [
+                'icon' => 'shopping-cart',
+                'title' => 'ICT Equipment Sales',
+                'description' => 'Premium laptops, desktops, and accessories from trusted brands',
+                'image' => '/img/ict-equipments.jpg',
+            ],
+            [
+                'icon' => 'network',
+                'title' => 'Network Infrastructure',
+                'description' => 'Complete networking solutions and server installations',
+                'image' => '/placeholder.svg?height=200&width=300',
+            ],
+            [
+                'icon' => 'shield',
+                'title' => 'CCTV & Security',
+                'description' => 'Advanced surveillance systems and cybersecurity solutions',
+                'image' => '/placeholder.svg?height=200&width=300',
+            ],
+            [
+                'icon' => 'code',
+                'title' => 'Software Development',
+                'description' => 'Custom software solutions and licensing services',
+                'image' => '/placeholder.svg?height=200&width=300',
+            ],
+            [
+                'icon' => 'headset',
+                'title' => 'Technical Support',
+                'description' => '24/7 maintenance and technical assistance',
+                'image' => '/placeholder.svg?height=200&width=300',
+            ],
+        ];
+
+        $products = [
+            [
+                'title' => 'Laptops & Desktops',
+                'description' => 'High-performance computers for business and personal use',
+                'image' => 'vendor/core/packages/theme/frontend/images/products/laptops-and-desktops.png',
+            ],
+            [
+                'title' => 'Networking Equipment',
+                'description' => 'Routers, switches, and UPS systems for reliable connectivity',
+                'image' => 'vendor/core/packages/theme/frontend/images/products/router-and-switches.png',
+            ],
+            [
+                'title' => 'CCTV Systems',
+                'description' => 'Advanced surveillance cameras and monitoring solutions',
+                'image' => 'vendor/core/packages/theme/frontend/images/products/cameras.png',
+            ],
+            [
+                'title' => 'Audio Equipment',
+                'description' => 'Professional headphones, microphones, and sound systems',
+                'image' => 'vendor/core/packages/theme/frontend/images/products/audio.png',
+            ],
+            [
+                'title' => 'Storage Solutions',
+                'description' => 'Reliable data storage and backup systems',
+                'image' => 'vendor/core/packages/theme/frontend/images/products/storage.png',
+            ],
+            [
+                'title' => 'Interactive Displays',
+                'description' => 'Smart whiteboards and projectors for modern workspaces',
+                'image' => 'vendor/core/packages/theme/frontend/images/products/advanced-interactive-display.png',
+            ],
+        ];
+
+        $whyChooseUs = [
+            [
+                'icon' => 'award',
+                'title' => 'Certified Team',
+                'description' => 'Expert technicians with industry certifications',
+            ],
+            [
+                'icon' => 'users',
+                'title' => 'Trusted Brands',
+                'description' => 'Authorized partners with leading technology companies',
+            ],
+            [
+                'icon' => 'clock',
+                'title' => '24/7 Support',
+                'description' => 'Round-the-clock technical assistance and maintenance',
+            ],
+            [
+                'icon' => 'check-circle',
+                'title' => 'Quality Assurance',
+                'description' => 'Rigorous testing and quality control processes',
+            ],
+        ];
+
+        $testimonials = [
+            [
+                'name' => 'Mr. Paul Mgata',
+                'company' => 'Starlink Gulf Limited',
+                'content' => 'Thanks to JOBARN, their expertise and dedication have enabled us to streamline operations and enhance patient care.',
+                'rating' => 4.5,
+            ],
+            [
+                'name' => 'Neema Changamike',
+                'company' => 'Wetcu Limited',
+                'content' =>
+                    'Excellent service and support. Their team helped us implement a complete ICT solution that improved our operations significantly.',
+                'rating' => 5,
+            ],
+            [
+                'name' => 'Respichius D. Mitti',
+                'company' => 'EDI Global',
+                'content' =>
+                    'Professional, reliable, and knowledgeable. JOBARN is our go-to partner for all technology needs.',
+                'rating' => 5,
+            ],
+        ];
+
+        $partners = ['Microsoft', 'Lenovo', 'CISCO', 'TP-Link', 'Dell', 'SOPHOS', 'Kaspersky', 'Apple'];
+
+        return view('packages/theme::frontend.pages.home', compact(
+            'services',
+            'products',
+            'whyChooseUs',
+            'testimonials',
+            'partners'
+        ));
     }
 
     public function getAbout()
@@ -158,7 +278,7 @@ class PublicController extends BaseController
     {
         $clients = [
             [
-                'name' => "DEFM",
+                'name' => "DERM",
                 'industry' => "Defense & Military",
                 'logo' => "/vendor/core/packages/theme/frontend/images/partners/images.png",
                 'description' => "Comprehensive ICT infrastructure and security solutions",
@@ -246,57 +366,22 @@ class PublicController extends BaseController
             ],
         ];
 
-        $testimonials = [
-            [
-                'name' => "Dr. Sarah Mwalimu",
-                'position' => "Chief Medical Officer",
-                'company' => "SALAMI HOSPITAL",
-                'content' => "JOBARN transformed our hospital's IT infrastructure completely. Their CCTV installation and network setup exceeded our expectations. The team was professional, knowledgeable, and delivered on time. Our operations have become much more efficient.",
-                'rating' => 5,
-                'image' => "/placeholder.svg?height=80&width=80",
-            ],
-            [
-                'name' => "James Kikwete",
-                'position' => "Operations Manager",
-                'company' => "Simba Cargo",
-                'content' => "Excellent service and support from JOBARN. They helped us implement a complete ICT solution that improved our logistics operations significantly. Their 24/7 support ensures our systems are always running smoothly.",
-                'rating' => 5,
-                'image' => "/placeholder.svg?height=80&width=80",
-            ],
-            [
-                'name' => "Amina Hassan",
-                'position' => "IT Director",
-                'company' => "SWEETSHAPES",
-                'content' => "Professional, reliable, and knowledgeable. JOBARN is our go-to partner for all technology needs. They understand our business requirements and always provide solutions that work perfectly for us.",
-                'rating' => 5,
-                'image' => "/placeholder.svg?height=80&width=80",
-            ],
-            [
-                'name' => "Colonel Michael Mwanza",
-                'position' => "IT Security Chief",
-                'company' => "DEFM",
-                'content' => "JOBARN's cybersecurity solutions have significantly enhanced our security posture. Their team's expertise in implementing enterprise-grade security systems is exceptional. Highly recommended for critical infrastructure projects.",
-                'rating' => 5,
-                'image' => "/placeholder.svg?height=80&width=80",
-            ],
-        ];
-
         $stats = [
             [
                 'icon' => 'Building',
-                'number' => "50+",
+                'number' => "200+",
                 'label' => "Happy Clients",
                 'description' => "Businesses trust us with their ICT needs",
             ],
             [
                 'icon' => 'Users',
-                'number' => "100+",
+                'number' => "50+",
                 'label' => "Projects Completed",
                 'description' => "Successful implementations across Tanzania",
             ],
             [
                 'icon' => 'Award',
-                'number' => "8+",
+                'number' => "10+",
                 'label' => "Technology Partners",
                 'description' => "Partnerships with leading global brands",
             ],
@@ -374,7 +459,112 @@ class PublicController extends BaseController
 
     public function getBlog()
     {
-        return view('packages/theme::frontend.pages.blog');
+        $posts = [
+            [
+                'id' => 1,
+                'title' => 'The Future of ICT in Tanzania',
+                'slug' => 'future-of-ict-tanzania',
+                'author' => 'Jane Doe',
+                'excerpt' => 'Explore how ICT is transforming businesses and communities across Tanzania.',
+                'content' => '<p>Information and Communication Technology (ICT) is rapidly evolving in Tanzania, driving innovation and economic growth...</p>',
+                'featured_image' => '/images/blog/ict-future.jpg',
+                'published_at' => \Carbon\Carbon::parse('2024-07-01'),
+                'tags' => [
+                    (object)['name' => 'ICT'],
+                    (object)['name' => 'Tanzania'],
+                    (object)['name' => 'Innovation'],
+                ],
+            ],
+            [
+                'id' => 2,
+                'title' => '5 Cybersecurity Tips for Small Businesses',
+                'slug' => 'cybersecurity-tips-small-business',
+                'author' => 'John Smith',
+                'excerpt' => 'Protect your business from cyber threats with these essential tips.',
+                'content' => '<ul><li>Use strong passwords</li><li>Keep software updated</li><li>Train your staff</li></ul>',
+                'featured_image' => '/images/blog/cybersecurity-tips.jpg',
+                'published_at' => \Carbon\Carbon::parse('2024-06-15'),
+                'tags' => [
+                    (object)['name' => 'Cybersecurity'],
+                    (object)['name' => 'Small Business'],
+                ],
+            ],
+            [
+                'id' => 3,
+                'title' => 'Why Cloud Computing Matters',
+                'slug' => 'why-cloud-computing-matters',
+                'author' => 'Amina Hassan',
+                'excerpt' => 'Cloud computing is revolutionizing the way organizations operate.',
+                'content' => '<p>Cloud computing offers flexibility, scalability, and cost savings for businesses of all sizes...</p>',
+                'featured_image' => '/images/blog/cloud-computing.jpg',
+                'published_at' => \Carbon\Carbon::parse('2024-05-20'),
+                'tags' => [
+                    (object)['name' => 'Cloud'],
+                    (object)['name' => 'Business'],
+                ],
+            ],
+        ];
+
+        $posts = collect($posts);
+
+        return view('packages/theme::frontend.pages.blog.index', compact('posts'));
+    }
+
+    public function getBlogDetail(string $slug)
+    {
+        $posts = [
+            [
+                'id' => 1,
+                'title' => 'The Future of ICT in Tanzania',
+                'slug' => 'future-of-ict-tanzania',
+                'author' => 'Jane Doe',
+                'excerpt' => 'Explore how ICT is transforming businesses and communities across Tanzania.',
+                'content' => '<p>Information and Communication Technology (ICT) is rapidly evolving in Tanzania, driving innovation and economic growth...</p>',
+                'featured_image' => '/images/blog/ict-future.jpg',
+                'published_at' => \Carbon\Carbon::parse('2024-07-01'),
+                'tags' => [
+                    (object)['name' => 'ICT'],
+                    (object)['name' => 'Tanzania'],
+                    (object)['name' => 'Innovation'],
+                ],
+            ],
+            [
+                'id' => 2,
+                'title' => '5 Cybersecurity Tips for Small Businesses',
+                'slug' => 'cybersecurity-tips-small-business',
+                'author' => 'John Smith',
+                'excerpt' => 'Protect your business from cyber threats with these essential tips.',
+                'content' => '<ul><li>Use strong passwords</li><li>Keep software updated</li><li>Train your staff</li></ul>',
+                'featured_image' => '/images/blog/cybersecurity-tips.jpg',
+                'published_at' => \Carbon\Carbon::parse('2024-06-15'),
+                'tags' => [
+                    (object)['name' => 'Cybersecurity'],
+                    (object)['name' => 'Small Business'],
+                ],
+            ],
+            [
+                'id' => 3,
+                'title' => 'Why Cloud Computing Matters',
+                'slug' => 'why-cloud-computing-matters',
+                'author' => 'Amina Hassan',
+                'excerpt' => 'Cloud computing is revolutionizing the way organizations operate.',
+                'content' => '<p>Cloud computing offers flexibility, scalability, and cost savings for businesses of all sizes...</p>',
+                'featured_image' => '/images/blog/cloud-computing.jpg',
+                'published_at' => \Carbon\Carbon::parse('2024-05-20'),
+                'tags' => [
+                    (object)['name' => 'Cloud'],
+                    (object)['name' => 'Business'],
+                ],
+            ],
+        ];
+
+        $posts = collect($posts); // Use the array above
+        $post = $posts->firstWhere('slug', $slug);
+
+        // Calculate reading time (optional)
+        $readingTime = ceil(str_word_count(strip_tags($post['content'])) / 200);
+
+        return view('packages/theme::frontend.pages.blog.show', compact('blog', 'readingTime'));
     }
 
     public function getProductsFrontEnd(Request $request)

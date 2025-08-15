@@ -108,44 +108,6 @@
         </div>
     </section>
 
-    <!-- Testimonials -->
-    <section class="py-16 lg:py-24 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center space-y-4 mb-12">
-                <x-badge class="bg-jobarn-accent1 text-white">Client Testimonials</x-badge>
-                <h2 class="text-3xl lg:text-4xl font-bold text-gray-900">What Our Clients Say About Us</h2>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                @foreach($testimonials as $testimonial)
-                    <x-card class="border-0 shadow-lg">
-                        <x-card.content class="p-8 space-y-6">
-                            <i data-lucide="quote" class="h-8 w-8 text-jobarn-primary/20"></i>
-                            <p class="text-gray-600 italic text-lg leading-relaxed">"{{ $testimonial['content'] }}"</p>
-                            <div class="flex items-center space-x-1 mb-4">
-                                @for($i = 0; $i < $testimonial['rating']; $i++)
-                                    <i data-lucide="star" class="h-5 w-5 fill-yellow-400 text-yellow-400"></i>
-                                @endfor
-                            </div>
-                            <div class="flex items-center space-x-4">
-                                <img
-                                    src="{{ asset('vendor/core/packages/theme/frontend/images/person.png') }}"
-                                    alt="{{ $testimonial['name'] }}"
-                                    class="rounded-full object-cover w-15 h-15" style="height: 60px; width: 60px;"
-                                >
-                                <div>
-                                    <p class="font-semibold text-gray-900">{{ $testimonial['name'] }}</p>
-                                    <p class="text-sm text-gray-600">{{ $testimonial['position'] }}</p>
-                                    <p class="text-sm font-medium text-jobarn-primary">{{ $testimonial['company'] }}</p>
-                                </div>
-                            </div>
-                        </x-card.content>
-                    </x-card>
-                @endforeach
-            </div>
-        </div>
-    </section>
-
     <!-- CTA Section -->
     <section class="py-16 lg:py-24 bg-gradient-to-r from-jobarn-primary to-jobarn-accent2 text-white">
         <div class="container mx-auto px-4 text-center space-y-8">

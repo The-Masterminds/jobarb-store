@@ -1,122 +1,6 @@
 @extends('packages/theme::frontend.master')
 
 @section('content')
-    @php
-
-        $services = [
-            [
-                'icon' => 'shopping-cart',
-                'title' => 'ICT Equipment Sales',
-                'description' => 'Premium laptops, desktops, and accessories from trusted brands',
-                'image' => '/img/ict-equipments.jpg',
-            ],
-            [
-                'icon' => 'network',
-                'title' => 'Network Infrastructure',
-                'description' => 'Complete networking solutions and server installations',
-                'image' => '/placeholder.svg?height=200&width=300',
-            ],
-            [
-                'icon' => 'shield',
-                'title' => 'CCTV & Security',
-                'description' => 'Advanced surveillance systems and cybersecurity solutions',
-                'image' => '/placeholder.svg?height=200&width=300',
-            ],
-            [
-                'icon' => 'code',
-                'title' => 'Software Development',
-                'description' => 'Custom software solutions and licensing services',
-                'image' => '/placeholder.svg?height=200&width=300',
-            ],
-            [
-                'icon' => 'headphone',
-                'title' => 'Technical Support',
-                'description' => '24/7 maintenance and technical assistance',
-                'image' => '/placeholder.svg?height=200&width=300',
-            ],
-        ];
-
-        $products = [
-            [
-                'title' => 'Laptops & Desktops',
-                'description' => 'High-performance computers for business and personal use',
-                'image' => 'http://192.168.1.141:3000/placeholder.svg?height=200&width=300',
-            ],
-            [
-                'title' => 'Networking Equipment',
-                'description' => 'Routers, switches, and UPS systems for reliable connectivity',
-                'image' => 'http://192.168.1.141:3000/placeholder.svg?height=200&width=300',
-            ],
-            [
-                'title' => 'CCTV Systems',
-                'description' => 'Advanced surveillance cameras and monitoring solutions',
-                'image' => 'http://192.168.1.141:3000/placeholder.svg?height=200&width=300',
-            ],
-            [
-                'title' => 'Audio Equipment',
-                'description' => 'Professional headphones, microphones, and sound systems',
-                'image' => 'http://192.168.1.141:3000/placeholder.svg?height=200&width=300',
-            ],
-            [
-                'title' => 'Storage Solutions',
-                'description' => 'Reliable data storage and backup systems',
-                'image' => 'http://192.168.1.141:3000/placeholder.svg?height=200&width=300',
-            ],
-            [
-                'title' => 'Interactive Displays',
-                'description' => 'Smart whiteboards and projectors for modern workspaces',
-                'image' => 'http://192.168.1.141:3000/placeholder.svg?height=200&width=300',
-            ],
-        ];
-
-        $whyChooseUs = [
-            [
-                'icon' => 'award',
-                'title' => 'Certified Team',
-                'description' => 'Expert technicians with industry certifications',
-            ],
-            [
-                'icon' => 'users',
-                'title' => 'Trusted Brands',
-                'description' => 'Authorized partners with leading technology companies',
-            ],
-            [
-                'icon' => 'clock',
-                'title' => '24/7 Support',
-                'description' => 'Round-the-clock technical assistance and maintenance',
-            ],
-            [
-                'icon' => 'check-circle',
-                'title' => 'Quality Assurance',
-                'description' => 'Rigorous testing and quality control processes',
-            ],
-        ];
-
-        $testimonials = [
-            [
-                'name' => 'Dr. Sarah Mwalimu',
-                'company' => 'SALAMI HOSPITAL',
-                'content' => "JOBARN transformed our hospital's IT infrastructure...",
-                'rating' => 5,
-            ],
-            [
-                'name' => 'James Kikwete',
-                'company' => 'Simba Cargo',
-                'content' =>
-                    'Excellent service and support. Their team helped us implement a complete ICT solution that improved our operations significantly.',
-                'rating' => 5,
-            ],
-            [
-                'name' => 'Amina Hassan',
-                'company' => 'SWEETSHAPES',
-                'content' =>
-                    'Professional, reliable, and knowledgeable. JOBARN is our go-to partner for all technology needs.',
-                'rating' => 5,
-            ],
-        ];
-
-        $partners = ['Microsoft', 'Lenovo', 'CISCO', 'TP-Link', 'Dell', 'SOPHOS', 'Kaspersky', 'Apple'];
-    @endphp
 
     <div class="min-h-screen">
         <!-- Hero Section -->
@@ -189,9 +73,9 @@
                         </x-button>
                     </div>
                     <div class="relative">
-                        <img src="http://192.168.0.44:3000/img/comp-network.png" alt="JOBARN About"
+                        <img src="{{ asset('vendor/core/packages/theme/frontend/images/about-us-1.png') }}" alt="JOBARN About"
                             class="rounded-2xl shadow-lg w-full h-auto"
-                            style="height: 400px; width: 500px; object-fit: cover;">
+                            style="height: 512px; object-fit: cover;">
                     </div>
                 </div>
             </div>
@@ -226,7 +110,7 @@
             </div>
         </section>
 
-        <!-- Product Highlights -->
+        <!-- <ct Highlights -->
         <section class="py-16 lg:py-24 bg-gray-50">
             <div class="container mx-auto px-4">
                 <div class="text-center space-y-4 mb-12">
@@ -338,12 +222,12 @@
                     Ready to transform your business with innovative ICT solutions? Get in touch with our experts today.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <x-button as="a" href="/contact" size="lg"
-                        class="bg-white text-jobarn-primary hover:bg-gray-100">
+                    <x-button as="a" href="/contact-us" size="lg"
+                        class="bg-white text-jobarn-primary get-started-cta hover:bg-gray-100">
                         Get Started Today
                     </x-button>
                     <x-button as="a" href="/services" size="lg" variant="outline"
-                        class="border-white text-white hover:bg-white hover:text-jobarn-primary bg-transparent">
+                        class="border-white text-white hover:bg-white hover:text-jobarn-primary services-cta bg-transparent">
                         View All Services
                     </x-button>
                 </div>
@@ -370,6 +254,18 @@
         document.querySelectorAll('.home-about-button').forEach(button => {
             button.addEventListener('click', () => {
                 window.location.href = `/about-us`;
+            });
+        });
+
+        document.querySelectorAll('.get-started-cta').forEach(button => {
+            button.addEventListener('click', () => {
+                window.location.href = `/contact-us`;
+            });
+        });
+
+        document.querySelectorAll('.services-cta').forEach(button => {
+            button.addEventListener('click', () => {
+                window.location.href = `/services`;
             });
         });
     </script>

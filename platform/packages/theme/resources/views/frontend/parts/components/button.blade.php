@@ -10,7 +10,6 @@
     // Use the correct facade from gehrisandro's package
     use TailwindMerge\TailwindMerge;
 
-    // Initialize the merger (configurable via config/tailwind-merge.php)
     $twMerge = TailwindMerge::instance();
 
     // Base classes

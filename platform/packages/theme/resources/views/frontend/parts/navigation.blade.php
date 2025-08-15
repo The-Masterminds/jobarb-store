@@ -20,9 +20,9 @@
             <div class="flex items-center space-x-4">
                 <div class="flex items-center space-x-1">
                     <i data-lucide="phone" class="h-3 w-3"></i>
-                    <a href="tel:{{ $settings['phone_primary'] ?? '+255784847946' }}" class="text-white hover:underline">
+                    <a href="tel:{{ $settings['phone_primary'] ?? '+255 784 837 946' }}" class="text-white hover:underline">
                         <span>
-                            {{ $settings['phone_primary'] ?? '+255 784 847 946' }}
+                            {{ $settings['phone_primary'] ?? '+255 784 837 946' }}
                         </span>
                     </a> <span class="md:inline">|</span>
                     <i data-lucide="message-circle" class="h-3 w-3"></i>

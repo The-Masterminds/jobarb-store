@@ -11,8 +11,8 @@ $settings = $settings ?? [];
             'instagram' => 'https://www.instagram.com/jobarnstore',
         ],
         'address' => 'Survey Complex, Ground Floor, Near Milimani City, Dar es Salaam',
-        'phone_primary' => '0784 847946',
-        'phone_secondary' => '0745 912000',
+        'phone_primary' => '+255 784 837 946',
+        'phone_secondary' => '+255 745 912 000',
         'email_primary' => 'info@jobarn.co.tz',
         'company_name' => 'JOBARN',
     ];

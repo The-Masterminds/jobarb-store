@@ -127,19 +127,19 @@
                                 [
                                     'icon' => 'phone',
                                     'title' => 'Phone Numbers',
-                                    'details' => ['+255 784 847 946', '+255 745 912 000']
+                                    'details' => ['+255 784 837 946', '+255 745 912 000']
                                 ],
                                 [
                                     'icon' => 'mail',
                                     'title' => 'Email Address',
-                                    'details' => ['info@jobarn.co.tz', 'support@jobarn.co.tz']
+                                    'details' => ['info@jobarn.co.tz']
                                 ],
                                 [
                                     'icon' => 'clock',
                                     'title' => 'Business Hours',
                                     'details' => [
-                                        'Monday - Friday: 8:00 AM - 2:00 PM',
-                                        'Saturday: 9:00 AM - 2:00 PM',
+                                        'Monday - Friday: 8:00 AM - 8:00 PM',
+                                        'Saturday: 9:00 AM - 8:00 PM',
                                         'Sunday: Closed'
                                     ]
                                 ]
