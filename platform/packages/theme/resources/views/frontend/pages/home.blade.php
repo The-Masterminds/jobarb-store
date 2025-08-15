@@ -132,7 +132,7 @@
                                 <h3 class="text-xl font-semibold text-gray-900">{{ $product['title'] }}</h3>
                                 <p class="text-gray-600">{{ $product['description'] }}</p>
                                 <x-button as="a" href="/products" variant="outline"
-                                    class="w-full border-jobarn-primary text-jobarn-primary hover:bg-jobarn-primary hover:text-white bg-transparent">
+                                    class="w-full border-jobarn-primary home-products text-jobarn-primary hover:bg-jobarn-primary hover:text-white bg-transparent">
                                     View Products
                                 </x-button>
                             </x-card.content>
@@ -266,6 +266,12 @@
         document.querySelectorAll('.services-cta').forEach(button => {
             button.addEventListener('click', () => {
                 window.location.href = `/services`;
+            });
+        });
+
+        document.querySelectorAll('.home-products').forEach(button => {
+            button.addEventListener('click', () => {
+                window.location.href = `/products`;
             });
         });
     </script>

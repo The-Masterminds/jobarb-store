@@ -278,40 +278,40 @@ class PublicController extends BaseController
     {
         $clients = [
             [
-                'name' => "DERM",
-                'industry' => "Defense & Military",
-                'logo' => "/vendor/core/packages/theme/frontend/images/partners/images.png",
+                'name' => "Derm Group",
+                'industry' => "Engineering Solutions",
+                'logo' => "/vendor/core/packages/theme/frontend/images/clients/derm-group.png",
                 'description' => "Comprehensive ICT infrastructure and security solutions",
             ],
             [
-                'name' => "SALAMI HOSPITAL",
+                'name' => "SAKAMU HOSPITAL",
                 'industry' => "Healthcare",
-                'logo' => "/vendor/core/packages/theme/frontend/images/partners/images.png",
+                'logo' => "/vendor/core/packages/theme/frontend/images/clients/sakamu.png",
                 'description' => "Complete hospital management system and CCTV installation",
             ],
             [
+                'name' => "EDI Global",
+                'industry' => "MERL Services",
+                'logo' => "/vendor/core/packages/theme/frontend/images/clients/edi-global.svg",
+                'description' => "Complete hospital management system and CCTV installation",
+            ],
+            [
+                'name' => "Imagine Worldwide Tanzania",
+                'industry' => "Kids Come First",
+                'logo' => "/vendor/core/packages/theme/frontend/images/clients/imagine-worldwide.png",
+                'description' => "Providing Children with the opportunity for success",
+            ],
+            [
                 'name' => "Simba Cargo",
-                'industry' => "Logistics & Transportation",
-                'logo' => "/vendor/core/packages/theme/frontend/images/partners/images.png",
-                'description' => "Fleet management system and network infrastructure",
+                'industry' => "Cargo Transportation",
+                'logo' => "/vendor/core/packages/theme/frontend/images/clients/simba-cargo.png",
+                'description' => "A Clearing & Logistic Company, From China and Dubai to Tanzania",
             ],
             [
-                'name' => "SWEETSHAPES",
-                'industry' => "Food & Beverage",
-                'logo' => "/vendor/core/packages/theme/frontend/images/partners/images.png",
-                'description' => "Point of sale systems and inventory management",
-            ],
-            [
-                'name' => "Tanzania Railways",
-                'industry' => "Transportation",
-                'logo' => "/vendor/core/packages/theme/frontend/images/partners/images.png",
-                'description' => "Communication systems and network infrastructure",
-            ],
-            [
-                'name' => "Dar es Salaam Port",
-                'industry' => "Maritime & Logistics",
-                'logo' => "/vendor/core/packages/theme/frontend/images/partners/images.png",
-                'description' => "Security systems and cargo management solutions",
+                'name' => "Magic Builders International",
+                'industry' => "Building Material ",
+                'logo' => "/vendor/core/packages/theme/frontend/images/clients/magic-builders.png",
+                'description' => "Building materials supplier in Dar es Salaam",
             ]
         ];
 
@@ -393,7 +393,7 @@ class PublicController extends BaseController
             ],
         ];
 
-        return view('packages/theme::frontend.pages.clients', compact('clients', 'partners', 'testimonials', 'stats'));
+        return view('packages/theme::frontend.pages.clients', compact('clients', 'partners', 'stats'));
     }
 
 
