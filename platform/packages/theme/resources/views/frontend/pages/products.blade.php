@@ -28,7 +28,7 @@
                         <i data-lucide="filter" class="h-4 w-4 text-gray-600"></i>
                         <select id="category-select"
                             class="flex h-10 w-[200px] items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
-                            @foreach ([['id' => 'all', 'name' => 'Select category'], ['id' => 'laptops', 'name' => 'Laptops & Desktops'], ['id' => 'networking', 'name' => 'Networking Equipment'], ['id' => 'cctv', 'name' => 'CCTV & Surveillance'], ['id' => 'audio', 'name' => 'Audio Equipment'], ['id' => 'interactive', 'name' => 'Interactive Displays'], ['id' => 'printers', 'name' => 'Printers & Projectors'], ['id' => 'accessories', 'name' => 'Computer Accessories'], ['id' => 'drones', 'name' => 'Drones & Cameras']] as $category)
+                            @foreach ($categories as $category)
                                 <option value="{{ $category['id'] }}">{{ $category['name'] }}</option>
                             @endforeach
                         </select>
@@ -163,7 +163,6 @@
 
                     console.log('Fetched products:', data.data.data);
 
-
                     if (!data.error && data.data.data.length > 0) {
                         renderProducts(data.data.data);
                     } else {
@@ -174,7 +173,7 @@
                     `;
                     }
 
-                    productCount.textContent = `Showing ${data.data.length} products`;
+                    productCount.textContent = `Showing ${data.data.data.length} products`;
                 } catch (error) {
                     console.error(error);
                     productsGrid.innerHTML = `
@@ -196,20 +195,19 @@
 
                 products.forEach(product => {
                     const productCard = document.createElement('div');
-                    productCard.className =
-                        'group hover:shadow-xl transition-all duration-300 overflow-hidden rounded-lg border';
-                                        productCard.innerHTML = `
+                    productCard.className = 'group hover:shadow-xl transition-all duration-300 overflow-hidden rounded-lg border';
+                    productCard.innerHTML = `
                         <div class="flex flex-col h-full">
                             <div class="relative h-48 overflow-hidden">
                                 <img src="/storage/${product.image || 'placeholder.svg'}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                                ${product.product_collections && product.product_collections.length > 0 ? `
-                                    <x-badge class="absolute top-2 left-2 bg-jobarn-primary text-white text-xs">
-                                        ${product.product_collections.map(c => c.name).join(', ')}
+                                <div class="absolute top-2 left-2 right-2 flex justify-between items-start gap-2 pointer-events-none">
+                                    <x-badge class="bg-jobarn-primary text-white text-xs pointer-events-auto">
+                                        ${product.product_collections && product.product_collections.length > 0 ? product.product_collections.map(c => c.name).join(', ') : ''}
                                     </x-badge>
-                                ` : ''}
-                                <x-badge class="absolute top-2 right-2 bg-gray-900/80 text-white text-xs">
-                                    ${product.product_type?.label || ''}
-                                </x-badge>
+                                    <x-badge class="bg-gray-900/80 text-white text-xs pointer-events-auto">
+                                        ${product.product_type?.label || ''}
+                                    </x-badge>
+                                </div>
                             </div>
                             <div class="flex-1 flex flex-col p-6 space-y-4">
                                 <h3 class="text-lg font-semibold text-gray-900 line-clamp-2">${product.name}</h3>
@@ -261,6 +259,8 @@
                 if (window.lucide) {
                     lucide.createIcons();
                 }
+
+
             }
 
             // Open quote modal function

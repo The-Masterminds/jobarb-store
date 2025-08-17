@@ -92,7 +92,7 @@ class IoriController extends PublicController
                 ->render(),
         ];
 
-        // Changed data to be returned as a response 
+        // Changed data to be returned as a response
         return $response
             ->setData($products)
             ->setAdditional($additional)

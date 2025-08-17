@@ -142,14 +142,14 @@ class PublicController extends BaseController
                 'name' => 'Neema Changamike',
                 'company' => 'Wetcu Limited',
                 'content' =>
-                    'Excellent service and support. Their team helped us implement a complete ICT solution that improved our operations significantly.',
+                'Excellent service and support. Their team helped us implement a complete ICT solution that improved our operations significantly.',
                 'rating' => 5,
             ],
             [
                 'name' => 'Respichius D. Mitti',
                 'company' => 'EDI Global',
                 'content' =>
-                    'Professional, reliable, and knowledgeable. JOBARN is our go-to partner for all technology needs.',
+                'Professional, reliable, and knowledgeable. JOBARN is our go-to partner for all technology needs.',
                 'rating' => 5,
             ],
         ];
@@ -405,8 +405,6 @@ class PublicController extends BaseController
 
         $slug = SlugHelper::getSlug($key, $prefix);
 
-        // dd($key);
-
         abort_unless($slug, 404);
 
         if (
@@ -418,6 +416,7 @@ class PublicController extends BaseController
         }
 
         $result = apply_filters(BASE_FILTER_PUBLIC_SINGLE_DATA, $slug);
+
 
         $extension = SlugHelper::getPublicSingleEndingURL();
 
@@ -652,6 +651,18 @@ class PublicController extends BaseController
 
         ]);
 
+        $categories = [
+            ['id' => 'all', 'name' => 'Select category'],
+            ['id' => 'laptops', 'name' => 'Laptops & Desktops'],
+            ['id' => 'networking', 'name' => 'Networking Equipment'],
+            ['id' => 'cctv', 'name' => 'CCTV & Surveillance'],
+            ['id' => 'audio', 'name' => 'Audio Equipment'],
+            ['id' => 'interactive', 'name' => 'Interactive Displays'],
+            ['id' => 'printers', 'name' => 'Printers & Projectors'],
+            ['id' => 'accessories', 'name' => 'Computer Accessories'],
+            ['id' => 'drones', 'name' => 'Drones & Cameras']
+        ];
+
         $products = $query->sortByDesc('created_at')->values()->all();
 
         Log::info('Fetching products :: ' . json_encode($request->method()));
@@ -688,57 +699,17 @@ class PublicController extends BaseController
             $products = collect();
         }
 
-        return view('packages/theme::frontend.pages.products', compact('products'));
+        return view('packages/theme::frontend.pages.products', compact('products', 'categories'));
     }
 
     public function getProductDetail(string $slug)
     {
-        $product = [
-            'id' => 1,
-            'name' => "Ubiquiti UniFi Switch 24",
-            'slug' => "ubiquiti-unifi-switch-24",
-            'description' =>
-                "24-Port Managed Gigabit Switch with SFP. The UniFi Switch 24 is a fully managed, 24-port Gigabit switch that delivers robust performance and intelligent switching for growing networks. With its sleek design and advanced features, it's perfect for small to medium-sized businesses looking to expand their network infrastructure.",
-            'image' => "http://192.168.1.141:3000/placeholder.svg?height=250&width=350",
-            'category' => "Networking",
-            'brand' => "Ubiquiti",
-            'sku' => "UBNT-SW24",
-            'price_range' => "Contact for pricing",
-            'status' => "active",
-            'specifications' => [
-                ['label' => "Ports", 'value' => "24 Gigabit RJ45"],
-                ['label' => "Power Consumption", 'value' => "25W"],
-                ['label' => "Rackmountable", 'value' => "Yes"],
-                ['label' => "Switching Capacity", 'value' => "52 Gbps"],
-                ['label' => "Max Power Consumption", 'value' => "25W"],
-                ['label' => "Dimensions", 'value' => "442 x 285 x 43.7 mm"],
-                ['label' => "Weight", 'value' => "3.4 kg"],
-                ['label' => "Operating Temperature", 'value' => "-5 to 40° C"],
-                ['label' => "Operating Humidity", 'value' => "5 to 95% RH"],
-                ['label' => "Certifications", 'value' => "CE, FCC, IC"],
-            ],
-            'features' => [
-                "24 Gigabit RJ45 ports",
-                "2 SFP ports for fiber connectivity",
-                "Layer 2 switching protocols",
-                "VLAN support",
-                "Link aggregation",
-                "Spanning tree protocol",
-                "Quality of Service (QoS)",
-                "SNMP monitoring",
-                "Web-based management interface",
-                "UniFi Controller integration",
-            ],
-            'related_products' => [2, 3, 9], // IDs of related products
-            'created_at' => "2024-01-15T10:00:00Z",
-            'updated_at' => "2024-01-20T15:30:00Z",
-        ];
+        $slug = SlugHelper::getSlug($slug, 'products');
 
-        $product = collect($product);
+        $product = apply_filters(BASE_FILTER_PUBLIC_SINGLE_DATA, $slug);
+        $product = $product['data']['product'];
 
         return view('packages/theme::frontend.pages.product-detail', compact('product'));
-
-
     }
 
     public function getSiteMap()
@@ -764,5 +735,4 @@ class PublicController extends BaseController
     {
         return $this->getView($slug, $prefix);
     }
-
 }

@@ -1,44 +1,44 @@
 @extends('packages/theme::frontend.master')
 
-
 @section('content')
+
 <div class="min-h-screen">
-    <!-- Back Navigation -->
-    <section class="py-8 bg-gray-50 border-b">
-        <div class="container mx-auto px-4">
-            <x-button variant="ghost" class="mb-4" link="/products">
-                <i data-lucide="arrow-left" class="h-4 w-4 mr-2"></i>
-                Back to Products
-            </x-button>
-        </div>
-    </section>
 
     <!-- Product Details -->
     <section class="py-16 lg:py-24">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-                <!-- Product Image -->
-                <div class="space-y-4">
+
+                <!-- Product Image Gallery -->
+                <div
+                    x-data="{ mainImage: '/storage/{{ $product['images'][0] ?? '/placeholder.svg' }}' }"
+                    class="space-y-4"
+                >
+                    <!-- Main Image -->
                     <div class="relative aspect-square rounded-2xl overflow-hidden bg-gray-100">
-                        <img
-                            src="{{ $product['image'] ?? '/placeholder.svg' }}"
-                            alt="{{ $product['name'] }}"
-                            class="w-full h-full object-cover"
-                        >
+                        <img :src="mainImage"
+                             alt="{{ $product['name'] }}"
+                             class="w-full h-full object-cover transition duration-300" />
+                    </div>
+
+                    <!-- Thumbnail Carousel -->
+                    <div class="flex space-x-3 overflow-x-auto">
+                        @foreach($product['images'] as $img)
+                            <div class="w-20 h-20 rounded-lg overflow-hidden border border-gray-200 cursor-pointer hover:border-jobarn-primary"
+                                 @click="mainImage = '/storage/{{ $img }}'">
+                                <img src="/storage/{{ $img }}"
+                                     alt="Thumbnail {{ $loop->iteration }}"
+                                     class="w-full h-full object-cover" />
+                            </div>
+                        @endforeach
                     </div>
                 </div>
 
                 <!-- Product Information -->
                 <div class="space-y-8">
+
                     <!-- Header -->
                     <div class="space-y-4">
-                        <div class="flex flex-wrap items-center gap-3">
-                            <x-badge class="bg-jobarn-primary text-white">{{ $product['brand'] }}</x-badge>
-                            <x-badge variant="secondary" class="bg-jobarn-accent2/10 text-jobarn-accent2">
-                                {{ $product['category'] }}
-                            </x-badge>
-                        </div>
-
                         <h1 class="text-3xl lg:text-4xl font-bold text-gray-900">{{ $product['name'] }}</h1>
 
                         <div class="flex flex-wrap items-center gap-6 text-gray-600">
@@ -48,11 +48,11 @@
                             </div>
                             <div class="flex items-center space-x-2">
                                 <i data-lucide="package" class="h-4 w-4"></i>
-                                <span>{{ $product['category'] }}</span>
+                                <span>{{ $product->product_type->label() }}</span>
                             </div>
                             <div class="flex items-center space-x-2">
-                                <i data-lucide="building-2" class="h-4 w-4"></i>
-                                <span>{{ $product['brand'] }}</span>
+                                <i data-lucide="layers" class="h-4 w-4"></i>
+                                <span>Stock: {{ $product->stock_status->label() }}</span>
                             </div>
                         </div>
                     </div>
@@ -60,23 +60,17 @@
                     <!-- Description -->
                     <div class="space-y-4">
                         <h2 class="text-xl font-semibold text-gray-900">Product Description</h2>
-                        <p class="text-gray-600 leading-relaxed">{{ $product['description'] }}</p>
+                        <div class="text-gray-600 leading-relaxed">
+                            {!! $product['description'] !!}
+                        </div>
                     </div>
 
-                    <!-- Key Features -->
+                    <!-- Content / Extended Info -->
                     <div class="space-y-4">
-                        <h2 class="text-xl font-semibold text-gray-900">Key Features</h2>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            @foreach(array_slice($product['features'], 0, 6) as $feature)
-                                <div class="flex items-start space-x-2">
-                                    <div class="h-2 w-2 bg-jobarn-primary rounded-full mt-2 flex-shrink-0"></div>
-                                    <span class="text-gray-600 text-sm">{{ $feature }}</span>
-                                </div>
-                            @endforeach
+                        <h2 class="text-xl font-semibold text-gray-900">More Information</h2>
+                        <div class="prose max-w-none text-gray-600">
+                            {!! $product['content'] !!}
                         </div>
-                        @if(count($product['features']) > 6)
-                            <p class="text-sm text-gray-500">+{{ count($product['features']) - 6 }} more features</p>
-                        @endif
                     </div>
 
                     <!-- Price and CTA -->
@@ -85,7 +79,9 @@
                         <div class="space-y-4">
                             <div class="flex items-center space-x-2">
                                 <i data-lucide="tag" class="h-5 w-5 text-jobarn-primary"></i>
-                                <span class="text-lg font-semibold text-gray-900">Pricing: {{ $product['price_range'] }}</span>
+                                <span class="text-lg font-semibold text-gray-900">
+                                    Price: {{ $product['front_sale_price'] }} {{ config('app.currency', 'USD') }}
+                                </span>
                             </div>
                             <x-button
                                 size="lg"
@@ -103,6 +99,7 @@
     </section>
 
     <!-- Technical Specifications -->
+    @if(!empty($product['length']) || !empty($product['wide']) || !empty($product['height']) || !empty($product['weight']))
     <section class="py-16 lg:py-24 bg-gray-50">
         <div class="container mx-auto px-4">
             <div class="max-w-4xl mx-auto">
@@ -114,18 +111,37 @@
                 <x-card class="border-0 shadow-lg">
                     <x-card.content class="p-8">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            @foreach($product['specifications'] as $spec)
-                                <div class="flex justify-between items-center py-3 border-b border-gray-100 last:border-b-0">
-                                    <span class="font-medium text-gray-900">{{ $spec['label'] }}</span>
-                                    <span class="text-gray-600 text-right">{{ $spec['value'] }}</span>
+                            @if($product['length'])
+                                <div class="flex justify-between items-center py-3 border-b border-gray-100">
+                                    <span class="font-medium text-gray-900">Length</span>
+                                    <span class="text-gray-600">{{ $product['length'] }} cm</span>
                                 </div>
-                            @endforeach
+                            @endif
+                            @if($product['wide'])
+                                <div class="flex justify-between items-center py-3 border-b border-gray-100">
+                                    <span class="font-medium text-gray-900">Width</span>
+                                    <span class="text-gray-600">{{ $product['wide'] }} cm</span>
+                                </div>
+                            @endif
+                            @if($product['height'])
+                                <div class="flex justify-between items-center py-3 border-b border-gray-100">
+                                    <span class="font-medium text-gray-900">Height</span>
+                                    <span class="text-gray-600">{{ $product['height'] }} cm</span>
+                                </div>
+                            @endif
+                            @if($product['weight'])
+                                <div class="flex justify-between items-center py-3 border-b border-gray-100">
+                                    <span class="font-medium text-gray-900">Weight</span>
+                                    <span class="text-gray-600">{{ $product['weight'] }} g</span>
+                                </div>
+                            @endif
                         </div>
                     </x-card.content>
                 </x-card>
             </div>
         </div>
     </section>
+    @endif
 
     <!-- CTA Section -->
     <section class="py-16 lg:py-24 bg-gradient-to-r from-jobarn-primary to-jobarn-accent2 text-white">
@@ -145,8 +161,8 @@
                 <x-button
                     size="lg"
                     variant="outline"
-                    class="border-white text-white hover:bg-white hover:text-jobarn-primary bg-transparent"
-                    link="/contact"
+                    class="border-white text-white product-contact hover:bg-white hover:text-jobarn-primary bg-transparent"
+                    link="/contact-us" onclick="event.preventDefault(); window.location.href='/contact-us';"
                 >
                     Contact Our Experts
                 </x-button>
@@ -177,31 +193,43 @@
                             </button>
                         </div>
                         <div class="mt-2">
-                            <form id="quote-form">
+                            <form id="quote-form" novalidate>
                                 <div class="space-y-4">
                                     <div>
-                                        <x-label for="quote-name">Full Name *</x-label>
-                                        <x-input id="quote-name" name="name" required />
+                                        <x-label for="name">Full Name *</x-label>
+                                        <x-input id="name" name="name" required />
+                                        <div class="error" id="name-error"></div>
                                     </div>
                                     <div>
-                                        <x-label for="quote-email">Email *</x-label>
-                                        <x-input id="quote-email" type="email" name="email" required />
+                                        <x-label for="email">Email *</x-label>
+                                        <x-input id="email" type="email" name="email" required />
+                                        <div class="error" id="email-error"></div>
                                     </div>
                                     <div>
-                                        <x-label for="quote-phone">Phone Number</x-label>
-                                        <x-input id="quote-phone" name="phone" />
+                                        <x-label for="phone">Phone Number</x-label>
+                                        <x-input id="phone" name="phone" required/>
                                     </div>
                                     <div>
-                                        <x-label for="quote-company">Company</x-label>
-                                        <x-input id="quote-company" name="company" />
+                                        <x-label for="company">Company</x-label>
+                                        <x-input id="company" name="company" />
                                     </div>
                                     <div>
-                                        <x-label for="quote-message">Message</x-label>
-                                        <x-textarea id="quote-message" name="message" rows="3"></x-textarea>
+                                        <x-label for="product">Product</x-label>
+                                        <x-input id="product" readonly name="prodduct" value="{{$product->name}}" />
+                                    </div>
+                                    <div>
+                                        <x-label for="content">Message</x-label>
+                                        <x-textarea id="content" name="message" rows="3"></x-textarea>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <x-checkbox name="agree_terms_and_policy" id="agree_terms_and_policy" />
+                                        <x-label for="agree_terms_and_policy" class="ml-2" required>I agree to the terms and policy</x-label>
+                                        <div class="error" id="agree-error"></div>
                                     </div>
                                     <input type="hidden" name="product_id" value="{{ $product['id'] }}">
                                     <input type="hidden" name="product_name" value="{{ $product['name'] }}">
                                 </div>
+                                <div class="error" id="server-error"></div>
                             </form>
                         </div>
                     </div>
@@ -231,285 +259,73 @@
 @push('js')
 <script>
 
+    // Validate quote form and show errors
+    function validateQuoteForm() {
+        const form = document.getElementById('quote-form');
+        const nameInput = form.elements.name;
+        const emailInput = form.elements.email;
+        const agreeInput = form.elements.agree_terms_and_policy;
+        const errors = [];
+
+        if (nameInput.value.trim() === '') {
+            errors.push('Please enter your full name.');
+            document.getElementById('name-error').textContent = errors[errors.length - 1];
+        } else {
+            document.getElementById('name-error').textContent = '';
+        }
+
+        if (emailInput.value.trim() === '') {
+            errors.push('Please enter your email address.');
+            document.getElementById('email-error').textContent = errors[errors.length - 1];
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
+            errors.push('Please enter a valid email address.');
+            document.getElementById('email-error').textContent = errors[errors.length - 1];
+        } else {
+            document.getElementById('email-error').textContent = '';
+        }
+
+        if (!agreeInput.checked) {
+            errors.push('Please agree to the terms and policy.');
+            document.getElementById('agree-error').textContent = errors[errors.length - 1];
+        } else {
+            document.getElementById('agree-error').textContent = '';
+        }
+
+        return errors.length === 0;
+    }
 
     // Submit quote form
     function submitQuoteForm() {
-        const form = document.getElementById('quote-form');
-        const formData = new FormData(form);
+        if (validateQuoteForm()) {
+            const form = document.getElementById('quote-form');
+            const formData = new FormData(form);
 
-        // You would typically send this to your backend
-        fetch('/api/quote-request', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Your quote request has been submitted successfully!');
-                document.getElementById('quote-modal').classList.add('hidden');
-                form.reset();
-            } else {
-                alert('There was an error submitting your request. Please try again.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('There was an error submitting your request. Please try again.');
-        });
+            // You would typically send this to your backend
+            fetch('/contact/send', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('server-error').textContent = '';
+                    form.reset();
+                } else {
+                    document.getElementById('server-error').textContent = data.message;
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                document.getElementById('server-error').textContent = 'There was an error submitting your request. Please try again.';
+            });
+        }
     }
 </script>
 @endpush
 
-
-{{-- jQuery AJAX logic --}}
-@push('scripts')
-<script>
-$(function() {
-    // Categories
-    const categories = [
-        { id: "all", name: "All Products" },
-        { id: "laptops", name: "Laptops & Desktops" },
-        { id: "networking", name: "Networking Equipment" },
-        { id: "cctv", name: "CCTV & Surveillance" },
-        { id: "audio", name: "Audio Equipment" },
-        { id: "interactive", name: "Interactive Displays" },
-        { id: "printers", name: "Printers & Projectors" },
-        { id: "accessories", name: "Computer Accessories" },
-        { id: "drones", name: "Drones & Cameras" },
-    ];
-
-    let selectedCategory = "all";
-    let searchTerm = "";
-
-    // Render category buttons
-    function renderCategoryButtons() {
-        let html = '';
-        categories.forEach(cat => {
-            html += `<button class="btn btn-sm ${selectedCategory === cat.id ? 'bg-jobarn-primary text-white' : 'btn-outline'} mx-1 mb-2" data-id="${cat.id}">${cat.name}</button>`;
-        });
-        $('#category-buttons').html(html);
-    }
-
-    // Fetch products
-    function fetchProducts() {
-        $('#products-loading').show();
-        $('#products-error').hide();
-        $('#products-empty').hide();
-        $('#products-grid').empty();
-        $('#products-count').empty();
-
-        $.ajax({
-            url: '/api/products',
-            data: {
-                category: selectedCategory,
-                search: searchTerm
-            },
-            success: function(res) {
-                $('#products-loading').hide();
-                let products = res.data || [];
-                $('#products-count').text(`Showing ${products.length} products`);
-                if (products.length === 0) {
-                    $('#products-empty').show();
-                    return;
-                }
-                let html = '';
-                products.forEach(product => {
-                    html += `
-                    <div class="card group hover:shadow-xl transition-all duration-300 overflow-hidden">
-                        <div class="relative h-48 overflow-hidden">
-                            <img src="${product.image || '/placeholder.svg'}" alt="${product.title}" class="object-cover w-100 h-100" style="width:100%;height:100%;object-fit:cover;">
-                            <span class="badge bg-jobarn-primary text-white absolute top-2 left-2">${product.brand}</span>
-                        </div>
-                        <div class="card-body p-6 space-y-4">
-                            <h3 class="text-lg font-semibold text-gray-900">${product.title}</h3>
-                            <p class="text-gray-600 text-sm">${product.description}</p>
-                            <div class="space-y-2">
-                                <p class="text-sm font-medium text-gray-700">Key Features:</p>
-                                <div class="flex flex-wrap gap-1">
-                                    ${(product.features || []).slice(0,2).map(f => `<span class="badge badge-secondary text-xs">${f}</span>`).join('')}
-                                    ${(product.features && product.features.length > 2) ? `<span class="badge badge-secondary text-xs">+${product.features.length-2} more</span>` : ''}
-                                </div>
-                            </div>
-                            <div class="flex gap-2">
-                                <button class="btn flex-1 bg-jobarn-primary text-white view-detail-btn" data-slug="${product.slug}">View Details</button>
-                                <button class="btn btn-outline border-jobarn-primary text-jobarn-primary quote-btn" data-title="${product.title}">Quote</button>
-                            </div>
-                        </div>
-                    </div>
-                    `;
-                });
-                $('#products-grid').html(html);
-            },
-            error: function(xhr) {
-                $('#products-loading').hide();
-                $('#products-error').show().text('Failed to load products. Please try again.');
-            }
-        });
-    }
-
-    // Fetch product detail
-    function fetchProductDetail(slug) {
-        $('#product-detail-content').html(`
-            <div class="text-center py-12">
-                <div class="spinner-border text-jobarn-primary" role="status"></div>
-                <p class="mt-4 text-gray-500">Loading product details...</p>
-            </div>
-        `);
-        $('#productDetailModal').modal('show');
-        $.ajax({
-            url: `/api/products/${slug}`,
-            success: function(res) {
-                let product = res.data;
-                if (!product) {
-                    $('#product-detail-content').html('<div class="text-center py-12 text-red-500">Product not found.</div>');
-                    return;
-                }
-                $('#product-detail-content').html(`
-                    <div class="min-h-screen">
-                        <section class="py-8 bg-gray-50 border-b">
-                            <div class="container mx-auto px-4">
-                                <button class="btn btn-link text-jobarn-primary" data-dismiss="modal">
-                                    <i class="bi bi-arrow-left mr-2"></i> Back to Products
-                                </button>
-                            </div>
-                        </section>
-                        <section class="py-16 lg:py-24">
-                            <div class="container mx-auto px-4">
-                                <div class="row">
-                                    <div class="col-lg-6 mb-4">
-                                        <div class="rounded-2xl overflow-hidden bg-gray-100" style="aspect-ratio:1/1;">
-                                            <img src="${product.image || '/placeholder.svg'}" alt="${product.name}" class="object-cover w-100 h-100" style="width:100%;height:100%;object-fit:cover;">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 space-y-8">
-                                        <div class="space-y-4">
-                                            <div class="flex flex-wrap items-center gap-3 mb-2">
-                                                <span class="badge bg-jobarn-primary text-white">${product.brand}</span>
-                                                <span class="badge bg-jobarn-accent2/10 text-jobarn-accent2">${product.category}</span>
-                                            </div>
-                                            <h1 class="text-3xl font-bold text-gray-900">${product.name}</h1>
-                                            <div class="flex flex-wrap items-center gap-6 text-gray-600">
-                                                <div class="flex items-center space-x-2">
-                                                    <i class="bi bi-hash"></i>
-                                                    <span class="font-medium">SKU: ${product.sku}</span>
-                                                </div>
-                                                <div class="flex items-center space-x-2">
-                                                    <i class="bi bi-box"></i>
-                                                    <span>${product.category}</span>
-                                                </div>
-                                                <div class="flex items-center space-x-2">
-                                                    <i class="bi bi-building"></i>
-                                                    <span>${product.brand}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="space-y-4">
-                                            <h2 class="text-xl font-semibold text-gray-900">Product Description</h2>
-                                            <p class="text-gray-600 leading-relaxed">${product.description}</p>
-                                        </div>
-                                        <div class="space-y-4">
-                                            <h2 class="text-xl font-semibold text-gray-900">Key Features</h2>
-                                            <div class="row">
-                                                ${(product.features || []).slice(0,6).map(f => `<div class="col-6 mb-2"><span class="text-gray-600 text-sm">• ${f}</span></div>`).join('')}
-                                            </div>
-                                            ${(product.features && product.features.length > 6) ? `<p class="text-sm text-gray-500">+${product.features.length-6} more features</p>` : ''}
-                                        </div>
-                                        <div class="space-y-6">
-                                            <hr/>
-                                            <div class="space-y-4">
-                                                <div class="flex items-center space-x-2">
-                                                    <i class="bi bi-tag text-jobarn-primary"></i>
-                                                    <span class="text-lg font-semibold text-gray-900">Pricing: ${product.price_range}</span>
-                                                </div>
-                                                <button class="btn btn-lg bg-jobarn-primary text-white quote-btn" data-title="${product.name}"><i class="bi bi-quote mr-2"></i>Request Quote</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                        <section class="py-16 lg:py-24 bg-gray-50">
-                            <div class="container mx-auto px-4">
-                                <div class="max-w-4xl mx-auto">
-                                    <div class="text-center space-y-4 mb-12">
-                                        <h2 class="text-3xl font-bold text-gray-900">Technical Specifications</h2>
-                                        <p class="text-lg text-gray-600">Detailed technical information and specifications</p>
-                                    </div>
-                                    <div class="card border-0 shadow-lg">
-                                        <div class="card-body p-8">
-                                            <div class="row">
-                                                ${(product.specifications || []).map(spec => `
-                                                    <div class="col-md-6 py-3 border-bottom">
-                                                        <span class="font-medium text-gray-900">${spec.label}</span>
-                                                        <span class="text-gray-600 float-right">${spec.value}</span>
-                                                    </div>
-                                                `).join('')}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                        <section class="py-16 lg:py-24 bg-gradient-to-r from-jobarn-primary to-jobarn-accent2 text-white">
-                            <div class="container mx-auto px-4 text-center space-y-8">
-                                <h2 class="text-3xl lg:text-4xl font-bold">Ready to Get Started?</h2>
-                                <p class="text-xl max-w-2xl mx-auto">
-                                    Contact our experts to discuss your requirements and get a customized quote for ${product.name}.
-                                </p>
-                                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                                    <button class="btn btn-lg bg-white text-jobarn-primary quote-btn" data-title="${product.name}">Request Quote</button>
-                                    <a href="/contact" class="btn btn-lg border-white text-white hover:bg-white hover:text-jobarn-primary bg-transparent">Contact Our Experts</a>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                `);
-            },
-            error: function() {
-                $('#product-detail-content').html('<div class="text-center py-12 text-red-500">Failed to load product details.</div>');
-            }
-        });
-    }
-
-    // Initial render
-    renderCategoryButtons();
-    fetchProducts();
-
-    // Event handlers
-    $('#category-select').on('change', function() {
-        selectedCategory = $(this).val();
-        renderCategoryButtons();
-        fetchProducts();
-    });
-
-    $('#search-input').on('input', function() {
-        searchTerm = $(this).val();
-        fetchProducts();
-    });
-
-    $('#category-buttons').on('click', 'button', function() {
-        selectedCategory = $(this).data('id');
-        $('#category-select').val(selectedCategory);
-        renderCategoryButtons();
-        fetchProducts();
-    });
-
-    $('#products-grid').on('click', '.view-detail-btn', function() {
-        const slug = $(this).data('slug');
-        fetchProductDetail(slug);
-    });
-
-    // Modal close
-    $(document).on('click', '[data-dismiss="modal"]', function() {
-        $('#productDetailModal').modal('hide');
-    });
-
-    // (Optional) Quote button handler
-    $(document).on('click', '.quote-btn', function() {
-        alert('Quote request for: ' + $(this).data('title'));
-        // You can open a quote modal here
-    });
-});
-</script>
-@endpush
 

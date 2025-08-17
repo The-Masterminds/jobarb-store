@@ -20,6 +20,8 @@ class PublicController extends BaseController
 {
     public function postSendContact(ContactRequest $request)
     {
+
+        return 
         $blacklistDomains = setting('blacklist_email_domains');
 
         if ($blacklistDomains) {
