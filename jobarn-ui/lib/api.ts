@@ -272,21 +272,21 @@ const MOCK_DATA = {
       content: `
         <h2>Introduction</h2>
         <p>Tanzania's ICT sector is experiencing unprecedented growth, driven by increasing internet penetration, mobile technology adoption, and government initiatives to promote digital transformation. As we look toward the future, several key trends are shaping the landscape of information and communication technology in the country.</p>
-        
+
         <h2>Key Trends Shaping Tanzania's ICT Future</h2>
-        
+
         <h3>1. Mobile-First Digital Solutions</h3>
         <p>With mobile phone penetration exceeding 80% in Tanzania, businesses are increasingly adopting mobile-first strategies. From mobile banking to e-commerce platforms, the mobile revolution is transforming how Tanzanians interact with technology.</p>
-        
+
         <h3>2. Cloud Computing Adoption</h3>
         <p>More organizations are migrating to cloud-based solutions to reduce infrastructure costs and improve scalability. This trend is particularly evident in the banking, healthcare, and education sectors.</p>
-        
+
         <h3>3. Cybersecurity Awareness</h3>
         <p>As digital adoption increases, so does the need for robust cybersecurity measures. Organizations are investing heavily in security solutions to protect their digital assets and customer data.</p>
-        
+
         <h2>Opportunities for Businesses</h2>
         <p>The evolving ICT landscape presents numerous opportunities for businesses willing to invest in technology. From improved operational efficiency to new revenue streams, the potential for growth is substantial.</p>
-        
+
         <h2>Conclusion</h2>
         <p>Tanzania's ICT future is bright, with technology playing an increasingly important role in driving economic growth and social development. Businesses that embrace these trends today will be well-positioned for success tomorrow.</p>
       `,
@@ -305,24 +305,24 @@ const MOCK_DATA = {
       content: `
         <h2>Why Cybersecurity Matters for Small Businesses</h2>
         <p>Small businesses are increasingly becoming targets for cybercriminals. With limited resources and often inadequate security measures, they present attractive opportunities for attackers. However, implementing basic cybersecurity practices can significantly reduce your risk.</p>
-        
+
         <h2>Essential Security Measures</h2>
-        
+
         <h3>1. Strong Password Policies</h3>
         <p>Implement strong password requirements and consider using password managers to generate and store complex passwords securely.</p>
-        
+
         <h3>2. Regular Software Updates</h3>
         <p>Keep all software, including operating systems and applications, up to date with the latest security patches.</p>
-        
+
         <h3>3. Employee Training</h3>
         <p>Educate your employees about common cyber threats such as phishing emails and social engineering attacks.</p>
-        
+
         <h3>4. Data Backup</h3>
         <p>Regularly backup your important data and test your backup systems to ensure they work when needed.</p>
-        
+
         <h3>5. Network Security</h3>
         <p>Secure your network with firewalls, secure Wi-Fi configurations, and network monitoring tools.</p>
-        
+
         <h2>Working with Security Professionals</h2>
         <p>Consider partnering with cybersecurity professionals who can assess your current security posture and recommend appropriate solutions for your business needs.</p>
       `,
@@ -341,24 +341,24 @@ const MOCK_DATA = {
       content: `
         <h2>Understanding Your Network Needs</h2>
         <p>Before investing in network infrastructure, it's crucial to understand your business requirements, current usage patterns, and future growth plans.</p>
-        
+
         <h2>Key Components of Business Networks</h2>
-        
+
         <h3>1. Switches and Routers</h3>
         <p>The backbone of your network, these devices manage data traffic and provide connectivity between different network segments.</p>
-        
+
         <h3>2. Wireless Access Points</h3>
         <p>Modern businesses require reliable Wi-Fi coverage throughout their premises to support mobile devices and flexible working arrangements.</p>
-        
+
         <h3>3. Security Appliances</h3>
         <p>Firewalls and intrusion detection systems protect your network from external threats and unauthorized access.</p>
-        
+
         <h3>4. Network Monitoring Tools</h3>
         <p>These tools help you monitor network performance, identify bottlenecks, and troubleshoot issues proactively.</p>
-        
+
         <h2>Planning for Scalability</h2>
         <p>Your network infrastructure should be designed to accommodate future growth without requiring complete overhauls.</p>
-        
+
         <h2>Professional Installation and Support</h2>
         <p>Working with experienced network professionals ensures proper installation, configuration, and ongoing support for your network infrastructure.</p>
       `,

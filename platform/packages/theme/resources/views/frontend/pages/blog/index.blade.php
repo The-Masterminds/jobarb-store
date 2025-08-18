@@ -35,7 +35,7 @@
         <div class="container mx-auto px-4">
             <div class="mb-8">
                 <p class="text-gray-600" id="post-count">
-                    {{-- {{ $posts->total() }} blog post{{ $posts->total() !== 1 ? 's' : '' }} found --}}
+                    {{ $posts->total() }} blog post{{ $posts->total() !== 1 ? 's' : '' }} found
                 </p>
             </div>
 
@@ -49,49 +49,48 @@
                         <x-card class="group hover:shadow-xl transition-all duration-300 overflow-hidden">
                             <div class="relative h-48 overflow-hidden">
                                 <img
-                                    src="{{ $post['featured_image'] ?? '/placeholder.svg' }}"
-                                    alt="{{ $post['title'] }}"
+                                    src="{{ asset('storage/' .$post->image) ?? '/placeholder.svg' }}"
+                                    alt="{{ $post->name }}"
                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                                 >
                             </div>
-                            <x-card.content class="p-6 space-y-4">
+
+                            <x-card.content class="space-y-4">
                                 <div class="flex items-center space-x-4 text-sm text-gray-500">
                                     <div class="flex items-center space-x-1">
                                         <i data-lucide="calendar" class="h-4 w-4"></i>
-                                    <span>{{ $post['published_at']->format('F j, Y') }}</span>
-                                    </div>
-                                    <div class="flex items-center space-x-1">
-                                        <i data-lucide="user" class="h-4 w-4"></i>
-                                        <span>{{ $post['author'] }}</span>
+                                        <span>{{ $post->created_at->format('F j, Y') }}</span>
                                     </div>
                                 </div>
 
                                 <h3 class="text-xl font-semibold text-gray-900 line-clamp-2 group-hover:text-jobarn-primary transition-colors">
-                                    {{ $post['title'] }}
+                                    {{ $post->name }}
                                 </h3>
 
-                                <p class="text-gray-600 line-clamp-3">{{ $post['excerpt'] }}</p>
+                                <p class="text-gray-600 line-clamp-3">{{ $post->description }}</p>
 
-                                {{-- <div class="flex flex-wrap gap-2">
+                                <div class="flex flex-wrap gap-2">
                                     @foreach($post->tags->take(3) as $tag)
                                         <x-badge variant="secondary" class="text-xs">
                                             {{ $tag->name }}
                                         </x-badge>
                                     @endforeach
-                                </div> --}}
+                                </div>
+                            </x-card.content>
 
-                                <x-button as="a" href="/" class="w-full bg-jobarn-primary hover:bg-jobarn-primary/90 text-white">
+                            <x-card.footer>
+                                <x-button as="a" href="/blog/{{ $post-> slug }}" onclick="event.preventDefault(); window.location.href='/blog/{{ $post->slug }}';" class="w-full bg-jobarn-primary hover:bg-jobarn-primary/90 text-white">
                                     Read More
                                     <i data-lucide="arrow-right" class="ml-2 h-4 w-4"></i>
                                 </x-button>
-                            </x-card.content>
+                            </x-card.footer>
                         </x-card>
                     @endforeach
                 </div>
 
                 <!-- Pagination -->
                 <div class="mt-12">
-                    {{-- {{  }} --}}
+                    {{ $posts->links('pagination::tailwind') }}
                 </div>
             @endif
         </div>
@@ -122,35 +121,37 @@
     </section>
 </div>
 
-@push('scripts')
+@push('js')
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('blog-search');
 
-    // Debounce search function
-    const debounce = (func, delay) => {
-        let timeout;
-        return function() {
-            const context = this;
-            const args = arguments;
-            clearTimeout(timeout);
-            timeout = setTimeout(() => func.apply(context, args), delay);
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('blog-search');
+
+        // Debounce search function
+        const debounce = (func, delay) => {
+            let timeout;
+            return function() {
+                const context = this;
+                const args = arguments;
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(context, args), delay);
+            };
         };
-    };
 
-    // Handle search
-    const handleSearch = debounce(function(e) {
-        const searchTerm = e.target.value;
-        window.location.href = "/?search=" + encodeURIComponent(searchTerm);
-    }, 500);
+        // Handle search
+        const handleSearch = debounce(function(e) {
+            const searchTerm = e.target.value;
+            window.location.href = "/blog?search=" + encodeURIComponent(searchTerm);
+        }, 500);
 
-    searchInput.addEventListener('input', handleSearch);
+        searchInput.addEventListener('input', handleSearch);
 
-    // Initialize Lucide icons
-    if (window.lucide) {
-        lucide.createIcons();
-    }
-});
+        // Initialize Lucide icons
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+    });
 </script>
 @endpush
 @endsection

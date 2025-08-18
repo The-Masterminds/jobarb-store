@@ -5,6 +5,8 @@ namespace Botble\Theme\Http\Controllers;
 use Botble\Base\Facades\BaseHelper;
 use Botble\Base\Http\Controllers\BaseController;
 use Botble\Base\Http\Responses\BaseHttpResponse;
+use Botble\Blog\Models\Category;
+use Botble\Blog\Repositories\Interfaces\PostInterface;
 use Botble\Page\Models\Page;
 use Botble\Page\Services\PageService;
 use Botble\SeoHelper\Facades\SeoHelper;
@@ -456,114 +458,28 @@ class PublicController extends BaseController
         return view('packages/theme::frontend.pages.contact', compact('googleMapsApiKey'));
     }
 
-    public function getBlog()
+    public function getBlog(Request $request)
     {
-        $posts = [
-            [
-                'id' => 1,
-                'title' => 'The Future of ICT in Tanzania',
-                'slug' => 'future-of-ict-tanzania',
-                'author' => 'Jane Doe',
-                'excerpt' => 'Explore how ICT is transforming businesses and communities across Tanzania.',
-                'content' => '<p>Information and Communication Technology (ICT) is rapidly evolving in Tanzania, driving innovation and economic growth...</p>',
-                'featured_image' => '/images/blog/ict-future.jpg',
-                'published_at' => \Carbon\Carbon::parse('2024-07-01'),
-                'tags' => [
-                    (object)['name' => 'ICT'],
-                    (object)['name' => 'Tanzania'],
-                    (object)['name' => 'Innovation'],
-                ],
-            ],
-            [
-                'id' => 2,
-                'title' => '5 Cybersecurity Tips for Small Businesses',
-                'slug' => 'cybersecurity-tips-small-business',
-                'author' => 'John Smith',
-                'excerpt' => 'Protect your business from cyber threats with these essential tips.',
-                'content' => '<ul><li>Use strong passwords</li><li>Keep software updated</li><li>Train your staff</li></ul>',
-                'featured_image' => '/images/blog/cybersecurity-tips.jpg',
-                'published_at' => \Carbon\Carbon::parse('2024-06-15'),
-                'tags' => [
-                    (object)['name' => 'Cybersecurity'],
-                    (object)['name' => 'Small Business'],
-                ],
-            ],
-            [
-                'id' => 3,
-                'title' => 'Why Cloud Computing Matters',
-                'slug' => 'why-cloud-computing-matters',
-                'author' => 'Amina Hassan',
-                'excerpt' => 'Cloud computing is revolutionizing the way organizations operate.',
-                'content' => '<p>Cloud computing offers flexibility, scalability, and cost savings for businesses of all sizes...</p>',
-                'featured_image' => '/images/blog/cloud-computing.jpg',
-                'published_at' => \Carbon\Carbon::parse('2024-05-20'),
-                'tags' => [
-                    (object)['name' => 'Cloud'],
-                    (object)['name' => 'Business'],
-                ],
-            ],
-        ];
+        //TODO:: Add search
+        // if($request->has('search')) {
+            // $searchTerm = $request->input('q', $request->input('search'));
 
-        $posts = collect($posts);
+            // $posts = app('Botble\Blog\Http\Controllers\API\PostController')->getSearch($request->merge(['q' => $searchTerm]), new PostInterface);
+
+        // }else {
+            $posts = app('Botble\Blog\Http\Controllers\API\PostController')->index($request);
+        // }
 
         return view('packages/theme::frontend.pages.blog.index', compact('posts'));
     }
 
     public function getBlogDetail(string $slug)
     {
-        $posts = [
-            [
-                'id' => 1,
-                'title' => 'The Future of ICT in Tanzania',
-                'slug' => 'future-of-ict-tanzania',
-                'author' => 'Jane Doe',
-                'excerpt' => 'Explore how ICT is transforming businesses and communities across Tanzania.',
-                'content' => '<p>Information and Communication Technology (ICT) is rapidly evolving in Tanzania, driving innovation and economic growth...</p>',
-                'featured_image' => '/images/blog/ict-future.jpg',
-                'published_at' => \Carbon\Carbon::parse('2024-07-01'),
-                'tags' => [
-                    (object)['name' => 'ICT'],
-                    (object)['name' => 'Tanzania'],
-                    (object)['name' => 'Innovation'],
-                ],
-            ],
-            [
-                'id' => 2,
-                'title' => '5 Cybersecurity Tips for Small Businesses',
-                'slug' => 'cybersecurity-tips-small-business',
-                'author' => 'John Smith',
-                'excerpt' => 'Protect your business from cyber threats with these essential tips.',
-                'content' => '<ul><li>Use strong passwords</li><li>Keep software updated</li><li>Train your staff</li></ul>',
-                'featured_image' => '/images/blog/cybersecurity-tips.jpg',
-                'published_at' => \Carbon\Carbon::parse('2024-06-15'),
-                'tags' => [
-                    (object)['name' => 'Cybersecurity'],
-                    (object)['name' => 'Small Business'],
-                ],
-            ],
-            [
-                'id' => 3,
-                'title' => 'Why Cloud Computing Matters',
-                'slug' => 'why-cloud-computing-matters',
-                'author' => 'Amina Hassan',
-                'excerpt' => 'Cloud computing is revolutionizing the way organizations operate.',
-                'content' => '<p>Cloud computing offers flexibility, scalability, and cost savings for businesses of all sizes...</p>',
-                'featured_image' => '/images/blog/cloud-computing.jpg',
-                'published_at' => \Carbon\Carbon::parse('2024-05-20'),
-                'tags' => [
-                    (object)['name' => 'Cloud'],
-                    (object)['name' => 'Business'],
-                ],
-            ],
-        ];
-
-        $posts = collect($posts); // Use the array above
-        $post = $posts->firstWhere('slug', $slug);
-
+        $post = app('Botble\Blog\Http\Controllers\API\PostController')->findBySlug($slug);
         // Calculate reading time (optional)
-        $readingTime = ceil(str_word_count(strip_tags($post['content'])) / 200);
+        $readingTime = ceil(str_word_count(strip_tags($post['content'])) / 300  );
 
-        return view('packages/theme::frontend.pages.blog.show', compact('blog', 'readingTime'));
+        return view('packages/theme::frontend.pages.blog.show', compact('post', 'readingTime'));
     }
 
     public function getProductsFrontEnd(Request $request)

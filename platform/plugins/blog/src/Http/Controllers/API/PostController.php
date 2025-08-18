@@ -31,7 +31,7 @@ class PostController extends BaseController
                 'with' => ['tags', 'categories', 'author', 'slugable'],
                 'condition' => ['status' => BaseStatusEnum::PUBLISHED],
                 'paginate' => [
-                    'per_page' => $request->integer('per_page', 10),
+                    'per_page' => $request->integer('per_page', 9),
                     'current_paged' => $request->integer('page', 1),
                 ],
             ]);

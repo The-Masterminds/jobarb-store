@@ -1,16 +1,7 @@
-@extends('layouts.app')
+@extends('packages/theme::frontend.master')
 
 @section('content')
 <div class="min-h-screen">
-    <!-- Back Navigation -->
-    <section class="py-8 bg-gray-50 border-b">
-        <div class="container mx-auto px-4">
-            <x-button variant="ghost" class="mb-4" link="{{ route('blog.index') }}">
-                <i data-lucide="arrow-left" class="h-4 w-4 mr-2"></i>
-                Back to Blog
-            </x-button>
-        </div>
-    </section>
 
     <!-- Blog Post Content -->
     <article class="py-16 lg:py-24">
@@ -19,7 +10,7 @@
                 <!-- Post Header -->
                 <header class="space-y-6 mb-12">
                     <div class="flex flex-wrap gap-2">
-                        @foreach($post->tags as $tag)
+                        @foreach($post['tags'] as $tag)
                             <x-badge class="bg-jobarn-primary text-white">
                                 {{ $tag->name }}
                             </x-badge>
@@ -31,11 +22,11 @@
                     <div class="flex flex-wrap items-center gap-6 text-gray-600">
                         <div class="flex items-center space-x-2">
                             <i data-lucide="user" class="h-4 w-4"></i>
-                            <span>{{ $post->author }}</span>
+                            <span>Admin</span>
                         </div>
                         <div class="flex items-center space-x-2">
                             <i data-lucide="calendar" class="h-4 w-4"></i>
-                            <span>{{ $post->published_at->format('F j, Y') }}</span>
+                            <span>{{ $post->created_at->format('F j, Y') }}</span>
                         </div>
                         <div class="flex items-center space-x-2">
                             <i data-lucide="clock" class="h-4 w-4"></i>
@@ -54,7 +45,7 @@
                 <!-- Featured Image -->
                 <div class="relative h-64 lg:h-96 mb-12 rounded-2xl overflow-hidden">
                     <img
-                        src="{{ $post->featured_image ?? '/placeholder.svg' }}"
+                        src="storage/{{ $post->featured_image ?? '/placeholder.svg' }}"
                         alt="{{ $post->title }}"
                         class="w-full h-full object-cover"
                     >
@@ -69,7 +60,7 @@
                 <footer class="mt-12 pt-8 border-t border-gray-200">
                     <div class="flex flex-wrap gap-2 mb-6">
                         <span class="text-gray-600 font-medium">Tags:</span>
-                        @foreach($post->tags as $tag)
+                        @foreach($post['tags'] as $tag)
                             <x-badge variant="secondary">
                                 {{ $tag->name }}
                             </x-badge>
@@ -77,12 +68,12 @@
                     </div>
 
                     <div class="flex flex-col sm:flex-row gap-4 justify-between items-center">
-                        <x-button as="a" href="{{ route('blog.index') }}" variant="outline">
+                        <x-button as="a" href="#" variant="outline">
                             <i data-lucide="arrow-left" class="h-4 w-4 mr-2"></i>
                             Back to Blog
                         </x-button>
 
-                        <x-button as="a" href="{{ route('contact') }}" class="bg-jobarn-primary hover:bg-jobarn-primary/90 text-white">
+                        <x-button as="a" href="#" class="bg-jobarn-primary hover:bg-jobarn-primary/90 text-white">
                             Get in Touch
                         </x-button>
                     </div>
@@ -99,7 +90,7 @@
                 <p class="text-lg text-gray-600">
                     Discover more articles about technology trends, best practices, and industry insights.
                 </p>
-                <x-button as="a" href="{{ route('blog.index') }}" size="lg" class="bg-jobarn-primary hover:bg-jobarn-primary/90 text-white">
+                <x-button as="a" href="#" size="lg" class="bg-jobarn-primary hover:bg-jobarn-primary/90 text-white">
                     View All Posts
                 </x-button>
             </div>
@@ -119,7 +110,7 @@
                 </x-button>
                 <x-button
                     as="a"
-                    href="{{ route('services') }}"
+                    href="#"
                     size="lg"
                     variant="outline"
                     class="border-white text-white hover:bg-white hover:text-jobarn-primary bg-transparent"
@@ -131,12 +122,14 @@
     </section>
 </div>
 
-@push('scripts')
+@endsection
+
+@push('js')
 <script>
 function sharePost() {
     if (navigator.share) {
         navigator.share({
-            title: "{{ $post->title }}",
+            title: "{{ $post['title'] }}",
             text: "Check out this blog post from JOBARN",
             url: window.location.href
         }).catch(err => {
@@ -144,7 +137,7 @@ function sharePost() {
         });
     } else {
         // Fallback for browsers that don't support Web Share API
-        const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent("{{ $post->title }}")}&url=${encodeURIComponent(window.location.href)}`;
+        const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent("{{ $post['title'] }}")}&url=${encodeURIComponent(window.location.href)}`;
         window.open(shareUrl, '_blank');
     }
 }
@@ -155,4 +148,4 @@ if (window.lucide) {
 }
 </script>
 @endpush
-@endsection
+
