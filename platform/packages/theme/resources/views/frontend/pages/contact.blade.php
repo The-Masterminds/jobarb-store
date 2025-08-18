@@ -170,11 +170,7 @@
                                 <div class="h-64 w-full rounded-lg overflow-hidden" id="map-container">
                                     <!-- Fallback content -->
                                     <div class="h-full bg-gray-200 flex items-center justify-center">
-                                        <div class="text-center space-y-2">
-                                            <i data-lucide="map-pin" class="h-8 w-8 text-gray-400 mx-auto"></i>
-                                            <p class="text-gray-500">Loading map...</p>
-                                            <p class="text-sm text-gray-400">Survey Complex, Dar es Salaam</p>
-                                        </div>
+                                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d495.2514960064443!2d39.217562!3d-6.768394!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x185c4fb619832baf%3A0xde88e511cef37d1c!2sJobarn%20General%20Trading!5e0!3m2!1sen!2sus!4v1755537232522!5m2!1sen!2sus" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                                     </div>
                                 </div>
                             </x-card.content>
@@ -207,48 +203,3 @@
         </section>
     </div>
 @endsection
-
-@push('js')
-<script>
-
-window.googleMapsApiKey = "{{ env('GOOGLE_MAPS_API_KEY') }}";
-
-function initMap() {
-    // Coordinates for Survey Complex, Dar es Salaam
-    const location = { lat: -6.768339, lng: 39.217601};
-
-    // Create the map
-    const map = new google.maps.Map(document.getElementById('map-container'), {
-        zoom: 15,
-        center: location,
-        mapId: 'YOUR_MAP_ID',
-        disableDefaultUI: true,
-        gestureHandling: 'cooperative'
-    });
-
-    // Add a marker
-    new google.maps.Marker({
-        position: location,
-        map: map,
-        title: 'Survey Complex, Dar es Salaam'
-    });
-}
-
-// Load Google Maps API
-function loadGoogleMaps() {
-    const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&callback=initMap`;
-    script.async = true;
-    script.defer = true;
-    document.head.appendChild(script);
-}
-
-// Initialize when page loads
-document.addEventListener('DOMContentLoaded', function() {
-    // Only load if the map container exists
-    if (document.getElementById('map-container')) {
-        loadGoogleMaps();
-    }
-});
-</script>
-@endpush
