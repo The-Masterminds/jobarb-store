@@ -517,35 +517,6 @@
             }
         },
         {
-            "name": "botble/installer",
-            "version": "dev-convert-to-nextjs",
-            "dist": {
-                "type": "path",
-                "url": "./platform/packages/installer",
-                "reference": "56db3c0b49f575a23f6f9e3cbfc697a8a6bd8a2b"
-            },
-            "require": {
-                "botble/platform": "*@dev"
-            },
-            "type": "package",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Botble\\Installer\\Providers\\InstallerServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Botble\\Installer\\": "src"
-                }
-            },
-            "description": "Installer package for Botble CMS application",
-            "transport-options": {
-                "relative": true
-            }
-        },
-        {
             "name": "botble/menu",
             "version": "dev-convert-to-nextjs",
             "dist": {

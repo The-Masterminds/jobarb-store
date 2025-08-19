@@ -1,9 +1,9 @@
 {
     "id": "archielite/iori",
-    "name": "Iori",
+    "name": "DonDesign",
     "namespace": "Theme\\Iori\\",
-    "description": "Iori - Multipurpose Agency/Startup theme",
-    "author": "Archi Elite",
+    "description": "DD - Jobarn/Startup theme",
+    "author": "Donnie Mushi",
     "version": "1.0.0",
     "required_plugins": []
 }

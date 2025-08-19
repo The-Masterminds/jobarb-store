@@ -42,45 +42,6 @@
                             @endif
                         </div>
                     </x-core::card.body>
-
-                    <x-core::card.footer>
-                        <div class="btn-list">
-                            @if (setting('theme') && Theme::getThemeName() == $key)
-                                <x-core::button
-                                    type="button"
-                                    color="info"
-                                    :disabled="true"
-                                    icon="ti ti-check"
-                                >
-                                    {{ trans('packages/theme::theme.activated') }}
-                                </x-core::button>
-                            @else
-                                @if (Auth::guard()->user()->hasPermission('theme.activate'))
-                                    <x-core::button
-                                        type="button"
-                                        color="primary"
-                                        icon="ti ti-check"
-                                        class="btn-trigger-active-theme"
-                                        :data-url="route('theme.active', ['theme' => $key])"
-                                        data-theme="{{ $key }}"
-                                    >
-                                        {{ trans('packages/theme::theme.active') }}
-                                    </x-core::button>
-                                @endif
-                                @if (Auth::guard()->user()->hasPermission('theme.remove'))
-                                    <x-core::button
-                                        type="button"
-                                        icon="ti ti-trash"
-                                        class="btn-trigger-remove-theme"
-                                        :data-url="route('theme.remove', ['theme' => $key])"
-                                        data-theme="{{ $key }}"
-                                    >
-                                        {{ trans('packages/theme::theme.remove') }}
-                                    </x-core::button>
-                                @endif
-                            @endif
-                        </div>
-                    </x-core::card.footer>
                 </x-core::card>
             </div>
         @endforeach

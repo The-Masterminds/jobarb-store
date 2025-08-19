@@ -34,14 +34,6 @@ class SystemPanelSection extends PanelSection
                     ->withDescription(trans('core/base::system.info.description'))
                     ->withPriority(9990)
                     ->withRoute('system.info'),
-                config('core.base.general.enable_system_updater')
-                    ? PanelSectionItem::make('updater')
-                    ->setTitle(trans('core/setting::setting.panel.system_updater'))
-                    ->withIcon('ti ti-refresh')
-                    ->withDescription(trans('core/setting::setting.panel.system_updater_description'))
-                    ->withPriority(9999)
-                    ->withRoute('system.updater')
-                    : null,
             ]);
     }
 }

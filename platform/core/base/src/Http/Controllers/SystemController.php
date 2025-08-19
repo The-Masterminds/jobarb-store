@@ -55,26 +55,6 @@ class SystemController extends BaseSystemController
         $response
             ->setData(['has_new_version' => false]);
 
-        try {
-            $updateData = $core->checkUpdate();
-        } catch (Throwable $exception) {
-            return $this
-                ->httpResponse()
-                ->setMessage($exception->getMessage());
-        }
-
-        if ($updateData) {
-            $response
-                ->setData(['has_new_version' => true])
-                ->setMessage(
-                    sprintf(
-                        'A new version (%s / released on %s) is available to update',
-                        $updateData->version,
-                        BaseHelper::formatDate($updateData->releasedDate)
-                    )
-                );
-        }
-
         return $response;
     }
 
@@ -96,20 +76,8 @@ class SystemController extends BaseSystemController
 
         $this->pageTitle(trans('core/base::system.updater'));
 
-        $activated = $core->verifyLicense(false, 15);
         $isOutdated = false;
 
-        try {
-            $latestUpdate = $core->getLatestVersion();
-
-            if ($latestUpdate) {
-                $isOutdated = version_compare($core->version(), $latestUpdate->version, '<');
-            }
-        } catch (ConnectionException $exception) {
-            $latestUpdate = null;
-
-            BaseHelper::logError($exception);
-        }
 
         $updateData = ['message' => null, 'status' => false];
 
@@ -118,8 +86,6 @@ class SystemController extends BaseSystemController
             'requiredMemoryLimit',
             'maximumExecutionTime',
             'requiredMaximumExecutionTime',
-            'activated',
-            'latestUpdate',
             'isOutdated',
             'updateData'
         ));

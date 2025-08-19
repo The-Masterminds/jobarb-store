@@ -14,7 +14,6 @@
         "botble/api": "^2.0.0",
         "botble/data-synchronize": "^1.0",
         "botble/get-started": "*@dev",
-        "botble/installer": "*@dev",
         "botble/menu": "*@dev",
         "botble/optimize": "*@dev",
         "botble/page": "*@dev",

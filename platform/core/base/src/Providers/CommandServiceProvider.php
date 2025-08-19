@@ -2,7 +2,6 @@
 
 namespace Botble\Base\Providers;
 
-use Botble\Base\Commands\ActivateLicenseCommand;
 use Botble\Base\Commands\CleanupSystemCommand;
 use Botble\Base\Commands\ClearExpiredCacheCommand;
 use Botble\Base\Commands\ClearLogCommand;
@@ -11,9 +10,7 @@ use Botble\Base\Commands\ExportDatabaseCommand;
 use Botble\Base\Commands\FetchGoogleFontsCommand;
 use Botble\Base\Commands\GoogleFontsUpdateCommand;
 use Botble\Base\Commands\ImportDatabaseCommand;
-use Botble\Base\Commands\InstallCommand;
 use Botble\Base\Commands\PublishAssetsCommand;
-use Botble\Base\Commands\UpdateCommand;
 use Botble\Base\Supports\ServiceProvider;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\AboutCommand;
@@ -27,16 +24,13 @@ class CommandServiceProvider extends ServiceProvider
         }
 
         $this->commands([
-            ActivateLicenseCommand::class,
             CleanupSystemCommand::class,
             ClearExpiredCacheCommand::class,
             ClearLogCommand::class,
             ExportDatabaseCommand::class,
             FetchGoogleFontsCommand::class,
             ImportDatabaseCommand::class,
-            InstallCommand::class,
             PublishAssetsCommand::class,
-            UpdateCommand::class,
             GoogleFontsUpdateCommand::class,
             CompressImagesCommand::class,
         ]);

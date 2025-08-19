@@ -450,7 +450,7 @@ return [
             ['button', 'data-value', 'Text'],
         ],
     ],
-    'enable_system_updater' => env('CMS_ENABLE_SYSTEM_UPDATER', true),
+    'enable_system_updater' => env('CMS_ENABLE_SYSTEM_UPDATER', false),
     'phone_validation_rule' => env('CMS_PHONE_VALIDATION_RULE', 'min:8|max:15|regex:/^([0-9\s\-\+\(\)]*)$/'),
     'zipcode_validation_rule' => env('CMS_ZIPCODE_VALIDATION_RULE', 'string|min:4|max:9'),
     'disable_verify_csrf_token' => env('CMS_DISABLE_VERIFY_CSRF_TOKEN', false),

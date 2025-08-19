@@ -42,9 +42,6 @@ class EventServiceProvider extends ServiceProvider
         ],
         RenderingSingleEvent::class => [
             AddHrefLangListener::class,
-        ],
-        InstallerFinished::class => [
-            CreateSelectedLanguageWhenInstallationFinished::class,
-        ],
+        ]
     ];
 }
