@@ -188,7 +188,7 @@ class PublicController extends BaseController
                     "Competitive Pricing & Warranties",
                 ],
                 'brands' => ["Lenovo", "Dell", "HP", "Apple", "Microsoft"],
-                'image' => "vendor/core/packages/theme/frontend/images/services/computer-components.jpg",
+                'image' => "vendor/core/packages/theme/frontend/images/services/computer-components.png",
                 'status' => "active",
             ],
             [
