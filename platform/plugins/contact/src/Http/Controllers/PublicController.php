@@ -13,15 +13,15 @@ use Botble\Contact\Models\Contact;
 use Botble\Contact\Models\CustomField;
 use Exception;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class PublicController extends BaseController
 {
-    public function postSendContact(ContactRequest $request)
+    public function poostSendContact(ContactRequest $request)
     {
 
-        return 
         $blacklistDomains = setting('blacklist_email_domains');
 
         if ($blacklistDomains) {

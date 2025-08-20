@@ -194,6 +194,7 @@
                         </div>
                         <div class="mt-2">
                             <form id="quote-form" novalidate>
+                                {{ csrf_field() }}
                                 <div class="space-y-4">
                                     <div>
                                         <x-label for="name">Full Name *</x-label>
@@ -231,11 +232,22 @@
                                 </div>
                                 <div class="error" id="server-error"></div>
                             </form>
+                            <div id="quote-success" class="hidden text-center py-12 px-4">
+                                <div class="flex flex-col items-center space-y-4">
+                                    <svg class="h-16 w-16 text-green-500 mb-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" class="text-green-200" fill="currentColor" fill-opacity="0.1"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2l4-4" />
+                                    </svg>
+                                    <h3 class="text-2xl font-bold text-green-700">Request Submitted!</h3>
+                                    <p class="text-gray-700">Thank you for your interest. Our team will contact you soon regarding your quote request.</p>
+                                    <x-button class="mt-4 bg-jobarn-primary text-white" onclick="closeQuoteModal()">Close</x-button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse" id="quote-modal-footer">
                 <x-button
                     class="bg-jobarn-primary hover:bg-jobarn-primary/90 text-white ml-3"
                     onclick="submitQuoteForm()"
@@ -258,74 +270,108 @@
 
 @push('js')
 <script>
-
     // Validate quote form and show errors
     function validateQuoteForm() {
         const form = document.getElementById('quote-form');
         const nameInput = form.elements.name;
         const emailInput = form.elements.email;
         const agreeInput = form.elements.agree_terms_and_policy;
-        const errors = [];
+        let valid = true;
 
         if (nameInput.value.trim() === '') {
-            errors.push('Please enter your full name.');
-            document.getElementById('name-error').textContent = errors[errors.length - 1];
+            document.getElementById('name-error').textContent = 'Please enter your full name.';
+            valid = false;
         } else {
             document.getElementById('name-error').textContent = '';
         }
 
         if (emailInput.value.trim() === '') {
-            errors.push('Please enter your email address.');
-            document.getElementById('email-error').textContent = errors[errors.length - 1];
+            document.getElementById('email-error').textContent = 'Please enter your email address.';
+            valid = false;
         } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
-            errors.push('Please enter a valid email address.');
-            document.getElementById('email-error').textContent = errors[errors.length - 1];
+            document.getElementById('email-error').textContent = 'Please enter a valid email address.';
+            valid = false;
         } else {
             document.getElementById('email-error').textContent = '';
         }
 
         if (!agreeInput.checked) {
-            errors.push('Please agree to the terms and policy.');
-            document.getElementById('agree-error').textContent = errors[errors.length - 1];
+            document.getElementById('agree-error').textContent = 'Please agree to the terms and policy.';
+            valid = false;
         } else {
             document.getElementById('agree-error').textContent = '';
         }
 
-        return errors.length === 0;
+        return valid;
+    }
+
+    // Show loading on submit button
+    function setLoading(isLoading) {
+        const btn = document.querySelector('#quote-modal-footer .bg-jobarn-primary'); // scoped only to footer
+        if (!btn) return; // if footer is hidden, skip
+
+        if (isLoading) {
+            btn.disabled = true;
+            btn.innerHTML = `<svg class="animate-spin h-5 w-5 inline mr-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path></svg>Submitting...`;
+        } else {
+            btn.disabled = false;
+            btn.innerHTML = `<i data-lucide="quote" class="h-4 w-4 mr-2"></i>Submit Request`;
+        }
+    }
+
+    // Show success message and hide form
+    function showQuoteSuccess() {
+        document.getElementById('quote-form').classList.add('hidden');
+        document.getElementById('quote-success').classList.remove('hidden');
+        const footer = document.getElementById('quote-modal-footer');
+        if (footer) footer.style.display = "none";
+    }
+
+    // Hide modal and reset success state and footer
+    function closeQuoteModal() {
+        document.getElementById('quote-modal').classList.add('hidden');
+        document.getElementById('quote-success').classList.add('hidden');
+        document.getElementById('quote-form').classList.remove('hidden');
+        const footer = document.getElementById('quote-modal-footer');
+        if (footer) footer.style.display = "";
     }
 
     // Submit quote form
     function submitQuoteForm() {
+        const form = document.getElementById('quote-form');
+        document.getElementById('server-error').textContent = '';
         if (validateQuoteForm()) {
-            const form = document.getElementById('quote-form');
+            setLoading(true);
             const formData = new FormData(form);
 
-            // You would typically send this to your backend
-            fetch('/contact/send', {
+            fetch('{{ route('public.contact.test') }}', {
                 method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': form.querySelector('input[name="_token"]').value
+                },
                 body: formData
             })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    document.getElementById('server-error').textContent = '';
+            .then(async response => {
+                setLoading(false);
+                if (response.ok) {
+                    // Success
                     form.reset();
+                    document.getElementById('server-error').textContent = '';
+                    showQuoteSuccess();
                 } else {
-                    document.getElementById('server-error').textContent = data.message;
+                    // Try to parse error
+                    let data = await response.json().catch(() => ({}));
+                    let msg = data.message || 'An error occurred. Please try again.';
+                    document.getElementById('server-error').textContent = msg;
                 }
             })
-            .catch(error => {
-                console.log(error);
-                document.getElementById('server-error').textContent = 'There was an error submitting your request. Please try again.';
+            .catch(() => {
+                setLoading(false);
+                document.getElementById('server-error').textContent = 'An error occurred. Please try again.';
             });
         }
     }
 </script>
 @endpush
-
 

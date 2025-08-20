@@ -35,12 +35,12 @@ Route::group(['namespace' => 'Botble\Contact\Http\Controllers'], function (): vo
         });
     });
 
-    if (defined('THEME_MODULE_SCREEN_NAME')) {
+    // if (defined('THEME_MODULE_SCREEN_NAME')) {
         Theme::registerRoutes(function (): void {
             Route::post('contact/send', [
                 'as' => 'public.send.contact',
                 'uses' => 'PublicController@postSendContact',
             ]);
         });
-    }
+    // }
 });

@@ -198,56 +198,56 @@
                     productCard.className = 'group hover:shadow-xl transition-all duration-300 overflow-hidden rounded-lg border';
                     productCard.innerHTML = `
                         <div class="flex flex-col h-full">
-            <!-- Image Section -->
-            <div class="relative h-48 overflow-hidden">
-                <img src="/storage/${product.image || 'placeholder.svg'}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                <div class="absolute top-2 left-2 right-2 flex justify-between items-start gap-2 pointer-events-none">
-                    <x-badge class="bg-jobarn-primary text-white text-xs pointer-events-auto">
-                        ${product.product_collections && product.product_collections.length > 0 ? product.product_collections.map(c => c.name).join(', ') : ''}
-                    </x-badge>
-                    <x-badge class="bg-gray-900/80 text-white text-xs pointer-events-auto">
-                        ${product.product_type?.label || ''}
-                    </x-badge>
-                </div>
-            </div>
+                            <!-- Image Section -->
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="/storage/${product.image || 'placeholder.svg'}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                <div class="absolute top-2 left-2 right-2 flex justify-between items-start gap-2 pointer-events-none">
+                                    <x-badge class="bg-jobarn-primary text-white text-xs pointer-events-auto">
+                                        ${product.product_collections && product.product_collections.length > 0 ? product.product_collections.map(c => c.name).join(', ') : ''}
+                                    </x-badge>
+                                    <x-badge class="bg-gray-900/80 text-white text-xs pointer-events-auto">
+                                        ${product.product_type?.label || ''}
+                                    </x-badge>
+                                </div>
+                            </div>
 
-            <!-- Content Section -->
-            <div class="flex-1 flex flex-col p-6 space-y-4">
-                <h3 class="text-lg font-semibold text-gray-900 line-clamp-2 group-hover:text-jobarn-primary transition-colors">
-                    ${product.name}
-                </h3>
+                            <!-- Content Section -->
+                            <div class="flex-1 flex flex-col p-6 space-y-4">
+                                <h3 class="text-lg font-semibold text-gray-900 line-clamp-2 group-hover:text-jobarn-primary transition-colors">
+                                    ${product.name}
+                                </h3>
 
-                <div class="text-gray-600 text-sm line-clamp-2">
-                    ${product.description}
-                </div>
+                                <div class="text-gray-600 text-sm line-clamp-2">
+                                    ${product.description}
+                                </div>
 
-                <div class="space-y-2">
-                    <p class="text-sm font-medium text-gray-700">Key Features:</p>
-                    <div class="flex flex-wrap gap-1">
-                        ${(product.description || '').replace(/<[^>]+>/g, '').split('\n').slice(0, 2).map(feature => `
-                            <x-badge variant="secondary" class="text-xs">${feature.trim()}</x-badge>
-                        `).join('')}
-                    </div>
-                </div>
-            </div>
+                                <div class="space-y-2">
+                                    <p class="text-sm font-medium text-gray-700">Key Features:</p>
+                                    <div class="flex flex-wrap gap-1">
+                                        ${(product.description || '').replace(/<[^>]+>/g, '').split('\n').slice(0, 2).map(feature => `
+                                            <x-badge variant="secondary" class="text-xs">${feature.trim()}</x-badge>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
 
-            <!-- Footer Section - Price and Buttons -->
-            <div class="border-t border-gray-200 p-6 mt-auto">
-                <div class="flex items-center justify-between mb-3">
-                    <span class="text-lg font-bold text-jobarn-primary">Tsh ${product.front_sale_price.toLocaleString()}</span>
-                    <span class="text-xs text-gray-500">${product.stock_status?.label || ''}</span>
-                </div>
+                            <!-- Footer Section - Price and Buttons -->
+                            <div class="border-t border-gray-200 p-6 mt-auto">
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-lg font-bold text-jobarn-primary">Tsh ${product.front_sale_price.toLocaleString()}</span>
+                                    <span class="text-xs text-gray-500">${product.stock_status?.label || ''}</span>
+                                </div>
 
-                <div class="flex gap-2">
-                    <x-button class="flex-1 bg-jobarn-primary hover:bg-jobarn-primary/90 text-white view-details" data-slug="${product.slugable?.key}">
-                        View Details
-                    </x-button>
-                    <x-button variant="outline" class="border-jobarn-primary text-jobarn-primary hover:bg-jobarn-primary hover:text-white request-quote" data-product-id="${product.id}">
-                        Quote
-                    </x-button>
-                </div>
-            </div>
-        </div>
+                                <div class="flex gap-2">
+                                    <x-button class="flex-1 bg-jobarn-primary hover:bg-jobarn-primary/90 text-white view-details" data-slug="${product.slugable?.key}">
+                                        View Details
+                                    </x-button>
+                                    <x-button variant="outline" class="border-jobarn-primary text-jobarn-primary hover:bg-jobarn-primary hover:text-white request-quote" data-product-id="${product.id}">
+                                        Quote
+                                    </x-button>
+                                </div>
+                            </div>
+                        </div>
 
                 `;
 
@@ -279,7 +279,7 @@
             function openQuoteModal(productId) {
                 // Implement your quote modal logic here
                 console.log('Request quote for product:', productId);
-                alert('Quote request functionality would open here for product: ' + productId);
+                // alert('Quote request functionality would open here for product: ' + productId);
             }
 
             // Event listeners

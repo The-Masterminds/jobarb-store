@@ -3,16 +3,14 @@
 namespace Botble\Theme\Http\Controllers;
 
 use Botble\Base\Facades\BaseHelper;
+use Botble\Base\Facades\EmailHandler;
 use Botble\Base\Http\Controllers\BaseController;
 use Botble\Base\Http\Responses\BaseHttpResponse;
-use Botble\Blog\Models\Category;
-use Botble\Blog\Repositories\Interfaces\PostInterface;
+use Botble\Contact\Forms\Fronts\ContactForm;
+use Botble\Contact\Events\SentContactEvent;
 use Botble\Page\Models\Page;
-use Botble\Page\Services\PageService;
-use Botble\SeoHelper\Facades\SeoHelper;
 use Botble\Slug\Facades\SlugHelper;
 use Botble\Slug\Models\Slug;
-use Botble\Theme\Events\RenderingHomePageEvent;
 use Botble\Theme\Events\RenderingSingleEvent;
 use Botble\Theme\Events\RenderingSiteMapEvent;
 use Botble\Theme\Facades\SiteMapManager;
@@ -396,6 +394,153 @@ class PublicController extends BaseController
         ];
 
         return view('packages/theme::frontend.pages.clients', compact('clients', 'partners', 'stats'));
+    }
+
+
+    public function requestQuote(Request $request)
+    {
+
+        dd($request);
+
+
+
+        $request->validate([
+            'name' => 'required',
+            'email' => 'nullable|email',
+            'phone' => 'required | regex:/^\+?[0-9\s\-\(\)]+$/',
+            'message' => 'required | string | max:1000',
+        ]);
+
+
+
+
+
+        $slug = Slug::where('reference_id', $request->input('product_id'))->first();
+
+        Log::debug(json_encode($slug));
+
+        $wholeMessageContent =
+            "\nMessage" . $request->input('message') . "\n" .
+            "Product Enquired: " . $request->input('product_name') . "\n" .
+            "Product Link: " . route('public.product.detail', $slug->key) . "\n" ;
+
+
+
+        $request->merge(['content' => $wholeMessageContent]);
+
+        $blacklistDomains = setting('blacklist_email_domains');
+
+        if ($blacklistDomains) {
+            $emailDomain = Str::after(strtolower($request->input('email')), '@');
+
+            $blacklistDomains = collect(json_decode($blacklistDomains, true))->pluck('value')->all();
+
+            if (in_array($emailDomain, $blacklistDomains)) {
+                return $this
+                    ->httpResponse()
+                    ->setError()
+                    ->setMessage(__('Your email is in blacklist. Please use another email address.'));
+            }
+        }
+
+
+        $blacklistWords = trim(setting('blacklist_keywords', ''));
+
+        if ($blacklistWords) {
+            $content = strtolower($request->input('message'));
+
+            $badWords = collect(json_decode($blacklistWords, true))
+                ->filter(function ($item) use ($content) {
+                    $matches = [];
+                    $pattern = '/\b' . preg_quote($item['value'], '/') . '\b/iu';
+
+                    return preg_match($pattern, $content, $matches, PREG_UNMATCHED_AS_NULL);
+                })
+                ->pluck('value')
+                ->all();
+
+            if (! empty($badWords)) {
+                return $this
+                    ->httpResponse()
+                    ->setError()
+                    ->setMessage(__('Your message contains blacklist words: ":words".', ['words' => implode(', ', $badWords)]));
+            }
+        }
+
+
+        $receiverEmails = null;
+
+        if ($receiverEmailsSetting = setting('receiver_emails', '')) {
+            $receiverEmails = trim($receiverEmailsSetting);
+        }
+
+        if ($receiverEmails) {
+            $receiverEmails = collect(json_decode($receiverEmails, true))
+                ->pluck('value')
+                ->all();
+        }
+
+        if (is_array($receiverEmails)) {
+            $receiverEmails = array_filter($receiverEmails);
+
+            if (count($receiverEmails) === 1) {
+                $receiverEmails = Arr::first($receiverEmails);
+            }
+        }
+
+
+        try {
+            $form = ContactForm::create();
+
+            $form->saving(function (ContactForm $form) use ($receiverEmails): void {
+                $data = $form->getRequestData();
+
+                /**
+                 * @var Contact $contact
+                 */
+                $contact = $form->getModel();
+
+                $contact->fill($data)->save();
+
+                event(new SentContactEvent($contact));
+
+                $args = [];
+
+                if ($contact->name && $contact->email) {
+                    $args = ['replyTo' => [$contact->name => $contact->email]];
+                }
+
+                $emailHandler = EmailHandler::setModule(CONTACT_MODULE_SCREEN_NAME)
+                    ->setVariableValues([
+                        'contact_name' => $contact->name,
+                        'contact_subject' => $contact->subject,
+                        'contact_email' => $contact->email,
+                        'contact_phone' => $contact->phone,
+                        'contact_address' => $contact->address,
+                        'contact_content' => $contact->content,
+                        'contact_custom_fields' => $data['custom_fields'] ?? [],
+                    ]);
+
+                $emailHandler->sendUsingTemplate('notice', $receiverEmails ?: null, $args);
+
+                $args = ['replyTo' => is_array($receiverEmails) ? Arr::first($receiverEmails) : $receiverEmails];
+
+                $emailHandler->sendUsingTemplate('sender-confirmation', $contact->email, $args);
+            }, true);
+
+            return $this
+                ->httpResponse()
+                ->setMessage(__('Send message successfully!'));
+        } catch (\Exception $exception) {
+            throw $exception;
+        } catch (\Exception $exception) {
+            BaseHelper::logError($exception);
+
+            return $this
+                ->httpResponse()
+                ->setError()
+                ->setMessage(__("Can't send message on this time, please try again later!"));
+        }
     }
 
 

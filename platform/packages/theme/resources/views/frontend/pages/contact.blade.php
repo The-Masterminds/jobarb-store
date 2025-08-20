@@ -104,7 +104,7 @@
                         @endif
                     </div>
 
-                    <!-- Contact Information -->
+                    <!-- Contact Informa    tion -->
                     <div class="space-y-8">
                         <div class="space-y-4">
                             <h2 class="text-3xl font-bold text-gray-900">Get in Touch</h2>
