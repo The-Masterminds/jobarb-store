@@ -66,7 +66,7 @@
 
             <div class="hidden md:flex items-center space-x-4">
                 <x-button
-                    @click="isQuoteModalOpen = true"
+                    onclick="event.preventDefault(); window.location.href='{{ route('public.contact') }}';"
                     class="bg-jobarn-primary hover:bg-jobarn-primary/90 text-white px-4 py-2 rounded"
                 >
                     Request Quote
@@ -80,24 +80,24 @@
                     <!-- Mobile Navigation Trigger -->
                     <x-sheet.trigger>
                         <x-button variant="ghost" size="icon">
-                            <i data-lucide="menu" class="h-5 w-5"></i>
-                        </x-button>
-                    </x-sheet.trigger>
+                                <i data-lucide="menu" class="h-5 w-5"></i>
+                            </x-button>
+                        </x-sheet.trigger>
 
-                    <!-- Mobile Navigation Content -->
-                    <x-sheet.content side="right" class="w-[300px] sm:w-[400px]">
-                        <nav class="flex flex-col space-y-4 mt-8">
-                            @foreach($navigation as $item)
-                                <a
-                                    href="{{ $item['href'] }}"
-                                    @click="isOpen = false"
-                                    class="text-lg font-medium transition-colors hover:text-jobarn-primary {{ request()->url() === url($item['href']) ? 'text-jobarn-primary' : 'text-gray-700' }}"
+                        <!-- Mobile Navigation Content -->
+                        <x-sheet.content side="right" class="w-[300px] sm:w-[400px]">
+                            <nav class="flex flex-col space-y-4 mt-8">
+                                @foreach($navigation as $item)
+                                    <a
+                                        href="{{ $item['href'] }}"
+                                        @click="isOpen = false"
+                                        class="text-lg font-medium transition-colors hover:text-jobarn-primary {{ request()->url() === url($item['href']) ? 'text-jobarn-primary' : 'text-gray-700' }}"
                                 >
                                     {{ $item['name'] }}
                                 </a>
                             @endforeach
                             <x-button
-                                @click="isOpen = false; isQuoteModalOpen = true"
+                                onclick="event.preventDefault(); window.location.href='{{ route('public.contact') }}';"
                                 class="bg-jobarn-primary hover:bg-jobarn-primary/90 text-white mt-4"
                             >
                                 Request Quote

@@ -4,10 +4,48 @@
     'productSku' => null
 ])
 
-<div x-data="{
-    isOpen: @js($isOpen),
-
-}" x-show="isOpen" class="fixed inset-0 z-50 overflow-y-auto">
+<div
+    x-data="{
+        isOpen: @js($isOpen),
+        isSubmitted: false,
+        isSubmitting: false,
+        services: [
+            'ICT Equipment Sales',
+            'Network Infrastructure',
+            'CCTV Installation',
+            'Server Installation',
+            'Technical Support',
+            'Software Development',
+            'Cybersecurity Solutions',
+            'Other'
+        ],
+        formData: {
+            fullName: '',
+            phoneNumber: '',
+            email: '',
+            company: '',
+            service: '',
+            message: ''
+        },
+        handleInputChange(field, value) {
+            this.formData[field] = value;
+        },
+        handleSubmit(e) {
+            e.preventDefault();
+            this.isSubmitting = true;
+            // Simulate AJAX request
+            setTimeout(() => {
+                this.isSubmitting = false;
+                this.isSubmitted = true;
+            }, 1200);
+        },
+        handleClose() {
+            this.isOpen = false;
+            this.isSubmitted = false;
+            this.isSubmitting = false;
+            // Optionally reset form fields here
+        }
+    }" x-show="isOpen" class="fixed inset-0 z-50 overflow-y-auto">
     <div class="fixed inset-0 bg-black/50" @click="handleClose"></div>
 
     <div class="relative bg-white rounded-lg max-w-md mx-auto my-8 p-6 max-h-[90vh] overflow-y-auto">

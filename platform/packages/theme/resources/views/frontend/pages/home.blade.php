@@ -274,5 +274,7 @@
                 window.location.href = `/products`;
             });
         });
+
+        
     </script>
 @endpush
