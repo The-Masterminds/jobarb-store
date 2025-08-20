@@ -344,7 +344,7 @@
             setLoading(true);
             const formData = new FormData(form);
 
-            fetch('{{ route('public.contact.test') }}', {
+            fetch('{{ route('public.quote.submit') }}', {
                 method: 'POST',
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest',

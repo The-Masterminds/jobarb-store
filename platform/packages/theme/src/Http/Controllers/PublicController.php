@@ -603,6 +603,146 @@ class PublicController extends BaseController
         return view('packages/theme::frontend.pages.contact', compact('googleMapsApiKey'));
     }
 
+
+    public function contactUs(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'nullable|email',
+            'phone' => 'required | regex:/^\+?[0-9\s\-\(\)]+$/',
+            'message' => 'required | string | max:1000',
+            'subject' => 'required | string | max:255',
+        ]);
+
+
+        $wholeMessageContent =
+            "Name: " . $request->input('name') . "\n" .
+            "Email: " . $request->input('email') . "\n" .
+            "Phone: " . $request->input('phone') . "\n" .
+            "Service: " . $request->input('service') . "\n" .
+            "Company: " . $request->input('company') . "\n" .
+            "Subject: " . $request->input('subject') . "\n" .
+            "Message: " . $request->input('message') . "\n";
+
+
+
+        $request->merge(['content' => $wholeMessageContent]);
+
+        $blacklistDomains = setting('blacklist_email_domains');
+
+        if ($blacklistDomains) {
+            $emailDomain = Str::after(strtolower($request->input('email')), '@');
+
+            $blacklistDomains = collect(json_decode($blacklistDomains, true))->pluck('value')->all();
+
+            if (in_array($emailDomain, $blacklistDomains)) {
+                return $this
+                    ->httpResponse()
+                    ->setError()
+                    ->setMessage(__('Your email is in blacklist. Please use another email address.'));
+            }
+        }
+
+
+        $blacklistWords = trim(setting('blacklist_keywords', ''));
+
+        if ($blacklistWords) {
+            $content = strtolower($request->input('message'));
+
+            $badWords = collect(json_decode($blacklistWords, true))
+                ->filter(function ($item) use ($content) {
+                    $matches = [];
+                    $pattern = '/\b' . preg_quote($item['value'], '/') . '\b/iu';
+
+                    return preg_match($pattern, $content, $matches, PREG_UNMATCHED_AS_NULL);
+                })
+                ->pluck('value')
+                ->all();
+
+            if (! empty($badWords)) {
+                return $this
+                    ->httpResponse()
+                    ->setError()
+                    ->setMessage(__('Your message contains blacklist words: ":words".', ['words' => implode(', ', $badWords)]));
+            }
+        }
+
+
+        $receiverEmails = null;
+
+        if ($receiverEmailsSetting = setting('receiver_emails', '')) {
+            $receiverEmails = trim($receiverEmailsSetting);
+        }
+
+        if ($receiverEmails) {
+            $receiverEmails = collect(json_decode($receiverEmails, true))
+                ->pluck('value')
+                ->all();
+        }
+
+        if (is_array($receiverEmails)) {
+            $receiverEmails = array_filter($receiverEmails);
+
+            if (count($receiverEmails) === 1) {
+                $receiverEmails = Arr::first($receiverEmails);
+            }
+        }
+
+
+        try {
+            $form = ContactForm::create();
+
+            $form->saving(function (ContactForm $form) use ($receiverEmails): void {
+                $data = $form->getRequestData();
+
+                /**
+                 * @var Contact $contact
+                 */
+                $contact = $form->getModel();
+
+                $contact->fill($data)->save();
+
+                event(new SentContactEvent($contact));
+
+                $args = [];
+
+                if ($contact->name && $contact->email) {
+                    $args = ['replyTo' => [$contact->name => $contact->email]];
+                }
+
+                $emailHandler = EmailHandler::setModule(CONTACT_MODULE_SCREEN_NAME)
+                    ->setVariableValues([
+                        'contact_name' => $contact->name,
+                        'contact_subject' => $contact->subject,
+                        'contact_email' => $contact->email,
+                        'contact_phone' => $contact->phone,
+                        'contact_address' => $contact->address,
+                        'contact_content' => $contact->content,
+                        'contact_custom_fields' => $data['custom_fields'] ?? [],
+                    ]);
+
+                $emailHandler->sendUsingTemplate('notice', $receiverEmails ?: null, $args);
+
+                $args = ['replyTo' => is_array($receiverEmails) ? Arr::first($receiverEmails) : $receiverEmails];
+
+                $emailHandler->sendUsingTemplate('sender-confirmation', $contact->email, $args);
+            }, true);
+
+            return redirect()->back()->with([
+                'success' => __('Send message successfully!'),
+            ]);
+
+        } catch (\Exception $exception) {
+            throw $exception;
+        } catch (\Exception $exception) {
+            BaseHelper::logError($exception);
+
+            return redirect()->back()->with([
+                'error' => __("Can't send message on this time, please try again later!"),
+            ]);
+        }
+    }
+
     public function getBlog(Request $request)
     {
         //TODO:: Add search

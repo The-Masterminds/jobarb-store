@@ -24,9 +24,8 @@ Theme::registerRoutes(function (): void {
         Route::get('clients', 'getClients')->name('public.clients');
         Route::get('products', 'getProductsFrontEnd')->name('public.products');
         Route::get('product/{slug}', 'getProductDetail')->name('public.product.detail')->where('slug', '[a-zA-Z0-9-_]+');
-        Route::post('contact/submit', 'requestQuote')->name('public.contact.submit');
-
-        Route::post('test/contact', 'requestQuote')->middleware(['throttle:5,1'])->name('public.contact.test');
+        Route::post('request/quote', 'requestQuote')->middleware(['throttle:5,1'])->name('public.quote.submit');
+        Route::post('contact-us', 'contactUs')->middleware(['throttle:5,1'])->name('public.contact.submit');
 
         if (setting('sitemap_enabled', true)) {
             Route::get('sitemap.xml', 'getSiteMap')->name('public.sitemap');

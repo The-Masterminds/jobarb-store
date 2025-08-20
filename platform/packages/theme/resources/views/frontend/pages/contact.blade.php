@@ -1,6 +1,5 @@
 @extends('packages/theme::frontend.master')
 
-
 @section('content')
     <div class="min-h-screen">
         <!-- Hero Section -->
@@ -26,7 +25,7 @@
                             <p class="text-gray-600">Fill out the form below and we'll get back to you within 24 hours.</p>
                         </div>
 
-                        @if(session('success'))
+                        <div id="contact-success" class="hidden">
                             <x-card class="border-green-200 bg-green-50">
                                 <x-card.content class="p-8 text-center space-y-4">
                                     <i data-lucide="check-circle" class="h-16 w-16 text-green-500 mx-auto"></i>
@@ -36,72 +35,84 @@
                                     </p>
                                 </x-card.content>
                             </x-card>
-                        @else
-                            <x-card class="border-0 shadow-lg">
-                                <x-card.content class="p-8">
-                                    <form class="space-y-6">
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                            <div class="space-y-2">
-                                                <x-label for="name">Full Name *</x-label>
-                                                <x-input id="name" name="name" placeholder="Your full name" required />
-                                            </div>
+                        </div>
 
-                                            <div class="space-y-2">
-                                                <x-label for="phone">Phone Number</x-label>
-                                                <x-input id="phone" name="phone" placeholder="+255 xxx xxx xxx" />
-                                            </div>
+                        <x-card class="border-0 shadow-lg">
+                            <x-card.content class="p-8">
+                                <form id="contact-form" class="space-y-6" action="{{ route('public.contact.submit') }}" method="POST" novalidate>
+                                    @csrf
+
+                                    <div id="contact-errors" class="mb-4 hidden">
+                                        <div class="bg-red-50 border border-red-200 text-red-700 rounded px-4 py-3 text-sm" id="contact-errors-list"></div>
+                                    </div>
+
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div class="space-y-2">
+                                            <x-label for="name">Full Name *</x-label>
+                                            <x-input id="name" name="name" placeholder="Your full name" required />
                                         </div>
 
                                         <div class="space-y-2">
-                                            <x-label for="service">Service of Interest</x-label>
-                                            <div class="space-y-2">
-                                                <x-select
-                                                    name="service"
-                                                    :options="[
-                                                        'ICT Equipment Sales',
-                                                        'Network Infrastructure',
-                                                        'CCTV Installation',
-                                                        'Server Installation',
-                                                        'Technical Support',
-                                                        'Software Development',
-                                                        'Cybersecurity Solutions',
-                                                        'Other',
-                                                    ]"
-                                                    placeholder="Select a service"
-                                                />
-                                            </div>
+                                            <x-label for="phone">Phone Number</x-label>
+                                            <x-input id="phone" name="phone" placeholder="+255 xxx xxx xxx" />
                                         </div>
+                                    </div>
 
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                            <div class="space-y-2">
-                                                <x-label for="email">Email Address *</x-label>
-                                                <x-input type="email" id="email" name="email" placeholder="your.email@example.com" required />
-                                            </div>
+                                    <div class="space-y-2">
+                                        <x-label for="service">Service of Interest</x-label>
+                                        <div class="space-y-2">
+                                            <x-select
+                                                name="service"
+                                                :options="[
+                                                    'ICT Equipment Sales',
+                                                    'Network Infrastructure',
+                                                    'CCTV Installation',
+                                                    'Server Installation',
+                                                    'Technical Support',
+                                                    'Software Development',
+                                                    'Cybersecurity Solutions',
+                                                    'Other',
+                                                ]"
+                                                placeholder="Select a service"
+                                            />
+                                        </div>
+                                    </div>
 
-                                            <div class="space-y-2">
-                                                <x-label for="company">Company Name</x-label>
-                                                <x-input id="company" name="company" placeholder="Your company name" />
-                                            </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div class="space-y-2">
+                                            <x-label for="email">Email Address *</x-label>
+                                            <x-input type="email" id="email" name="email" placeholder="your.email@example.com" required />
                                         </div>
 
                                         <div class="space-y-2">
-                                            <x-label for="subject">Subject *</x-label>
-                                            <x-input id="subject" name="subject" placeholder="Brief subject of your inquiry" required />
+                                            <x-label for="company">Company Name</x-label>
+                                            <x-input id="company" name="company" placeholder="Your company name" />
                                         </div>
+                                    </div>
 
-                                        <div class="space-y-2">
-                                            <x-label for="message">Message *</x-label>
-                                            <x-textarea id="message" name="message" rows="5" placeholder="Please describe your requirements in detail..." required />
-                                        </div>
+                                    <div class="space-y-2">
+                                        <x-label for="subject">Subject *</x-label>
+                                        <x-input id="subject" name="subject" placeholder="Brief subject of your inquiry" required />
+                                    </div>
 
-                                        <x-button type="submit" class="w-full bg-jobarn-primary hover:bg-jobarn-primary/90 text-white">
-                                            Send Message
-                                            <i data-lucide="send" class="ml-2 h-4 w-4"></i>
-                                        </x-button>
-                                    </form>
-                                </x-card.content>
-                            </x-card>
-                        @endif
+                                    <div class="space-y-2">
+                                        <x-label for="message">Message *</x-label>
+                                        <x-textarea id="message" name="message" rows="5" placeholder="Please describe your requirements in detail..." required />
+                                    </div>
+
+                                    <x-button type="submit" id="contact-submit-btn" class="w-full bg-jobarn-primary hover:bg-jobarn-primary/90 text-white">
+                                        <span id="contact-submit-text">Send Message</span>
+                                        <span id="contact-submit-spinner" class="hidden ml-2">
+                                            <svg class="animate-spin h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                                            </svg>
+                                        </span>
+                                        <i data-lucide="send" class="ml-2 h-4 w-4"></i>
+                                    </x-button>
+                                </form>
+                            </x-card.content>
+                        </x-card>
                     </div>
 
                     <!-- Contact Informa    tion -->
@@ -203,3 +214,84 @@
         </section>
     </div>
 @endsection
+
+
+@push('js')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('contact-form');
+    const submitBtn = document.getElementById('contact-submit-btn');
+    const submitText = document.getElementById('contact-submit-text');
+    const submitSpinner = document.getElementById('contact-submit-spinner');
+    const errorsDiv = document.getElementById('contact-errors');
+    const errorsList = document.getElementById('contact-errors-list');
+    const successDiv = document.getElementById('contact-success');
+
+    if (form) {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            errorsDiv.classList.add('hidden');
+            errorsList.innerHTML = '';
+            submitBtn.disabled = true;
+            submitSpinner.classList.remove('hidden');
+            submitText.classList.add('opacity-50');
+
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': form.querySelector('input[name="_token"]').value
+                },
+                body: formData
+            })
+            .then(async response => {
+                submitBtn.disabled = false;
+                submitSpinner.classList.add('hidden');
+                submitText.classList.remove('opacity-50');
+
+                if (response.ok) {
+                    // Success
+                    form.reset();
+                    errorsDiv.classList.add('hidden');
+                    errorsList.innerHTML = '';
+                    successDiv.classList.remove('hidden');
+                    setTimeout(() => {
+                        successDiv.classList.add('hidden');
+                    }, 5000);
+                } else if (response.status === 422) {
+                    // Validation errors
+                    const data = await response.json();
+                    let html = '';
+                    if (data.errors) {
+                        Object.values(data.errors).forEach(errArr => {
+                            errArr.forEach(msg => {
+                                html += `<div>${msg}</div>`;
+                            });
+                        });
+                    } else if (data.message) {
+                        html = `<div>${data.message}</div>`;
+                    } else {
+                        html = `<div>There was an error. Please try again.</div>`;
+                    }
+                    errorsList.innerHTML = html;
+                    errorsDiv.classList.remove('hidden');
+                } else {
+                    // Other errors
+                    errorsList.innerHTML = `<div>There was an error. Please try again.</div>`;
+                    errorsDiv.classList.remove('hidden');
+                }
+            })
+            .catch(() => {
+                submitBtn.disabled = false;
+                submitSpinner.classList.add('hidden');
+                submitText.classList.remove('opacity-50');
+                errorsList.innerHTML = `<div>There was an error. Please try again.</div>`;
+                errorsDiv.classList.remove('hidden');
+            });
+        });
+    }
+});
+</script>
+@endpush
