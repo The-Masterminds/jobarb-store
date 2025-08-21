@@ -131,7 +131,7 @@
                                     'title' => 'Our Location',
                                     'details' => [
                                         'Survey Complex, Ground Floor',
-                                        'Near Milimani City',
+                                        'Near Mlimani City',
                                         'Dar es Salaam, Tanzania'
                                     ]
                                 ],

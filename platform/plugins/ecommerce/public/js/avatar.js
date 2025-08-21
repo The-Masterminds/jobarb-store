@@ -1,1 +1,289 @@
-(()=>{var a=function(a,t){var i="";$.each(a,(function(a,t){i+=t+"<br />"})),$(t).find(".success-message").html("").hide(),$(t).find(".error-message").html("").hide(),$(t).find(".error-message").html(i).show()};function t(a){this.$container=a,this.$avatarView=this.$container.find(".avatar-view"),this.$avatar=this.$avatarView.find("img"),this.$avatarModal=this.$container.find("#avatar-modal"),this.$loading=this.$container.find(".loading"),this.$avatarForm=this.$avatarModal.find(".avatar-form"),this.$avatarSrc=this.$avatarForm.find(".avatar-src"),this.$avatarData=this.$avatarForm.find(".avatar-data"),this.$avatarInput=this.$avatarForm.find(".avatar-input"),this.$avatarSave=this.$avatarForm.find(".avatar-save"),this.$avatarWrapper=this.$avatarModal.find(".avatar-wrapper"),this.$avatarPreview=this.$avatarModal.find(".avatar-preview"),this.init()}t.prototype={constructor:t,support:{fileList:!!$('<input type="file">').prop("files"),fileReader:!!window.FileReader,formData:!!window.FormData},init:function(){this.support.datauri=this.support.fileList&&this.support.fileReader,this.support.formData||this.initIframe(),this.initModal(),this.addListener()},addListener:function(){this.$avatarView.on("click",$.proxy(this.click,this)),this.$avatarInput.on("change",$.proxy(this.change,this)),this.$avatarForm.on("submit",$.proxy(this.submit,this))},initModal:function(){this.$avatarModal.length&&"function"==typeof this.$avatarModal.modal&&this.$avatarModal.modal("hide"),this.initPreview()},initPreview:function(){var a=this.$avatar.prop("src");this.$avatarPreview.empty().html('<img src="'+a+'" alt="avatar">')},initIframe:function(){var a="avatar-iframe-"+Math.random().toString().replace(".",""),t=$('<iframe name="'+a+'" style="display:none;"></iframe>'),i=!0,r=this;this.$iframe=t,this.$avatarForm.attr("target",a).after(t),this.$iframe.on("load",(function(){var a,t,e;try{t=this.contentWindow,a=(e=(e=this.contentDocument)||t.document)?e.body.innerText:null}catch(a){}a?r.submitDone(a):i?i=!1:$("#print-msg").text("Image upload failed!").removeClass("hidden"),r.submitEnd()}))},click:function(){this.$avatarModal.length&&"function"==typeof this.$avatarModal.modal&&this.$avatarModal.modal("show")},change:function(){var a,t;this.support.datauri?(a=this.$avatarInput.prop("files")).length>0&&(t=a[0],this.isImageFile(t)&&this.read(t)):(t=this.$avatarInput.val(),this.isImageFile(t)&&this.syncUpload())},submit:function(){return this.$avatarSrc.val()||this.$avatarInput.val()?this.support.formData?(this.ajaxUpload(),!1):void 0:(alert("Please select image!"),!1)},isImageFile:function(a){return a.type?/^image\/\w+$/.test(a.type):/\.(jpg|jpeg|png|gif)$/.test(a)},read:function(a){var t=this,i=new FileReader;i.readAsDataURL(a),i.onload=function(){t.url=this.result,t.startCropper()}},startCropper:function(){var a=this;this.active?this.$img.cropper("replace",this.url):(this.$img=$('<img src="'+this.url+'" alt="avatar">'),this.$avatarWrapper.empty().html(this.$img),this.$img.cropper({aspectRatio:1,rotatable:!0,preview:this.$avatarPreview.selector,done:function(t){var i=['{"x":'+t.x,'"y":'+t.y,'"height":'+t.height,'"width":'+t.width+"}"].join();a.$avatarData.val(i)}}),this.active=!0)},stopCropper:function(){this.active&&(this.$img.cropper("destroy"),this.$img.remove(),this.active=!1)},ajaxUpload:function(){var t=this.$avatarForm.attr("action"),i=new FormData(this.$avatarForm[0]),r=this;$.ajax(t,{type:"post",data:i,processData:!1,contentType:!1,beforeSend:function(){r.submitStart()},success:function(a){r.submitDone(a)},error:function(t){!function(t,i){if(void 0===t.errors||_.isArray(t.errors))if(void 0!==t.responseJSON)if(void 0!==t.responseJSON.errors)422===t.status&&a(t.responseJSON.errors,i);else if(void 0!==t.responseJSON.message)$(i).find(".error-message").html(t.responseJSON.message).show();else{var r="";$.each(t.responseJSON,(function(a,t){$.each(t,(function(a,t){r+=t+"<br />"}))})),$(i).find(".error-message").html(r).show()}else $(i).find(".error-message").html(t.statusText).show();else a(t.errors,i)}(t)},complete:function(){r.submitEnd()}})},syncUpload:function(){this.$avatarSave.click()},submitStart:function(){this.$loading.fadeIn(),this.$avatarSave.attr("disabled",!0).text("Saving...")},submitDone:function(a){try{a=JSON.parse(a)}catch(a){}a&&!a.error?a.error?$("#print-msg").text(a.message).removeClass("hidden"):(this.url=a.data.url,this.support.datauri||this.uploaded?(this.uploaded=!1,this.cropDone()):(this.uploaded=!0,this.$avatarSrc.val(this.url),this.startCropper()),this.$avatarInput.val("")):$("#print-msg").text(a.message).removeClass("hidden")},submitEnd:function(){this.$loading.fadeOut(),this.$avatarSave.removeAttr("disabled").text("Save")},cropDone:function(){this.$avatarSrc.val(""),this.$avatarData.val(""),this.$avatar.prop("src",this.url),$(".user-menu img").prop("src",this.url),$(".user.dropdown img").prop("src",this.url),this.stopCropper(),this.initModal()}},$((function(){new t($(".crop-avatar")),$(document).on("change",'[data-bb-toggle="change-customer-avatar"]',(function(a){var t=$(a.currentTarget),i=t.data("url"),r=t[0].files[0];if(void 0!==i&&void 0!==r){var e=new FormData;e.append("avatar_file",r),$.ajax({url:i,type:"POST",data:e,contentType:!1,processData:!1,success:function(a){var t=a.data,i=a.message,r=a.error;"undefined"!=typeof Theme&&r?Theme.showError(i):("undefined"!=typeof Theme&&Theme.showSuccess(i),$('[data-bb-value="customer-avatar"]').prop("src",t.url))}})}}))}))})();
+/******/ (() => { // webpackBootstrap
+/*!***********************************************************!*\
+  !*** ./platform/plugins/ecommerce/resources/js/avatar.js ***!
+  \***********************************************************/
+/**
+ * Created by Botble Technologies on 06/09/2015.
+ */
+
+var handleError = function handleError(data, form) {
+  if (typeof data.errors !== 'undefined' && !_.isArray(data.errors)) {
+    handleValidationError(data.errors, form);
+  } else {
+    if (typeof data.responseJSON !== 'undefined') {
+      if (typeof data.responseJSON.errors !== 'undefined') {
+        if (data.status === 422) {
+          handleValidationError(data.responseJSON.errors, form);
+        }
+      } else if (typeof data.responseJSON.message !== 'undefined') {
+        $(form).find('.error-message').html(data.responseJSON.message).show();
+      } else {
+        var message = '';
+        $.each(data.responseJSON, function (index, el) {
+          $.each(el, function (key, item) {
+            message += item + '<br />';
+          });
+        });
+        $(form).find('.error-message').html(message).show();
+      }
+    } else {
+      $(form).find('.error-message').html(data.statusText).show();
+    }
+  }
+};
+var handleValidationError = function handleValidationError(errors, form) {
+  var message = '';
+  $.each(errors, function (index, item) {
+    message += item + '<br />';
+  });
+  $(form).find('.success-message').html('').hide();
+  $(form).find('.error-message').html('').hide();
+  $(form).find('.error-message').html(message).show();
+};
+function CropAvatar($element) {
+  this.$container = $element;
+  this.$avatarView = this.$container.find('.avatar-view');
+  this.$avatar = this.$avatarView.find('img');
+  this.$avatarModal = this.$container.find('#avatar-modal');
+  this.$loading = this.$container.find('.loading');
+  this.$avatarForm = this.$avatarModal.find('.avatar-form');
+  this.$avatarSrc = this.$avatarForm.find('.avatar-src');
+  this.$avatarData = this.$avatarForm.find('.avatar-data');
+  this.$avatarInput = this.$avatarForm.find('.avatar-input');
+  this.$avatarSave = this.$avatarForm.find('.avatar-save');
+  this.$avatarWrapper = this.$avatarModal.find('.avatar-wrapper');
+  this.$avatarPreview = this.$avatarModal.find('.avatar-preview');
+  this.init();
+}
+CropAvatar.prototype = {
+  constructor: CropAvatar,
+  support: {
+    fileList: !!$('<input type="file">').prop('files'),
+    fileReader: !!window.FileReader,
+    formData: !!window.FormData
+  },
+  init: function init() {
+    this.support.datauri = this.support.fileList && this.support.fileReader;
+    if (!this.support.formData) {
+      this.initIframe();
+    }
+    this.initModal();
+    this.addListener();
+  },
+  addListener: function addListener() {
+    this.$avatarView.on('click', $.proxy(this.click, this));
+    this.$avatarInput.on('change', $.proxy(this.change, this));
+    this.$avatarForm.on('submit', $.proxy(this.submit, this));
+  },
+  initModal: function initModal() {
+    if (this.$avatarModal.length && typeof this.$avatarModal.modal === 'function') {
+      this.$avatarModal.modal('hide');
+    }
+    this.initPreview();
+  },
+  initPreview: function initPreview() {
+    var url = this.$avatar.prop('src');
+    this.$avatarPreview.empty().html('<img src="' + url + '" alt="avatar">');
+  },
+  initIframe: function initIframe() {
+    var iframeName = 'avatar-iframe-' + Math.random().toString().replace('.', ''),
+      $iframe = $('<iframe name="' + iframeName + '" style="display:none;"></iframe>'),
+      firstLoad = true,
+      _this = this;
+    this.$iframe = $iframe;
+    this.$avatarForm.attr('target', iframeName).after($iframe);
+    this.$iframe.on('load', function () {
+      var data, win, doc;
+      try {
+        win = this.contentWindow;
+        doc = this.contentDocument;
+        doc = doc ? doc : win.document;
+        data = doc ? doc.body.innerText : null;
+      } catch (e) {}
+      if (data) {
+        _this.submitDone(data);
+      } else {
+        if (firstLoad) {
+          firstLoad = false;
+        } else {
+          $('#print-msg').text('Image upload failed!').removeClass('hidden');
+        }
+      }
+      _this.submitEnd();
+    });
+  },
+  click: function click() {
+    if (this.$avatarModal.length && typeof this.$avatarModal.modal === 'function') {
+      this.$avatarModal.modal('show');
+    }
+  },
+  change: function change() {
+    var files, file;
+    if (this.support.datauri) {
+      files = this.$avatarInput.prop('files');
+      if (files.length > 0) {
+        file = files[0];
+        if (this.isImageFile(file)) {
+          this.read(file);
+        }
+      }
+    } else {
+      file = this.$avatarInput.val();
+      if (this.isImageFile(file)) {
+        this.syncUpload();
+      }
+    }
+  },
+  submit: function submit() {
+    if (!this.$avatarSrc.val() && !this.$avatarInput.val()) {
+      alert('Please select image!');
+      return false;
+    }
+    if (this.support.formData) {
+      this.ajaxUpload();
+      return false;
+    }
+  },
+  isImageFile: function isImageFile(file) {
+    if (file.type) {
+      return /^image\/\w+$/.test(file.type);
+    }
+    return /\.(jpg|jpeg|png|gif)$/.test(file);
+  },
+  read: function read(file) {
+    var _this = this,
+      fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onload = function () {
+      _this.url = this.result;
+      _this.startCropper();
+    };
+  },
+  startCropper: function startCropper() {
+    var _this = this;
+    if (this.active) {
+      this.$img.cropper('replace', this.url);
+    } else {
+      this.$img = $('<img src="' + this.url + '" alt="avatar">');
+      this.$avatarWrapper.empty().html(this.$img);
+      this.$img.cropper({
+        aspectRatio: 1,
+        rotatable: true,
+        preview: this.$avatarPreview.selector,
+        done: function done(data) {
+          var json = ['{"x":' + data.x, '"y":' + data.y, '"height":' + data.height, '"width":' + data.width + '}'].join();
+          _this.$avatarData.val(json);
+        }
+      });
+      this.active = true;
+    }
+  },
+  stopCropper: function stopCropper() {
+    if (this.active) {
+      this.$img.cropper('destroy');
+      this.$img.remove();
+      this.active = false;
+    }
+  },
+  ajaxUpload: function ajaxUpload() {
+    var url = this.$avatarForm.attr('action'),
+      data = new FormData(this.$avatarForm[0]),
+      _this = this;
+    $.ajax(url, {
+      type: 'post',
+      data: data,
+      processData: false,
+      contentType: false,
+      beforeSend: function beforeSend() {
+        _this.submitStart();
+      },
+      success: function success(data) {
+        _this.submitDone(data);
+      },
+      error: function error(data) {
+        handleError(data);
+      },
+      complete: function complete() {
+        _this.submitEnd();
+      }
+    });
+  },
+  syncUpload: function syncUpload() {
+    this.$avatarSave.click();
+  },
+  submitStart: function submitStart() {
+    this.$loading.fadeIn();
+    this.$avatarSave.attr('disabled', true).text('Saving...');
+  },
+  submitDone: function submitDone(data) {
+    try {
+      data = JSON.parse(data);
+    } catch (e) {}
+    if (data && !data.error) {
+      if (!data.error) {
+        this.url = data.data.url;
+        if (this.support.datauri || this.uploaded) {
+          this.uploaded = false;
+          this.cropDone();
+        } else {
+          this.uploaded = true;
+          this.$avatarSrc.val(this.url);
+          this.startCropper();
+        }
+        this.$avatarInput.val('');
+      } else {
+        $('#print-msg').text(data.message).removeClass('hidden');
+      }
+    } else {
+      $('#print-msg').text(data.message).removeClass('hidden');
+    }
+  },
+  submitEnd: function submitEnd() {
+    this.$loading.fadeOut();
+    this.$avatarSave.removeAttr('disabled').text('Save');
+  },
+  cropDone: function cropDone() {
+    this.$avatarSrc.val('');
+    this.$avatarData.val('');
+    this.$avatar.prop('src', this.url);
+    $('.user-menu img').prop('src', this.url);
+    $('.user.dropdown img').prop('src', this.url);
+    this.stopCropper();
+    this.initModal();
+  }
+};
+$(function () {
+  new CropAvatar($('.crop-avatar'));
+  $(document).on('change', '[data-bb-toggle="change-customer-avatar"]', function (e) {
+    var currentTarget = $(e.currentTarget);
+    var url = currentTarget.data('url');
+    var file = currentTarget[0].files[0];
+    if (typeof url === 'undefined' || typeof file === 'undefined') {
+      return;
+    }
+    var formData = new FormData();
+    formData.append('avatar_file', file);
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: formData,
+      contentType: false,
+      processData: false,
+      success: function success(_ref) {
+        var data = _ref.data,
+          message = _ref.message,
+          error = _ref.error;
+        if (typeof Theme !== 'undefined' && error) {
+          Theme.showError(message);
+          return;
+        }
+        if (typeof Theme !== 'undefined') {
+          Theme.showSuccess(message);
+        }
+        $('[data-bb-value="customer-avatar"]').prop('src', data.url);
+      }
+    });
+  });
+});
+/******/ })()
+;

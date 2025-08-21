@@ -39,7 +39,7 @@
             </div>
             <div class="hidden md:block">
                 <span>
-                    {{ $settings['address'] ?? 'Survey Complex, Ground Floor, Near Milimani City, Dar es Salaam' }}
+                    {{ $settings['address'] ?? 'Survey Complex, Ground Floor, Near Mlimani City, Dar es Salaam' }}
                 </span>
             </div>
         </div>
@@ -75,37 +75,59 @@
 
 
             <!-- Mobile Navigation -->
-            <div class="md:hidden">
-                <x-sheet.root x-data="{ isOpen: false }">
-                    <!-- Mobile Navigation Trigger -->
-                    <x-sheet.trigger>
-                        <x-button variant="ghost" size="icon">
-                                <i data-lucide="menu" class="h-5 w-5"></i>
-                            </x-button>
-                        </x-sheet.trigger>
+            <div class="md:hidden" x-data="{ isOpen: false }">
+                <!-- Mobile Navigation Trigger -->
+                <x-button variant="ghost" size="icon" @click="isOpen = true">
+                    <i data-lucide="menu" class="h-5 w-5"></i>
+                </x-button>
 
-                        <!-- Mobile Navigation Content -->
-                        <x-sheet.content side="right" class="w-[300px] sm:w-[400px]">
-                            <nav class="flex flex-col space-y-4 mt-8">
-                                @foreach($navigation as $item)
-                                    <a
-                                        href="{{ $item['href'] }}"
-                                        @click="isOpen = false"
-                                        class="text-lg font-medium transition-colors hover:text-jobarn-primary {{ request()->url() === url($item['href']) ? 'text-jobarn-primary' : 'text-gray-700' }}"
-                                >
-                                    {{ $item['name'] }}
-                                </a>
-                            @endforeach
-                            <x-button
-                                onclick="event.preventDefault(); window.location.href='{{ route('public.contact') }}';"
-                                class="bg-jobarn-primary hover:bg-jobarn-primary/90 text-white mt-4"
+                <!-- Overlay -->
+                <div
+                    x-show="isOpen"
+                    x-transition.opacity
+                    class="fixed inset-0 bg-black/40 z-40"
+                    @click="isOpen = false"
+                    x-cloak
+                ></div>
+
+                <!-- Mobile Navigation Drawer -->
+                <div
+                    x-show="isOpen"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="translate-x-full"
+                    x-transition:enter-end="translate-x-0"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="translate-x-0"
+                    x-transition:leave-end="translate-x-full"
+                    class="fixed top-0 right-0 z-50 w-[300px] sm:w-[400px] h-full bg-white shadow-lg flex flex-col"
+                    x-cloak
+                >
+                    <div class="flex items-center justify-between p-4 border-b">
+                        <span class="font-bold text-lg">Menu</span>
+                        <button @click="isOpen = false" class="text-gray-500 hover:text-jobarn-primary">
+                            <i data-lucide="x" class="h-6 w-6"></i>
+                        </button>
+                    </div>
+                    <nav class="flex flex-col space-y-4 mt-8 px-6 bg-white">
+                        @foreach($navigation as $item)
+                            <a
+                                href="{{ $item['href'] }}"
+                                @click="isOpen = false"
+                                class="text-lg font-medium transition-colors hover:text-jobarn-primary {{ request()->url() === url($item['href']) ? 'text-jobarn-primary' : 'text-gray-700' }}"
                             >
-                                Request Quote
-                            </x-button>
-                        </nav>
-                    </x-sheet.content>
-                </x-sheet.root>
+                                {{ $item['name'] }}
+                            </a>
+                        @endforeach
+                        <x-button
+                            onclick="event.preventDefault(); window.location.href='{{ route('public.contact') }}';"
+                            class="bg-jobarn-primary hover:bg-jobarn-primary/90 text-white mt-4" style="margin-bottom: 8px;"
+                        >
+                            Request Quote
+                        </x-button>
+                    </nav>
+                </div>
             </div>
+
 
         </div>
     </div>

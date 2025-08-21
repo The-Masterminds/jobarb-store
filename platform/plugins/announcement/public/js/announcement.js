@@ -1,2 +1,289 @@
-(()=>{var e={7762:function(e,t,n){var r,o,a;function i(e){return i="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},i(e)
-/*! js-cookie v3.0.5 | MIT */}a=function(){"use strict";function e(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var r in n)e[r]=n[r]}return e}var t=function t(n,r){function o(t,o,a){if("undefined"!=typeof document){"number"==typeof(a=e({},r,a)).expires&&(a.expires=new Date(Date.now()+864e5*a.expires)),a.expires&&(a.expires=a.expires.toUTCString()),t=encodeURIComponent(t).replace(/%(2[346B]|5E|60|7C)/g,decodeURIComponent).replace(/[()]/g,escape);var i="";for(var u in a)a[u]&&(i+="; "+u,!0!==a[u]&&(i+="="+a[u].split(";")[0]));return document.cookie=t+"="+n.write(o,t)+i}}return Object.create({set:o,get:function(e){if("undefined"!=typeof document&&(!arguments.length||e)){for(var t=document.cookie?document.cookie.split("; "):[],r={},o=0;o<t.length;o++){var a=t[o].split("="),i=a.slice(1).join("=");try{var u=decodeURIComponent(a[0]);if(r[u]=n.read(i,u),e===u)break}catch(e){}}return e?r[e]:r}},remove:function(t,n){o(t,"",e({},n,{expires:-1}))},withAttributes:function(n){return t(this.converter,e({},this.attributes,n))},withConverter:function(n){return t(e({},this.converter,n),this.attributes)}},{attributes:{value:Object.freeze(r)},converter:{value:Object.freeze(n)}})}({read:function(e){return'"'===e[0]&&(e=e.slice(1,-1)),e.replace(/(%[\dA-F]{2})+/gi,decodeURIComponent)},write:function(e){return encodeURIComponent(e).replace(/%(2[346BF]|3[AC-F]|40|5[BDE]|60|7[BCD])/g,decodeURIComponent)}},{path:"/"});return t},"object"===i(t)?e.exports=a():void 0===(o="function"==typeof(r=a)?r.call(t,n,t,e):r)||(e.exports=o)}},t={};function n(r){var o=t[r];if(void 0!==o)return o.exports;var a=t[r]={exports:{}};return e[r].call(a.exports,a,a.exports,n),a.exports}n.n=e=>{var t=e&&e.__esModule?()=>e.default:()=>e;return n.d(t,{a:t}),t},n.d=(e,t)=>{for(var r in t)n.o(t,r)&&!n.o(e,r)&&Object.defineProperty(e,r,{enumerable:!0,get:t[r]})},n.o=(e,t)=>Object.prototype.hasOwnProperty.call(e,t),(()=>{"use strict";var e=n(7762),t=n.n(e);function r(e){return function(e){if(Array.isArray(e))return o(e)}(e)||function(e){if("undefined"!=typeof Symbol&&null!=e[Symbol.iterator]||null!=e["@@iterator"])return Array.from(e)}(e)||function(e,t){if(e){if("string"==typeof e)return o(e,t);var n={}.toString.call(e).slice(8,-1);return"Object"===n&&e.constructor&&(n=e.constructor.name),"Map"===n||"Set"===n?Array.from(e):"Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)?o(e,t):void 0}}(e)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function o(e,t){(null==t||t>e.length)&&(t=e.length);for(var n=0,r=Array(t);n<t;n++)r[n]=e[n];return r}document.addEventListener("DOMContentLoaded",(function(){var e=document.querySelector(".ae-anno-announcement-wrapper");if(e){var n=e.querySelectorAll(".ae-anno-announcement"),o=document.querySelector(".ae-anno-announcement__next-button"),a=document.querySelector(".ae-anno-announcement__previous-button"),i=document.querySelector(".ae-anno-announcement__dismiss-button"),u=null!==e.getAttribute("data-announcement-autoplay"),c=parseInt(e.getAttribute("data-announcement-autoplay-delay")||5e3),s=JSON.parse(t().get("ae-anno-dismissed-announcements")||"[]"),l=1,f=null,d=function(){u&&c&&(f&&clearInterval(f),f=setInterval((function(){l++,p(l)}),c))},p=function(){l>n.length?l=1:l<1&&(l=n.length),n.forEach((function(e){e.style.display="none"})),n[l-1].style.display="block",d()};p(l),o&&o.addEventListener("click",(function(){l++,p(l)})),a&&a.addEventListener("click",(function(){p(l--)})),i&&i.addEventListener("click",(function(){var n=JSON.parse(i.getAttribute("data-announcement-ids"));s.push.apply(s,r(n)),t().set("ae-anno-dismissed-announcements",JSON.stringify(s),{expires:365}),e.parentNode.removeChild(e)})),d()}}))})()})();
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./platform/plugins/announcement/resources/js/js.cookie.js":
+/*!*****************************************************************!*\
+  !*** ./platform/plugins/announcement/resources/js/js.cookie.js ***!
+  \*****************************************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+/*! js-cookie v3.0.5 | MIT */
+;
+(function (global, factory) {
+  ( false ? 0 : _typeof(exports)) === 'object' && "object" !== 'undefined' ? module.exports = factory() :  true ? !(__WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+		(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
+		__WEBPACK_AMD_DEFINE_FACTORY__),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : (0);
+})(this, function () {
+  'use strict';
+
+  /* eslint-disable no-var */
+  function assign(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+      for (var key in source) {
+        target[key] = source[key];
+      }
+    }
+    return target;
+  }
+  /* eslint-enable no-var */
+
+  /* eslint-disable no-var */
+  var defaultConverter = {
+    read: function read(value) {
+      if (value[0] === '"') {
+        value = value.slice(1, -1);
+      }
+      return value.replace(/(%[\dA-F]{2})+/gi, decodeURIComponent);
+    },
+    write: function write(value) {
+      return encodeURIComponent(value).replace(/%(2[346BF]|3[AC-F]|40|5[BDE]|60|7[BCD])/g, decodeURIComponent);
+    }
+  };
+  /* eslint-enable no-var */
+
+  /* eslint-disable no-var */
+
+  function init(converter, defaultAttributes) {
+    function set(name, value, attributes) {
+      if (typeof document === 'undefined') {
+        return;
+      }
+      attributes = assign({}, defaultAttributes, attributes);
+      if (typeof attributes.expires === 'number') {
+        attributes.expires = new Date(Date.now() + attributes.expires * 864e5);
+      }
+      if (attributes.expires) {
+        attributes.expires = attributes.expires.toUTCString();
+      }
+      name = encodeURIComponent(name).replace(/%(2[346B]|5E|60|7C)/g, decodeURIComponent).replace(/[()]/g, escape);
+      var stringifiedAttributes = '';
+      for (var attributeName in attributes) {
+        if (!attributes[attributeName]) {
+          continue;
+        }
+        stringifiedAttributes += '; ' + attributeName;
+        if (attributes[attributeName] === true) {
+          continue;
+        }
+
+        // Considers RFC 6265 section 5.2:
+        // ...
+        // 3.  If the remaining unparsed-attributes contains a %x3B (";")
+        //     character:
+        // Consume the characters of the unparsed-attributes up to,
+        // not including, the first %x3B (";") character.
+        // ...
+        stringifiedAttributes += '=' + attributes[attributeName].split(';')[0];
+      }
+      return document.cookie = name + '=' + converter.write(value, name) + stringifiedAttributes;
+    }
+    function get(name) {
+      if (typeof document === 'undefined' || arguments.length && !name) {
+        return;
+      }
+
+      // To prevent the for loop in the first place assign an empty array
+      // in case there are no cookies at all.
+      var cookies = document.cookie ? document.cookie.split('; ') : [];
+      var jar = {};
+      for (var i = 0; i < cookies.length; i++) {
+        var parts = cookies[i].split('=');
+        var value = parts.slice(1).join('=');
+        try {
+          var found = decodeURIComponent(parts[0]);
+          jar[found] = converter.read(value, found);
+          if (name === found) {
+            break;
+          }
+        } catch (e) {}
+      }
+      return name ? jar[name] : jar;
+    }
+    return Object.create({
+      set: set,
+      get: get,
+      remove: function remove(name, attributes) {
+        set(name, '', assign({}, attributes, {
+          expires: -1
+        }));
+      },
+      withAttributes: function withAttributes(attributes) {
+        return init(this.converter, assign({}, this.attributes, attributes));
+      },
+      withConverter: function withConverter(converter) {
+        return init(assign({}, this.converter, converter), this.attributes);
+      }
+    }, {
+      attributes: {
+        value: Object.freeze(defaultAttributes)
+      },
+      converter: {
+        value: Object.freeze(converter)
+      }
+    });
+  }
+  var api = init(defaultConverter, {
+    path: '/'
+  });
+  /* eslint-enable no-var */
+
+  return api;
+});
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
+(() => {
+"use strict";
+/*!********************************************************************!*\
+  !*** ./platform/plugins/announcement/resources/js/announcement.js ***!
+  \********************************************************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _js_cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./js.cookie */ "./platform/plugins/announcement/resources/js/js.cookie.js");
+/* harmony import */ var _js_cookie__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_js_cookie__WEBPACK_IMPORTED_MODULE_0__);
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+
+'use strict';
+document.addEventListener('DOMContentLoaded', function () {
+  var wrapper = document.querySelector('.ae-anno-announcement-wrapper');
+  if (!wrapper) {
+    return;
+  }
+  var announcements = wrapper.querySelectorAll('.ae-anno-announcement');
+  var nextBtn = document.querySelector('.ae-anno-announcement__next-button');
+  var prevBtn = document.querySelector('.ae-anno-announcement__previous-button');
+  var dismissButton = document.querySelector('.ae-anno-announcement__dismiss-button');
+  var autoplay = wrapper.getAttribute('data-announcement-autoplay') !== null;
+  var autoplayDelay = parseInt(wrapper.getAttribute('data-announcement-autoplay-delay') || 5000);
+  var dismissedAnnouncements = JSON.parse(_js_cookie__WEBPACK_IMPORTED_MODULE_0___default().get('ae-anno-dismissed-announcements') || '[]');
+  var currentIndex = 1;
+  var autoplayInterval = null;
+  var autoplayAnnouncement = function autoplayAnnouncement() {
+    if (autoplay && autoplayDelay) {
+      if (autoplayInterval) {
+        clearInterval(autoplayInterval);
+      }
+      autoplayInterval = setInterval(function () {
+        currentIndex++;
+        showAnnouncement(currentIndex);
+      }, autoplayDelay);
+    }
+  };
+  var showAnnouncement = function showAnnouncement() {
+    if (currentIndex > announcements.length) {
+      currentIndex = 1;
+    } else if (currentIndex < 1) {
+      currentIndex = announcements.length;
+    }
+    announcements.forEach(function (announcement) {
+      announcement.style.display = 'none';
+    });
+    announcements[currentIndex - 1].style.display = 'block';
+    autoplayAnnouncement();
+  };
+  showAnnouncement(currentIndex);
+  if (nextBtn) {
+    nextBtn.addEventListener('click', function () {
+      currentIndex++;
+      showAnnouncement(currentIndex);
+    });
+  }
+  if (prevBtn) {
+    prevBtn.addEventListener('click', function () {
+      showAnnouncement(currentIndex--);
+    });
+  }
+  if (dismissButton) {
+    dismissButton.addEventListener('click', function () {
+      var ids = JSON.parse(dismissButton.getAttribute('data-announcement-ids'));
+      dismissedAnnouncements.push.apply(dismissedAnnouncements, _toConsumableArray(ids));
+      _js_cookie__WEBPACK_IMPORTED_MODULE_0___default().set('ae-anno-dismissed-announcements', JSON.stringify(dismissedAnnouncements), {
+        expires: 365
+      });
+      wrapper.parentNode.removeChild(wrapper);
+    });
+  }
+  autoplayAnnouncement();
+});
+})();
+
+/******/ })()
+;

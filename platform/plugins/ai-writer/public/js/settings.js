@@ -1,1 +1,118 @@
-(()=>{function e(t){return e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e(t)}function t(e,t){for(var a=0;a<t.length;a++){var r=t[a];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,n(r.key),r)}}function n(t){var n=function(t,n){if("object"!=e(t)||!t)return t;var a=t[Symbol.toPrimitive];if(void 0!==a){var r=a.call(t,n||"default");if("object"!=e(r))return r;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===n?String:Number)(t)}(t,"string");return"symbol"==e(n)?n:n+""}var a=function(){return e=function e(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.$modelWrapper=$("#openai-model-wrapper"),this.$spinTemplateWrapper=$("#spin-template-wrapper"),this.$promptTemplateWrapper=$("#prompt-template-wrapper"),this.$modelWrapper.length&&this.handleMultipleModels(),this.$spinTemplateWrapper.length&&Array.isArray($spinTemplates)&&this.handleMultiSpinTemplate(),this.$promptTemplateWrapper.length&&Array.isArray($promptTemplates)&&this.handleMultiPromptTemplate()},n=[{key:"handleMultipleModels",value:function(){var e=this.$modelWrapper.find("#add-model"),t=this.$modelWrapper.data("default"),n=this.$modelWrapper.data("models");n.length||(n=[""]);var a=function(){var n=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"",a=$('<div class="d-flex mt-2 more-model align-items-center">\n          <input type="radio" name="ai_writer_openai_default_model" class="setting-selection-option default-model" value="'.concat(n,'" ').concat(n===t?"checked":"",'>\n          <input class="next-input item-model" placeholder="').concat(e.data("placeholder"),'" name="ai_writer_openai_models[]" value="').concat(n,'" />\n          <a class="btn btn-link text-danger"><i class="fas fa-minus"></i></a>\n        </div>'));e.before(a)};this.$modelWrapper.on("click",".more-model > a",(function(){$(this).parents(".more-model").remove(),$(".more-model").length||a()})),this.$modelWrapper.on("change",".more-model > input.item-model",(function(){var e=$(this).val();$(this).siblings(".default-model").val(e)})),e.on("click",(function(e){e.preventDefault(),a()})),n.forEach((function(e){a(e)}))}},{key:"handleMultiSpinTemplate",value:function(){this.handleMultiTemplate("spin")}},{key:"handleMultiPromptTemplate",value:function(){this.handleMultiTemplate("prompt")}},{key:"handleMultiTemplate",value:function(e){var t="spin"===e?this.$spinTemplateWrapper:this.$promptTemplateWrapper,n=t.find(".add-template"),a=$("spin"===e?"#spin-html-template":"#prompt-html-template").get(0),r=0,i=function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"",i=arguments.length>1&&void 0!==arguments[1]?arguments[1]:"",l=$(a.innerHTML);l.find(".item-title").attr("name","ai_writer_".concat(e,"_template[").concat(r,"][title]")).val(t),l.find(".item-content").attr("name","ai_writer_".concat(e,"_template[").concat(r,"][content]")).val(i),r++,n.before(l)};t.on("click",".more-template .remove-template",(function(e){e.preventDefault(),$(this).parents(".more-template").remove(),t.find(".more-template").length||i()})),n.on("click",(function(e){e.preventDefault(),i()})),("spin"===e?$spinTemplates:$promptTemplates).forEach((function(e){var t=e.title,n=e.content;i(t,n)}))}}],n&&t(e.prototype,n),a&&t(e,a),Object.defineProperty(e,"prototype",{writable:!1}),e;var e,n,a}();$(document).ready((function(){new a}))})();
+/******/ (() => { // webpackBootstrap
+/*!*************************************************************!*\
+  !*** ./platform/plugins/ai-writer/resources/js/settings.js ***!
+  \*************************************************************/
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var SettingManagement = /*#__PURE__*/function () {
+  function SettingManagement() {
+    _classCallCheck(this, SettingManagement);
+    this.$modelWrapper = $('#openai-model-wrapper');
+    this.$spinTemplateWrapper = $('#spin-template-wrapper');
+    this.$promptTemplateWrapper = $('#prompt-template-wrapper');
+    if (this.$modelWrapper.length) {
+      this.handleMultipleModels();
+    }
+    if (this.$spinTemplateWrapper.length && Array.isArray($spinTemplates)) {
+      this.handleMultiSpinTemplate();
+    }
+    if (this.$promptTemplateWrapper.length && Array.isArray($promptTemplates)) {
+      this.handleMultiPromptTemplate();
+    }
+  }
+  return _createClass(SettingManagement, [{
+    key: "handleMultipleModels",
+    value: function handleMultipleModels() {
+      var $addBtn = this.$modelWrapper.find('#add-model');
+      var $defaultModels = this.$modelWrapper.data('default');
+      var $apiModels = this.$modelWrapper.data('models');
+      if (!$apiModels.length) {
+        $apiModels = [''];
+      }
+      var addModel = function addModel() {
+        var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+        var $newModel = $("<div class=\"d-flex mt-2 more-model align-items-center\">\n          <input type=\"radio\" name=\"ai_writer_openai_default_model\" class=\"setting-selection-option default-model\" value=\"".concat(value, "\" ").concat(value === $defaultModels ? 'checked' : '', ">\n          <input class=\"next-input item-model\" placeholder=\"").concat($addBtn.data('placeholder'), "\" name=\"ai_writer_openai_models[]\" value=\"").concat(value, "\" />\n          <a class=\"btn btn-link text-danger\"><i class=\"fas fa-minus\"></i></a>\n        </div>"));
+        $addBtn.before($newModel);
+      };
+      var render = function render() {
+        $apiModels.forEach(function (model) {
+          addModel(model);
+        });
+      };
+      this.$modelWrapper.on('click', '.more-model > a', function () {
+        $(this).parents('.more-model').remove();
+        var $models = $('.more-model');
+        if (!$models.length) {
+          addModel();
+        }
+      });
+      this.$modelWrapper.on('change', '.more-model > input.item-model', function () {
+        var value = $(this).val();
+        $(this).siblings('.default-model').val(value);
+      });
+      $addBtn.on('click', function (e) {
+        e.preventDefault();
+        addModel();
+      });
+      render();
+    }
+  }, {
+    key: "handleMultiSpinTemplate",
+    value: function handleMultiSpinTemplate() {
+      this.handleMultiTemplate('spin');
+    }
+  }, {
+    key: "handleMultiPromptTemplate",
+    value: function handleMultiPromptTemplate() {
+      this.handleMultiTemplate('prompt');
+    }
+  }, {
+    key: "handleMultiTemplate",
+    value: function handleMultiTemplate(templateType) {
+      var $self = this;
+      var $templateWrapper = templateType === 'spin' ? this.$spinTemplateWrapper : this.$promptTemplateWrapper;
+      var $addBtn = $templateWrapper.find('.add-template');
+      var $template = $(templateType === 'spin' ? '#spin-html-template' : '#prompt-html-template').get(0);
+      var index = 0;
+      var addTemplate = function addTemplate() {
+        var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+        var content = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+        var $newItem = $($template.innerHTML);
+        $newItem.find('.item-title').attr('name', "ai_writer_".concat(templateType, "_template[").concat(index, "][title]")).val(title);
+        $newItem.find('.item-content').attr('name', "ai_writer_".concat(templateType, "_template[").concat(index, "][content]")).val(content);
+        index++;
+        $addBtn.before($newItem);
+      };
+      var render = function render() {
+        var $templates = templateType === 'spin' ? $spinTemplates : $promptTemplates;
+        $templates.forEach(function (_ref) {
+          var title = _ref.title,
+            content = _ref.content;
+          addTemplate(title, content);
+        });
+      };
+      $templateWrapper.on('click', '.more-template .remove-template', function (e) {
+        e.preventDefault();
+        $(this).parents('.more-template').remove();
+        var $templates = $templateWrapper.find('.more-template');
+        if (!$templates.length) {
+          addTemplate();
+        }
+      });
+      $addBtn.on('click', function (e) {
+        e.preventDefault();
+        addTemplate();
+      });
+      render();
+    }
+  }]);
+}();
+$(document).ready(function () {
+  new SettingManagement();
+});
+/******/ })()
+;

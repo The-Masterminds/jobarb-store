@@ -10,7 +10,7 @@ $settings = $settings ?? [];
             'twitter' => 'https://twitter.com/jobarnstore',
             'instagram' => 'https://www.instagram.com/jobarnstore',
         ],
-        'address' => 'Survey Complex, Ground Floor, Near Milimani City, Dar es Salaam',
+        'address' => 'Survey Complex, Ground Floor, Near Mlimani City, Dar es Salaam',
         'phone_primary' => '+255 784 837 946',
         'phone_secondary' => '+255 745 912 000',
         'email_primary' => 'info@jobarn.co.tz',

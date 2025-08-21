@@ -1,1 +1,251 @@
-(()=>{function t(e){return t="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},t(e)}function e(t,e){var r="undefined"!=typeof Symbol&&t[Symbol.iterator]||t["@@iterator"];if(!r){if(Array.isArray(t)||(r=function(t,e){if(t){if("string"==typeof t)return n(t,e);var r={}.toString.call(t).slice(8,-1);return"Object"===r&&t.constructor&&(r=t.constructor.name),"Map"===r||"Set"===r?Array.from(t):"Arguments"===r||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(r)?n(t,e):void 0}}(t))||e&&t&&"number"==typeof t.length){r&&(t=r);var a=0,o=function(){};return{s:o,n:function(){return a>=t.length?{done:!0}:{done:!1,value:t[a++]}},e:function(t){throw t},f:o}}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}var i,l=!0,u=!1;return{s:function(){r=r.call(t)},n:function(){var t=r.next();return l=t.done,t},e:function(t){u=!0,i=t},f:function(){try{l||null==r.return||r.return()}finally{if(u)throw i}}}}function n(t,e){(null==e||e>t.length)&&(e=t.length);for(var n=0,r=Array(e);n<e;n++)r[n]=t[n];return r}function r(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,a(r.key),r)}}function a(e){var n=function(e,n){if("object"!=t(e)||!e)return e;var r=e[Symbol.toPrimitive];if(void 0!==r){var a=r.call(e,n||"default");if("object"!=t(a))return a;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===n?String:Number)(e)}(e,"string");return"symbol"==t(n)?n:n+""}var o=function(){return t=function t(){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),this.$body=$("body"),this.promptForm=$("#setup-prompt"),this.spinForm=$("#setup-spin"),this.generateModal=$("#ai-writer-generator-modal"),this.spinModal=$("#ai-writer-spin-modal"),this.handleGenerateEvents(),"undefined"!=typeof $spinTemplates&&this.handleSpinEvents()},n=[{key:"updateModalState",value:function(t,e){var n=t.find(".modal-content");n.length&&(e?Botble.showLoading(n[0]):Botble.hideLoading(n[0]))}},{key:"pushContentToTarget",value:function(t,e){var n=this.generateModal;e&&(t=t.replace(/(?:\r\n|\r|\n)/g,"<br>"),$("form").find('[name="'+e+'"]').each((function(e,r){var a=r.id||"";EDITOR.CKEDITOR[a]?EDITOR.CKEDITOR[a].setData(t):r.value=t,Botble.showSuccess($('[data-bb-toggle="ai-writer-push-content"]').data("bb-message")),n.modal("hide")})))}},{key:"handleGenerateEvents",value:function(){var t=this,e=t.promptForm,n=e.find("#preview_content"),r=e.find("#target_field"),a=e.find("#prompt"),o=e.find('select[name="language"]'),i=t.generateModal.find('[data-bb-toggle="ai-writer-generate"]'),l=t.generateModal.find('[data-bb-toggle="ai-writer-push-content"]'),u=function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:0;$promptTemplates[t]&&a.val($promptTemplates[t].content)};$(document).on("click",'[data-bb-toggle="ai-writer-generate-modal"]',(function(e){e.preventDefault();var n=$(this).closest(".card-body").find("textarea").prop("id");t.generateModal.find("#target_field").val(n),t.generateModal.modal("show")})).on("change","#prompt_type",(function(){u($(this).val())})),i.on("click",(function(e){e.preventDefault();var r=$(e.currentTarget).data("generate-url"),i=a.val();$.ajax({url:r,type:"POST",data:{prompt:i,language:o.val()},beforeSend:function(){t.updateModalState(t.generateModal,!0)},success:function(t){t.error?Botble.showError(t.message):window.EDITOR.CKEDITOR[n.prop("id")].setData(t.data.content)},error:function(t){Botble.handleError(t)},complete:function(){t.updateModalState(t.generateModal,!1)}})})),l.on("click",(function(e){e.preventDefault();var a=window.EDITOR.CKEDITOR[n.prop("id")],o=a.getData(),i=r.val();t.pushContentToTarget(o,i),a.setData("")})),u(0)}},{key:"handleSpinEvents",value:function(){var t=this,n=t.spinForm.find("#target_spin_field"),r=t.spinForm.find("#spin_template_title"),a=t.spinForm.find("#spin"),o=t.spinForm.find("#preview_spin_content"),i=t.spinModal.find('[data-bb-toggle="ai-writer-spin"]'),l=t.spinModal.find('[data-bb-toggle="ai-writer-push-content"]'),u=$('[data-bb-toggle="ai-writer-spin-content-modal"]');t.spinModal.find(".modal-body .loading-spinner").hide();var d=function(){var t,e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:0;$spinTemplates[e]&&a.val(null===(t=$spinTemplates[e])||void 0===t?void 0:t.content)},f=function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"",e="",n=o.prop("id");t&&($("form").find('[name="'.concat(t,'"]')).each((function(t,n){var r=n.id||"";e=EDITOR.CKEDITOR[r]?EDITOR.CKEDITOR[r].getData(e):n.value})),EDITOR.CKEDITOR[n]?EDITOR.CKEDITOR[n].setData(e):o.val(e))};u.on("click",(function(e){e.preventDefault();var r=n.val();f(r),t.spinModal.modal("show")})),i.on("click",(function(t){t.preventDefault();var n,r=function(){var t=a.val();return t.split(/\r?\n/).filter((function(t){return t})).map((function(t){var e,n=null==t||null===(e=t.slice(1,-1))||void 0===e?void 0:e.split("|");return n.filter((function(t){var e;return(t=null===(e=t)||void 0===e?void 0:e.trim()).length})).map((function(t){return null==t?void 0:t.trim()}))}))}(),i=o.val(),l=o.prop("id"),u=e(r);try{for(u.s();!(n=u.n()).done;){var d,f=n.value,c=e(f);try{for(c.s();!(d=c.n()).done;){var p=d.value,s=new RegExp(p,"gi");if(i.match(s)){var v=f[Math.floor(Math.random()*f.length)];i=i.replace(s,v)}}}catch(t){c.e(t)}finally{c.f()}}}catch(t){u.e(t)}finally{u.f()}EDITOR.CKEDITOR[l]?EDITOR.CKEDITOR[l].setData(i):o.val(i)})),l.on("click",(function(e){e.preventDefault();var r=o.val(),a=n.val();t.pushContentToTarget(r,a),t.spinModal.modal("hide")})),n.on("change",(function(t){var e=t.currentTarget.value;f(e)})),r.on("change",(function(){d($(this).val())})),d()}}],n&&r(t.prototype,n),a&&r(t,a),Object.defineProperty(t,"prototype",{writable:!1}),t;var t,n,a}();$(document).ready((function(){new o}))})();
+/******/ (() => { // webpackBootstrap
+/*!**************************************************************!*\
+  !*** ./platform/plugins/ai-writer/resources/js/ai-writer.js ***!
+  \**************************************************************/
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var AiWriter = /*#__PURE__*/function () {
+  function AiWriter() {
+    _classCallCheck(this, AiWriter);
+    this.$body = $('body');
+    this.promptForm = $('#setup-prompt');
+    this.spinForm = $('#setup-spin');
+    this.generateModal = $('#ai-writer-generator-modal');
+    this.spinModal = $('#ai-writer-spin-modal');
+    this.handleGenerateEvents();
+    if (typeof $spinTemplates !== 'undefined') {
+      this.handleSpinEvents();
+    }
+  }
+  return _createClass(AiWriter, [{
+    key: "updateModalState",
+    value: function updateModalState(modal, isLoading) {
+      var $content = modal.find('.modal-content');
+      if (!$content.length) {
+        return;
+      }
+      if (isLoading) {
+        Botble.showLoading($content[0]);
+      } else {
+        Botble.hideLoading($content[0]);
+      }
+    }
+  }, {
+    key: "pushContentToTarget",
+    value: function pushContentToTarget($contentValue, $targetName) {
+      var $generateModal = this.generateModal;
+      if (!$targetName) {
+        return;
+      }
+      $contentValue = $contentValue.replace(/(?:\r\n|\r|\n)/g, '<br>');
+      var $contentTarget = $('form').find('[name="' + $targetName + '"]');
+      $contentTarget.each(function (index, element) {
+        var id = element.id || '';
+        if (EDITOR.CKEDITOR[id]) {
+          EDITOR.CKEDITOR[id].setData($contentValue);
+        } else {
+          element.value = $contentValue;
+        }
+        Botble.showSuccess($('[data-bb-toggle="ai-writer-push-content"]').data('bb-message'));
+        $generateModal.modal('hide');
+      });
+    }
+  }, {
+    key: "handleGenerateEvents",
+    value: function handleGenerateEvents() {
+      var $self = this;
+      var $promptForm = $self.promptForm;
+      var $previewEditor = $promptForm.find('#preview_content');
+      var $targetField = $promptForm.find('#target_field');
+      var $promptEditor = $promptForm.find('#prompt');
+      var $promptLanguage = $promptForm.find('select[name="language"]');
+      var $btnGenerate = $self.generateModal.find('[data-bb-toggle="ai-writer-generate"]');
+      var $btnPush = $self.generateModal.find('[data-bb-toggle="ai-writer-push-content"]');
+      var renderPrompt = function renderPrompt() {
+        var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+        if ($promptTemplates[index]) {
+          $promptEditor.val($promptTemplates[index].content);
+        }
+      };
+      $(document).on('click', '[data-bb-toggle="ai-writer-generate-modal"]', function (event) {
+        event.preventDefault();
+        var targetFieldId = $(this).closest('.card-body').find('textarea').prop('id');
+        $self.generateModal.find('#target_field').val(targetFieldId);
+        $self.generateModal.modal('show');
+      }).on('change', '#prompt_type', function () {
+        renderPrompt($(this).val());
+      });
+      $btnGenerate.on('click', function (event) {
+        event.preventDefault();
+        var $current = $(event.currentTarget);
+        var $generateUrl = $current.data('generate-url');
+        var $promptValue = $promptEditor.val();
+        $.ajax({
+          url: $generateUrl,
+          type: 'POST',
+          data: {
+            prompt: $promptValue,
+            language: $promptLanguage.val()
+          },
+          beforeSend: function beforeSend() {
+            $self.updateModalState($self.generateModal, true);
+          },
+          success: function success(res) {
+            if (res.error) {
+              Botble.showError(res.message);
+            } else {
+              var editor = window.EDITOR.CKEDITOR[$previewEditor.prop('id')];
+              editor.setData(res.data.content);
+            }
+          },
+          error: function error(data) {
+            Botble.handleError(data);
+          },
+          complete: function complete() {
+            $self.updateModalState($self.generateModal, false);
+          }
+        });
+      });
+      $btnPush.on('click', function (event) {
+        event.preventDefault();
+        var editor = window.EDITOR.CKEDITOR[$previewEditor.prop('id')];
+        var $contentValue = editor.getData();
+        var $targetName = $targetField.val();
+        $self.pushContentToTarget($contentValue, $targetName);
+        editor.setData('');
+      });
+      renderPrompt(0);
+    }
+  }, {
+    key: "handleSpinEvents",
+    value: function handleSpinEvents() {
+      var $self = this;
+      var $targetField = $self.spinForm.find('#target_spin_field');
+      var $spinTemplateTitle = $self.spinForm.find('#spin_template_title');
+      var $spinEditor = $self.spinForm.find('#spin');
+      var $previewEditor = $self.spinForm.find('#preview_spin_content');
+      var $btnSpin = $self.spinModal.find('[data-bb-toggle="ai-writer-spin"]');
+      var $btnPush = $self.spinModal.find('[data-bb-toggle="ai-writer-push-content"]');
+      var $btnOpenSpin = $('[data-bb-toggle="ai-writer-spin-content-modal"]');
+      $self.spinModal.find('.modal-body .loading-spinner').hide();
+      var renderSpinTemplate = function renderSpinTemplate() {
+        var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+        if ($spinTemplates[index]) {
+          var _$spinTemplates$index;
+          $spinEditor.val((_$spinTemplates$index = $spinTemplates[index]) === null || _$spinTemplates$index === void 0 ? void 0 : _$spinTemplates$index.content);
+        }
+      };
+      var pushTargetContentToSpin = function pushTargetContentToSpin() {
+        var $targetName = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+        var $contentValue = '';
+        var $previewId = $previewEditor.prop('id');
+        if (!$targetName) {
+          return;
+        }
+        var $contentTarget = $('form').find("[name=\"".concat($targetName, "\"]"));
+        $contentTarget.each(function (index, element) {
+          var id = element.id || '';
+          if (EDITOR.CKEDITOR[id]) {
+            $contentValue = EDITOR.CKEDITOR[id].getData($contentValue);
+          } else {
+            $contentValue = element.value;
+          }
+        });
+        if (EDITOR.CKEDITOR[$previewId]) {
+          EDITOR.CKEDITOR[$previewId].setData($contentValue);
+        } else {
+          $previewEditor.val($contentValue);
+        }
+      };
+      var getSpinTemplate = function getSpinTemplate() {
+        var $spinValue = $spinEditor.val();
+        $spinValue = $spinValue.split(/\r?\n/).filter(function (element) {
+          return element;
+        }).map(function (parents) {
+          var _parents$slice;
+          var elements = parents === null || parents === void 0 || (_parents$slice = parents.slice(1, -1)) === null || _parents$slice === void 0 ? void 0 : _parents$slice.split('|');
+          elements = elements.filter(function (element) {
+            var _element;
+            element = (_element = element) === null || _element === void 0 ? void 0 : _element.trim();
+            return element.length;
+          }).map(function (element) {
+            return element === null || element === void 0 ? void 0 : element.trim();
+          });
+          return elements;
+        });
+        return $spinValue;
+      };
+      $btnOpenSpin.on('click', function (event) {
+        event.preventDefault();
+        var $targetName = $targetField.val();
+        pushTargetContentToSpin($targetName);
+        $self.spinModal.modal('show');
+      });
+      $btnSpin.on('click', function (e) {
+        e.preventDefault();
+        var $spinValue = getSpinTemplate();
+        var $previewValue = $previewEditor.val();
+        var $previewId = $previewEditor.prop('id');
+        var _iterator = _createForOfIteratorHelper($spinValue),
+          _step;
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
+            var words = _step.value;
+            var _iterator2 = _createForOfIteratorHelper(words),
+              _step2;
+            try {
+              for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+                var item = _step2.value;
+                var regex = new RegExp(item, 'gi');
+                if ($previewValue.match(regex)) {
+                  var randomWord = words[Math.floor(Math.random() * words.length)];
+                  $previewValue = $previewValue.replace(regex, randomWord);
+                }
+              }
+            } catch (err) {
+              _iterator2.e(err);
+            } finally {
+              _iterator2.f();
+            }
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
+        }
+        if (EDITOR.CKEDITOR[$previewId]) {
+          EDITOR.CKEDITOR[$previewId].setData($previewValue);
+        } else {
+          $previewEditor.val($previewValue);
+        }
+      });
+      $btnPush.on('click', function (e) {
+        e.preventDefault();
+        var $contentValue = $previewEditor.val();
+        var $targetName = $targetField.val();
+        $self.pushContentToTarget($contentValue, $targetName);
+        $self.spinModal.modal('hide');
+      });
+      $targetField.on('change', function (event) {
+        var $targetName = event.currentTarget.value;
+        pushTargetContentToSpin($targetName);
+      });
+      $spinTemplateTitle.on('change', function () {
+        renderSpinTemplate($(this).val());
+      });
+      renderSpinTemplate();
+    }
+  }]);
+}();
+$(document).ready(function () {
+  new AiWriter();
+});
+/******/ })()
+;
